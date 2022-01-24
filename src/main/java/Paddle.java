@@ -13,13 +13,12 @@ public class Paddle {
         velocity = 0;
     }
 
-    // param che dovremo poi passare
     public void move(int topLimY, int botLimY) {
         // top limits is 0 always
         int nextY = y+velocity;
         if (nextY < topLimY) {
             y = topLimY;
-        } else if (nextY > botLimY) {
+        } else if (nextY > botLimY) { // math.min ??
             y = botLimY;
         } else {
             y = nextY;
