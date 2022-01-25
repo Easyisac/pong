@@ -18,6 +18,7 @@ public class Paddle {
         this.topLimY = topLimY;
         this.botLimY = botLimY;
         velocity = 0;
+
     }
 
     public void move() {
