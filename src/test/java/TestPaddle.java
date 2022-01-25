@@ -8,8 +8,9 @@ public class TestPaddle {
     private int x = 50;
     private int y = 50;
     private int topLimY = 0;
-    private int botLimY = 100;
+    private int botLimY = 500;
     private Paddle p = new Paddle(1,x,y, topLimY, botLimY);
+    private int paddle_height = p.getPaddleHeight();
 
 
     @ParameterizedTest
@@ -31,11 +32,11 @@ public class TestPaddle {
     }
 
     @ParameterizedTest
-    @ValueSource(ints={50, 130, 110, 200})
+    @ValueSource(ints={451, 500, 550, 600})
     public void paddle_outside_bot_panel_move_test(int velocity){
         p.setVelocity(velocity);
         p.move();
 
-        assertEquals(p.getY(), botLimY);
+        assertEquals(p.getY(), botLimY-paddle_height);
     }
 }
