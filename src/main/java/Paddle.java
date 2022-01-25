@@ -39,7 +39,9 @@ public class Paddle {
         return y;
     }
 
-    public int getPaddleHeight() { return PADDLE_HEIGHT; }
+    public int getPADDLE_HEIGHT() { return PADDLE_HEIGHT; }
+
+    public int getPADDLE_WIDTH() { return PADDLE_WIDTH; }
 
     public void setVelocity(int velocity){
         this.velocity = velocity;

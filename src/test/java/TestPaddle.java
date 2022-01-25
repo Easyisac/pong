@@ -9,7 +9,7 @@ public class TestPaddle {
     private int topLim = 0;
     private int botLim = 500;
     private Paddle p = new Paddle(1,x,y, topLim, botLim);
-    private int paddle_height = p.getPaddleHeight();
+    private int paddle_height = p.getPADDLE_HEIGHT();
 
 
     @ParameterizedTest
