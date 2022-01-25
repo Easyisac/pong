@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -7,9 +6,9 @@ public class TestPaddle {
 
     private int x = 50;
     private int y = 50;
-    private int topLimY = 0;
-    private int botLimY = 500;
-    private Paddle p = new Paddle(1,x,y, topLimY, botLimY);
+    private int topLim = 0;
+    private int botLim = 500;
+    private Paddle p = new Paddle(1,x,y, topLim, botLim);
     private int paddle_height = p.getPaddleHeight();
 
 
@@ -19,7 +18,7 @@ public class TestPaddle {
         p.setVelocity(velocity);
         p.move();
 
-        assertEquals(p.getY(), y+velocity);
+        assertEquals(y+velocity, p.getY());
     }
 
     @ParameterizedTest
@@ -28,7 +27,7 @@ public class TestPaddle {
         p.setVelocity(velocity);
         p.move();
 
-        assertEquals(p.getY(), topLimY);
+        assertEquals(topLim, p.getY());
     }
 
     @ParameterizedTest
@@ -37,6 +36,6 @@ public class TestPaddle {
         p.setVelocity(velocity);
         p.move();
 
-        assertEquals(p.getY(), botLimY-paddle_height);
+        assertEquals(botLim -paddle_height,p.getY());
     }
 }
