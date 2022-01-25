@@ -1,28 +1,26 @@
 public class Paddle {
 
     private final int id;
-    private int x;
+    private final int x;
     private int y;
+    private final int topLimY;
+    private final int botLimY;
 
     private int velocity;
 
-    public Paddle(int id, int x, int y) {
+    public Paddle(int id, int x, int y, int topLimY, int botLimY) {
         this.id = id;
         this.x = x;
         this.y = y;
+        this.topLimY = topLimY;
+        this.botLimY = botLimY;
         velocity = 0;
     }
 
-    public void move(int topLimY, int botLimY) {
-        // top limits is 0 always
-        int nextY = y+velocity;
-        if (nextY < topLimY) {
-            y = topLimY;
-        } else if (nextY > botLimY) { // math.min ??
-            y = botLimY;
-        } else {
-            y = nextY;
-        }
+    public void move() {
+        y += velocity;
+        y = Math.max(y, topLimY);
+        y = Math.min(y, botLimY);
     }
 
     public int getId() {
