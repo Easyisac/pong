@@ -1,11 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class GamePanel extends JPanel {
 
+    private static PaddleDrawer pd0;
     private static PaddleDrawer pd1;
-    private static PaddleDrawer pd2;
     private static BallDrawer b;
+
+    private static PaddleMover pm0;
+    private static PaddleMover pm1;
 
     public int gameHeight = 500;
     public int gameWidth = 500;
@@ -19,6 +24,7 @@ public class GamePanel extends JPanel {
     public GamePanel(){
         this.setPreferredSize(panelSize);
         this.setBackground(Color.black);
+        //this.addKeyListener(new GameKeyListener());
     }
 
     //Standard method, draws static images, calls draw function
@@ -41,12 +47,25 @@ public class GamePanel extends JPanel {
 
     //Method that calls drawing functions for objects
     public void draw(Graphics2D g2){
+        pd0.draw(g2);
         pd1.draw(g2);
-        pd2.draw(g2);
         b.draw(g2);
     }
 
+    public static class GameKeyListener extends KeyAdapter {
 
+        @Override
+        public void keyPressed(KeyEvent e) {
+            pm0.keyPressed(e);
+            pm1.keyPressed(e);
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            pm0.keyReleased(e);
+            pm1.keyReleased(e);
+        }
+    }
 
 
     public static void main(String[] args) {
@@ -58,11 +77,21 @@ public class GamePanel extends JPanel {
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.add(panel);
         jf.pack();
-        Paddle p1 = new Paddle(0, panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder);
-        Paddle p2 = new Paddle(1, panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder);
-        Ball ball = new Ball(panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder, p1, p2);
+        jf.setResizable(false);
+        jf.addKeyListener(new GameKeyListener());
+        Paddle p0 = new Paddle(0, panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder);
+        Paddle p1 = new Paddle(1, panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder);
+        Ball ball = new Ball(panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder, p0, p1);
+        pm0 = new PaddleMover(p0);
+        pm1 = new PaddleMover(p1);
+        pd0 = new PaddleDrawer(p0);
         pd1 = new PaddleDrawer(p1);
-        pd2 = new PaddleDrawer(p2);
         b = new BallDrawer(ball);
+
+        Thread pt0 = new Thread(pm0);
+        Thread pt1 = new Thread(pm1);
+
+        pt0.start();
+        pt1.start();
     }
 }
