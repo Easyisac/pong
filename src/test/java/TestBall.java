@@ -43,39 +43,70 @@ public class TestBall {
     }
 
     @ParameterizedTest
-    @ValueSource(ints={0, 10, 50, 250, 500})
-    public void ball_with_different_x_collides_with_top_boundary(int x) {
-        ball.setX(x);
-        ball.setY(topLim + ball.getBALL_RADIUS());
+    @ValueSource(ints={-10, -20, -50, -250, -500})
+    public void ball_out_top_boundary(int yVelocity) {
+        ball.setyVelocity(yVelocity);
+        ball.setY(topLim + 15);
 
         assertEquals(true, ball.checkCollisionsTop());
     }
 
     @ParameterizedTest
-    @ValueSource(ints={0, 10, 50, 250, 500})
-    public void ball_with_different_x_collides_with_bottom_boundary(int x) {
-        ball.setX(x);
-        ball.setY(botLim - ball.getBALL_RADIUS());
+    @ValueSource(ints={10, 20, 50, 250, 500})
+    public void ball_out_bottom_boundary(int yVelocity) {
+        ball.setyVelocity(yVelocity);
+        ball.setY(botLim - 15);
 
         assertEquals(true, ball.checkCollisionsBottom());
     }
 
     @ParameterizedTest
-    @ValueSource(ints={0, 10, 50, 250, 500})
-    public void ball_with_different_y_collides_with_left_boundary(int y) {
-        ball.setX(leftLim + ball.getBALL_RADIUS()); // ball hits boundary with left side
-        ball.setY(y);
+    @ValueSource(ints={-5, -10, -50, -250, -500})
+    public void ball_out_left_boundary(int xVelocity) {
+        ball.setxVelocity(xVelocity); // ball hits boundary with left side
+        ball.setX(leftLim + 15);
 
         assertEquals(true, ball.checkCollisionsLeft());
     }
 
     @ParameterizedTest
-    @ValueSource(ints={0, 10, 50, 250, 500})
-    public void ball_with_different_y_collides_with_right_boundary(int y) {
-        ball.setX(rightLim - ball.getBALL_RADIUS()); // ball hits boundary with right side
-        ball.setY(y);
+    @ValueSource(ints={5, 10, 50, 250, 500})
+    public void ball_out_right_boundary(int xVelocity) {
+        ball.setxVelocity(xVelocity); // ball hits boundary with right side
+        ball.setX(rightLim - 15);
 
         assertEquals(true, ball.checkCollisionsRight());
+    }
+
+    @ParameterizedTest
+    @CsvSource({"-10, 0", "-10, 10", "-15, 10", "-10, 25", "-10, -25"})
+    public void ball_collides_with_paddle_left(int xVelocity, int yVelocity) {
+        ball.setxVelocity(xVelocity);
+        ball.setyVelocity(yVelocity);
+        ball.setY(pLeft.getY() + pLeft.getPADDLE_HEIGHT()/2);
+        ball.setX(pLeft.getX() + pLeft.getPADDLE_WIDTH() + 10);
+
+        assertEquals(true, ball.checkCollisionsPaddleLeft());
+    }
+
+    @ParameterizedTest
+    @CsvSource({"10, 0", "10, 10", "15, 10", "10, 25", "10, -25"})
+    public void ball_collides_with_paddle_right(int xVelocity, int yVelocity) {
+        ball.setxVelocity(xVelocity);
+        ball.setyVelocity(yVelocity);
+        ball.setY(pRight.getY() + pRight.getPADDLE_HEIGHT()/2);
+        ball.setX(pRight.getX() - 10);
+
+        assertEquals(true, ball.checkCollisionsPaddleRight());
+    }
+
+    @Test
+    public void ball_bounced_top_boundary(){
+        // TODO
+        int final_positionX = 250;
+        int final_positionY = 250;
+        assertEquals(final_positionX, ball.getX());
+        assertEquals(final_positionY, ball.getY());
     }
 
 /*    @ParameterizedTest
