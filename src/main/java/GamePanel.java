@@ -28,6 +28,13 @@ public class GamePanel extends JPanel {
         g2.setColor(Color.white);
         g2.setStroke(new BasicStroke(1));
         g2.drawRect(leftBorder, topBorder, gameWidth, gameHeight);
+        /* Test sulle posizioni delle barrette e della palla
+        g2.drawLine(100,50,100,550); righe verticali per le barrette
+        g2.drawLine(500,50,500,550);
+        g2.drawLine(110,50,110,550);
+        g2.drawLine(490,50,490,550);
+        g2.drawLine(50,50,550,550); linee diagonali per la palla
+        g2.drawLine(550,50,50,550);*/
         draw(g2);
         repaint();
     }
@@ -51,8 +58,8 @@ public class GamePanel extends JPanel {
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.add(panel);
         jf.pack();
-        Paddle p1 = new Paddle(0, 100, 100, panel.topBorder, panel.gameHeight + panel.topBorder);
-        Paddle p2 = new Paddle(1, 500-p1.getPADDLE_WIDTH(), 300, panel.topBorder, panel.gameHeight + panel.topBorder);
+        Paddle p1 = new Paddle(0, panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder);
+        Paddle p2 = new Paddle(1, panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder);
         Ball ball = new Ball(panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder);
         pd1 = new PaddleDrawer(p1);
         pd2 = new PaddleDrawer(p2);
