@@ -13,30 +13,54 @@ public class PaddleMover implements Runnable {
     }
 
     public void keyPressed(KeyEvent e) {
-        switch(e.getKeyCode()){
-            case KeyEvent.VK_UP:
-                paddle.setVelocity(-1);
-                break;
-            case KeyEvent.VK_DOWN:
-                paddle.setVelocity(1);
-                break;
-            default:
-                System.out.println("key pressed: not an arrow");
-                break;
+        if (paddle.getId() == 0) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_W:
+                    paddle.setVelocity(-1);
+                    break;
+                case KeyEvent.VK_S:
+                    paddle.setVelocity(1);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_UP:
+                    paddle.setVelocity(-1);
+                    break;
+                case KeyEvent.VK_DOWN:
+                    paddle.setVelocity(1);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
     public void keyReleased(KeyEvent e) {
-        switch(e.getKeyCode()){
-            case KeyEvent.VK_UP:
-                paddle.setVelocity(0);
-                break;
-            case KeyEvent.VK_DOWN:
-                paddle.setVelocity(0);
-                break;
-            default:
-                System.out.println("key relased: not an arrow");
-                break;
+        if (paddle.getId() == 0) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_W:
+                    paddle.setVelocity(0);
+                    break;
+                case KeyEvent.VK_S:
+                    paddle.setVelocity(0);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_UP:
+                    paddle.setVelocity(0);
+                    break;
+                case KeyEvent.VK_DOWN:
+                    paddle.setVelocity(0);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

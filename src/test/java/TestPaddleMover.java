@@ -1,7 +1,6 @@
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.awt.event.KeyEvent;
 import java.util.stream.Stream;
@@ -15,18 +14,18 @@ public class TestPaddleMover {
     private final int leftLim = 0;
     private final int rightLim = 500;
 
-    private final Paddle p = new Paddle(1, topLim, botLim, leftLim, rightLim);
-    private final PaddleMover pm = new PaddleMover(p);
+    private final Paddle p0 = new Paddle(0, topLim, botLim, leftLim, rightLim);
+    private final Paddle p1 = new Paddle(1, topLim, botLim, leftLim, rightLim);
+    private final PaddleMover pm0 = new PaddleMover(p0);
+    private final PaddleMover pm1 = new PaddleMover(p1);
     private final GamePanel gp = new GamePanel();
-
-    private final int yStart = p.getY();
 
     @ParameterizedTest
     @MethodSource("provideParametersPressed")
     public void paddle_mover_key_pressed_test(int key, int result) {
         KeyEvent ke = new KeyEvent(gp, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, key, 'Z');
-        pm.keyPressed(ke);
-        assertEquals(result, p.getVelocity());
+        pm1.keyPressed(ke);
+        assertEquals(result, p1.getVelocity());
     }
 
     private static Stream<Arguments> provideParametersPressed() {
@@ -40,8 +39,9 @@ public class TestPaddleMover {
     @MethodSource("provideParametersReleased")
     public void paddle_mover_key_released_test(int key, int result) {
         KeyEvent ke = new KeyEvent(gp, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, key, 'Z');
-        pm.keyReleased(ke);
-        assertEquals(result, p.getVelocity());
+        p1.setVelocity(1);
+        pm1.keyReleased(ke);
+        assertEquals(result, p1.getVelocity());
     }
 
     private static Stream<Arguments> provideParametersReleased() {
@@ -50,4 +50,46 @@ public class TestPaddleMover {
                 Arguments.of(KeyEvent.VK_DOWN, 0)
         );
     }
+
+
+    @ParameterizedTest
+    @MethodSource("provideParametersPressedContemporary")
+    public void paddle_mover_key_pressed_contemporary_test(int key, int[] result) {
+        KeyEvent ke = new KeyEvent(gp, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, key, 'Z');
+        pm0.keyPressed(ke);
+        pm1.keyPressed(ke);
+        assertEquals(result[0], p0.getVelocity());
+        assertEquals(result[1], p1.getVelocity());
+    }
+
+    private static Stream<Arguments> provideParametersPressedContemporary() {
+        return Stream.of(
+                Arguments.of(KeyEvent.VK_UP, new int[]{0,-1}),
+                Arguments.of(KeyEvent.VK_DOWN, new int[]{0,1}),
+                Arguments.of(KeyEvent.VK_W, new int[]{-1,0}),
+                Arguments.of(KeyEvent.VK_S, new int[]{1,0})
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideParametersReleasedContemporary")
+    public void paddle_mover_key_released_contemporary_test(int key, int[] result) {
+        KeyEvent ke = new KeyEvent(gp, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, key, 'Z');
+        p0.setVelocity(1);
+        p1.setVelocity(1);
+        pm0.keyReleased(ke);
+        pm1.keyReleased(ke);
+        assertEquals(result[0], p0.getVelocity());
+        assertEquals(result[1], p1.getVelocity());
+    }
+
+    private static Stream<Arguments> provideParametersReleasedContemporary() {
+        return Stream.of(
+                Arguments.of(KeyEvent.VK_UP, new int[]{1,0}),
+                Arguments.of(KeyEvent.VK_DOWN, new int[]{1,0}),
+                Arguments.of(KeyEvent.VK_W, new int[]{0,1}),
+                Arguments.of(KeyEvent.VK_S, new int[]{0,1})
+        );
+    }
+
 }
