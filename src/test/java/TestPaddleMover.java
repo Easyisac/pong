@@ -22,17 +22,32 @@ public class TestPaddleMover {
     private final int yStart = p.getY();
 
     @ParameterizedTest
-    @MethodSource("provideParameters")
-    public void paddle_mover_movement_test(int key, int result) {
+    @MethodSource("provideParametersPressed")
+    public void paddle_mover_key_pressed_test(int key, int result) {
         KeyEvent ke = new KeyEvent(gp, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, key, 'Z');
         pm.keyPressed(ke);
         assertEquals(result, p.getVelocity());
     }
 
-    private static Stream<Arguments> provideParameters() {
+    private static Stream<Arguments> provideParametersPressed() {
         return Stream.of(
                 Arguments.of(KeyEvent.VK_UP, -1),
                 Arguments.of(KeyEvent.VK_DOWN, 1)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideParametersReleased")
+    public void paddle_mover_key_released_test(int key, int result) {
+        KeyEvent ke = new KeyEvent(gp, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, key, 'Z');
+        pm.keyReleased(ke);
+        assertEquals(result, p.getVelocity());
+    }
+
+    private static Stream<Arguments> provideParametersReleased() {
+        return Stream.of(
+                Arguments.of(KeyEvent.VK_UP, 0),
+                Arguments.of(KeyEvent.VK_DOWN, 0)
         );
     }
 }

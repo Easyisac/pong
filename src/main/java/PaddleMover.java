@@ -15,11 +15,9 @@ public class PaddleMover implements Runnable {
     public void keyPressed(KeyEvent e) {
         switch(e.getKeyCode()){
             case KeyEvent.VK_UP:
-                System.out.println("key pressed: UP arrow");
                 paddle.setVelocity(-1);
                 break;
             case KeyEvent.VK_DOWN:
-                System.out.println("key pressed: DOWN arrow");
                 paddle.setVelocity(1);
                 break;
             default:
@@ -29,6 +27,16 @@ public class PaddleMover implements Runnable {
     }
 
     public void keyReleased(KeyEvent e) {
-        System.out.println("key released");
+        switch(e.getKeyCode()){
+            case KeyEvent.VK_UP:
+                paddle.setVelocity(0);
+                break;
+            case KeyEvent.VK_DOWN:
+                paddle.setVelocity(0);
+                break;
+            default:
+                System.out.println("key relased: not an arrow");
+                break;
+        }
     }
 }
