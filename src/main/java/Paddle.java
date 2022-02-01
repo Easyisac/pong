@@ -43,6 +43,8 @@ public class Paddle {
         return y;
     }
 
+    public int getVelocity() { return velocity; }
+
     public int getPADDLE_HEIGHT() { return PADDLE_HEIGHT; }
 
     public int getPADDLE_WIDTH() { return PADDLE_WIDTH; }
