@@ -11,10 +11,12 @@ public class Ball {
     private int xVelocity;
     private int yVelocity;
 
+    private final int BALL_RADIUS = 10;
+
 
     public Ball(int topLim, int botLim, int leftLim, int rightLim) {
-        xStart = rightLim/2;
-        yStart = botLim/2;
+        xStart = (rightLim + leftLim) / 2 - BALL_RADIUS;
+        yStart = (topLim + botLim) / 2 - BALL_RADIUS;
         x = xStart;
         y = yStart;
         this.topLim = topLim;
@@ -24,7 +26,7 @@ public class Ball {
         xVelocity = 0;
         yVelocity = 0;
     }
-    
+
     public void move() {
         y += yVelocity;
         x += xVelocity;

@@ -23,8 +23,8 @@ public class TestBall {
         ball.setyVelocity(yVelocity);
         ball.move();
 
-        assertEquals(xStart +xVelocity, ball.getX());
-        assertEquals(yStart +yVelocity, ball.getY());
+        assertEquals(xStart + xVelocity, ball.getX());
+        assertEquals(yStart + yVelocity, ball.getY());
     }
 
     @ParameterizedTest
