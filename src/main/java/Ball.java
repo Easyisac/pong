@@ -2,6 +2,8 @@ public class Ball {
     
     private int x;
     private int y;
+    private final int xStart;
+    private final int yStart;
     private final int topLim;
     private final int botLim;
     private final int leftLim;
@@ -9,10 +11,14 @@ public class Ball {
     private int xVelocity;
     private int yVelocity;
 
+    private final int BALL_RADIUS = 10;
+
 
     public Ball(int topLim, int botLim, int leftLim, int rightLim) {
-        this.x = rightLim/2;
-        this.y = botLim/2;
+        xStart = (rightLim + leftLim) / 2 - BALL_RADIUS;
+        yStart = (topLim + botLim) / 2 - BALL_RADIUS;
+        x = xStart;
+        y = yStart;
         this.topLim = topLim;
         this.botLim = botLim;
         this.leftLim = leftLim;
@@ -20,7 +26,7 @@ public class Ball {
         xVelocity = 0;
         yVelocity = 0;
     }
-    
+
     public void move() {
         y += yVelocity;
         x += xVelocity;
@@ -37,5 +43,14 @@ public class Ball {
     public void setxVelocity(int xVelocity) { this.xVelocity = xVelocity; }
 
     public void setyVelocity(int yVelocity) { this.yVelocity = yVelocity; }
+
+    public int getxStart() { return xStart; }
+
+    public int getyStart() { return yStart; }
+
+    public void reset() {
+        x = xStart;
+        y = yStart;
+    }
 
 }
