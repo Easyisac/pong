@@ -9,8 +9,7 @@ public class GamePanel extends JPanel {
     private static PaddleDrawer pd1;
     private static BallDrawer b;
 
-    private static PaddleMover pm0;
-    private static PaddleMover pm1;
+    private static PaddleMover pm;
 
     public int gameHeight = 500;
     public int gameWidth = 500;
@@ -56,14 +55,12 @@ public class GamePanel extends JPanel {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            pm0.keyPressed(e);
-            pm1.keyPressed(e);
+            pm.keyPressed(e);
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
-            pm0.keyReleased(e);
-            pm1.keyReleased(e);
+            pm.keyReleased(e);
         }
     }
 
@@ -82,16 +79,13 @@ public class GamePanel extends JPanel {
         Paddle p0 = new Paddle(0, panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder);
         Paddle p1 = new Paddle(1, panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder);
         Ball ball = new Ball(panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder, p0, p1);
-        pm0 = new PaddleMover(p0);
-        pm1 = new PaddleMover(p1);
+        pm = new PaddleMover(p0,p1);
         pd0 = new PaddleDrawer(p0);
         pd1 = new PaddleDrawer(p1);
         b = new BallDrawer(ball);
 
-        Thread pt0 = new Thread(pm0);
-        Thread pt1 = new Thread(pm1);
+        Thread pt0 = new Thread(pm);
 
         pt0.start();
-        pt1.start();
     }
 }

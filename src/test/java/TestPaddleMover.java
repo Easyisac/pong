@@ -16,15 +16,14 @@ public class TestPaddleMover {
 
     private final Paddle p0 = new Paddle(0, topLim, botLim, leftLim, rightLim);
     private final Paddle p1 = new Paddle(1, topLim, botLim, leftLim, rightLim);
-    private final PaddleMover pm0 = new PaddleMover(p0);
-    private final PaddleMover pm1 = new PaddleMover(p1);
+    private final PaddleMover pm = new PaddleMover(p0, p1);
     private final GamePanel gp = new GamePanel();
 
     @ParameterizedTest
     @MethodSource("provideParametersPressed")
     public void paddle_mover_key_pressed_test(int key, int result) {
         KeyEvent ke = new KeyEvent(gp, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, key, 'Z');
-        pm1.keyPressed(ke);
+        pm.keyPressed(ke);
         assertEquals(result, p1.getVelocity());
     }
 
@@ -40,7 +39,7 @@ public class TestPaddleMover {
     public void paddle_mover_key_released_test(int key, int result) {
         KeyEvent ke = new KeyEvent(gp, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, key, 'Z');
         p1.setVelocity(1);
-        pm1.keyReleased(ke);
+        pm.keyReleased(ke);
         assertEquals(result, p1.getVelocity());
     }
 
@@ -56,8 +55,8 @@ public class TestPaddleMover {
     @MethodSource("provideParametersPressedContemporary")
     public void paddle_mover_key_pressed_contemporary_test(int key, int[] result) {
         KeyEvent ke = new KeyEvent(gp, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, key, 'Z');
-        pm0.keyPressed(ke);
-        pm1.keyPressed(ke);
+        pm.keyPressed(ke);
+        pm.keyPressed(ke);
         assertEquals(result[0], p0.getVelocity());
         assertEquals(result[1], p1.getVelocity());
     }
@@ -77,8 +76,8 @@ public class TestPaddleMover {
         KeyEvent ke = new KeyEvent(gp, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, key, 'Z');
         p0.setVelocity(1);
         p1.setVelocity(1);
-        pm0.keyReleased(ke);
-        pm1.keyReleased(ke);
+        pm.keyReleased(ke);
+        pm.keyReleased(ke);
         assertEquals(result[0], p0.getVelocity());
         assertEquals(result[1], p1.getVelocity());
     }
