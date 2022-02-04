@@ -3,8 +3,11 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements Runnable {
 
+    private static Paddle p0;
+    private static Paddle p1;
+    private static Ball ball;
     private static PaddleDrawer pd0;
     private static PaddleDrawer pd1;
     private static BallDrawer b;
@@ -21,27 +24,36 @@ public class GamePanel extends JPanel {
             gameHeight + topBorder + botBorder);
 
     public GamePanel(){
-        this.setPreferredSize(panelSize);
-        this.setBackground(Color.black);
-        //this.addKeyListener(new GameKeyListener());
+        setPreferredSize(panelSize);
+        setBackground(Color.black);
+        addKeyListener(new GameKeyListener());
+        setFocusable(true);
+        //setDoubleBuffered(true);
+        p0 = new Paddle(0, topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder);
+        p1 = new Paddle(1, topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder);
+        ball = new Ball(topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder, p0, p1);
+        pm = new PaddleMover(p0,p1);
+        pd0 = new PaddleDrawer(p0);
+        pd1 = new PaddleDrawer(p1);
+        b = new BallDrawer(ball);
     }
 
     //Standard method, draws static images, calls draw function
+    @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         g2.setColor(Color.white);
         g2.setStroke(new BasicStroke(1));
         g2.drawRect(leftBorder, topBorder, gameWidth, gameHeight);
-        /* Test sulle posizioni delle barrette e della palla
-        g2.drawLine(100,50,100,550); //righe verticali per le barrette
+        // Test sulle posizioni delle barrette e della palla
+        /*g2.drawLine(100,50,100,550); //righe verticali per le barrette
         g2.drawLine(500,50,500,550);
         g2.drawLine(110,50,110,550);
         g2.drawLine(490,50,490,550);
         g2.drawLine(50,50,550,550); //linee diagonali per la palla
         g2.drawLine(550,50,50,550);*/
         draw(g2);
-        repaint();
     }
 
     //Method that calls drawing functions for objects
@@ -49,6 +61,23 @@ public class GamePanel extends JPanel {
         pd0.draw(g2);
         pd1.draw(g2);
         b.draw(g2);
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            pm.setPaddleVelocity(p0);
+            pm.setPaddleVelocity(p1);
+            p0.move();
+            p1.move();
+            ball.move();
+            repaint();
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static class GameKeyListener extends KeyAdapter {
@@ -62,32 +91,5 @@ public class GamePanel extends JPanel {
         public void keyReleased(KeyEvent e) {
             pm.keyReleased(e);
         }
-    }
-
-
-    public static void main(String[] args) {
-        GamePanel panel = new GamePanel();
-
-        JFrame jf = new JFrame();
-        jf.setTitle("PONG");
-        jf.setVisible(true);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.add(panel);
-        jf.pack();
-        jf.setResizable(false);
-        jf.addKeyListener(new GameKeyListener());
-        jf.setFocusable(true);
-        jf.requestFocus();
-        Paddle p0 = new Paddle(0, panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder);
-        Paddle p1 = new Paddle(1, panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder);
-        Ball ball = new Ball(panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder, p0, p1);
-        pm = new PaddleMover(p0,p1);
-        pd0 = new PaddleDrawer(p0);
-        pd1 = new PaddleDrawer(p1);
-        b = new BallDrawer(ball);
-
-        Thread pt = new Thread(pm);
-
-        pt.start();
     }
 }

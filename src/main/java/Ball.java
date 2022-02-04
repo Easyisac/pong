@@ -28,8 +28,8 @@ public class Ball {
         this.rightLim = rightLim;
         this.pLeft = pLeft;
         this.pRight = pRight;
-        xVelocity = 0;
-        yVelocity = 0;
+        xVelocity = (int)(Math.random()*3)+1;
+        yVelocity = (int)(Math.random()*3)+1;
     }
 
     public void move() {
@@ -58,12 +58,14 @@ public class Ball {
     }
 
     private void bounceOffPaddleRight() {
-        x -= xVelocity;
+        xVelocity = -xVelocity;
+        x += xVelocity;
         y += yVelocity;
     }
 
     private void bounceOffPaddleLeft() {
-        x -= xVelocity;
+        xVelocity = -xVelocity;
+        x += xVelocity;
         y += yVelocity;
     }
 
@@ -75,14 +77,16 @@ public class Ball {
 
     private void bounceOffBottomBoundary() {
         x += xVelocity;
-        y -= yVelocity;
+        yVelocity = -yVelocity;
+        y += yVelocity;
     }
 
     private void bounceOffTopBoundary() {
        // int pixelsFromTopBoundary = Math.abs(y - BALL_RADIUS - topLim);
        // yVelocity = -yVelocity - 2*pixelsFromTopBoundary;
         x += xVelocity;
-        y -= yVelocity;
+        yVelocity = -yVelocity;
+        y += yVelocity;
     }
 
     public int getX() {
