@@ -171,6 +171,32 @@ public class TestBall {
         assertEquals(final_positionY, ball.getY());
     }
 
+    @ParameterizedTest
+    @ValueSource(ints={-5, -10, -50, -250, -500})
+    public void ball_score_on_left_on_straight_line(int xVelocity){
+        ball.setxVelocity(xVelocity);
+        ball.setY(topLim+10);
+        ball.setX(leftLim+10);
+
+        ball.move();
+
+        assertEquals(ball.getxStart(), ball.getX());
+        assertEquals(ball.getyStart(), ball.getY());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints={5, 10, 50, 250, 500})
+    public void ball_score_on_right_on_straight_line(int xVelocity){
+        ball.setxVelocity(xVelocity);
+        ball.setY(topLim+10);
+        ball.setX(rightLim-10);
+
+        ball.move();
+
+        assertEquals(ball.getxStart(), ball.getX());
+        assertEquals(ball.getyStart(), ball.getY());
+    }
+
 
 
 /*    @ParameterizedTest

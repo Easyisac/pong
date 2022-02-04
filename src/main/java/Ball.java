@@ -70,9 +70,11 @@ public class Ball {
     }
 
     private void goalScoredRight() {
+        reset();
     }
 
     private void goalScoredLeft() {
+        reset();
     }
 
     private void bounceOffBottomBoundary() {
@@ -113,6 +115,8 @@ public class Ball {
     public void reset() {
         x = xStart;
         y = yStart;
+        setyVelocity((int)(Math.random()*3)+1);
+        setxVelocity((int)(Math.random()*3)+1);
     }
 
     public boolean checkCollisionsTop() {
@@ -132,13 +136,15 @@ public class Ball {
     }
 
     public boolean checkCollisionsPaddleLeft(){
-        boolean condX = pLeft.getX() <= (x + xVelocity) && (x + xVelocity) <= pLeft.getX() + pLeft.getPADDLE_WIDTH();
+        boolean condX = pLeft.getX() <= (x - BALL_RADIUS/2 + xVelocity) &&
+                (x - BALL_RADIUS/2 + xVelocity) <= pLeft.getX() + pLeft.getPADDLE_WIDTH();
         boolean condY = pLeft.getY() <= (y + yVelocity) && (y + yVelocity) <= pLeft.getY() + pLeft.getPADDLE_HEIGHT();
         return (condX && condY);
     }
 
     public boolean checkCollisionsPaddleRight(){
-        boolean condX = pRight.getX() <= (x + xVelocity) && (x + xVelocity) <= pRight.getX() + pRight.getPADDLE_WIDTH();
+        boolean condX = pRight.getX() <= (x + BALL_RADIUS/2 + xVelocity) &&
+                (x + BALL_RADIUS/2 +  xVelocity) <= pRight.getX() + pRight.getPADDLE_WIDTH();
         boolean condY = pRight.getY() <= (y + yVelocity) && (y + yVelocity) <= pRight.getY() + pRight.getPADDLE_HEIGHT();
         return (condX && condY);
     }
