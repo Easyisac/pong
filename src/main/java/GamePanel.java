@@ -76,6 +76,8 @@ public class GamePanel extends JPanel {
         jf.pack();
         jf.setResizable(false);
         jf.addKeyListener(new GameKeyListener());
+        jf.setFocusable(true);
+        jf.requestFocus();
         Paddle p0 = new Paddle(0, panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder);
         Paddle p1 = new Paddle(1, panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder);
         Ball ball = new Ball(panel.topBorder, panel.gameHeight + panel.topBorder, panel.leftBorder, panel.gameWidth + panel.leftBorder, p0, p1);
@@ -84,8 +86,8 @@ public class GamePanel extends JPanel {
         pd1 = new PaddleDrawer(p1);
         b = new BallDrawer(ball);
 
-        Thread pt0 = new Thread(pm);
+        Thread pt = new Thread(pm);
 
-        pt0.start();
+        pt.start();
     }
 }
