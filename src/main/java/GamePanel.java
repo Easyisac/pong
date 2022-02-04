@@ -66,8 +66,6 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
         while (true) {
-            pm.setPaddleVelocity(p0);
-            pm.setPaddleVelocity(p1);
             p0.move();
             p1.move();
             ball.move();
