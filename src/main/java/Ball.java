@@ -18,8 +18,8 @@ public class Ball {
 
 
     public Ball(int topLim, int botLim, int leftLim, int rightLim, Paddle pLeft, Paddle pRight) {
-        xStart = (rightLim + leftLim) / 2 - BALL_RADIUS;
-        yStart = (topLim + botLim) / 2 - BALL_RADIUS;
+        xStart = (rightLim + leftLim) / 2;
+        yStart = (topLim + botLim) / 2;
         x = xStart;
         y = yStart;
         this.topLim = topLim;
@@ -33,8 +33,56 @@ public class Ball {
     }
 
     public void move() {
+        if (checkCollisionsTop()){
+            bounceOffTopBoundary();
+        }
+        else if (checkCollisionsBottom()){
+            bounceOffBottomBoundary();
+        }
+        else if (checkCollisionsLeft()){
+            goalScoredLeft();
+        }
+        else if (checkCollisionsRight()){
+            goalScoredRight();
+        }
+        else if (checkCollisionsPaddleLeft()){
+            bounceOffPaddleLeft();
+        }
+        else if (checkCollisionsPaddleRight()){
+            bounceOffPaddleRight();
+        }
+        else {
+            y += yVelocity;
+            x += xVelocity;
+        }
+    }
+
+    private void bounceOffPaddleRight() {
+        x -= xVelocity;
         y += yVelocity;
+    }
+
+    private void bounceOffPaddleLeft() {
+        x -= xVelocity;
+        y += yVelocity;
+    }
+
+    private void goalScoredRight() {
+    }
+
+    private void goalScoredLeft() {
+    }
+
+    private void bounceOffBottomBoundary() {
         x += xVelocity;
+        y -= yVelocity;
+    }
+
+    private void bounceOffTopBoundary() {
+       // int pixelsFromTopBoundary = Math.abs(y - BALL_RADIUS - topLim);
+       // yVelocity = -yVelocity - 2*pixelsFromTopBoundary;
+        x += xVelocity;
+        y -= yVelocity;
     }
 
     public int getX() {
@@ -64,18 +112,32 @@ public class Ball {
     }
 
     public boolean checkCollisionsTop() {
-        return y == (topLim + BALL_RADIUS);
+        return (y - BALL_RADIUS + yVelocity) <= topLim;
     }
 
     public boolean checkCollisionsBottom() {
-        return y == (botLim - BALL_RADIUS);
+        return (y + BALL_RADIUS + yVelocity) >= botLim;
     }
 
     public boolean checkCollisionsLeft() {
-        return x == (leftLim + BALL_RADIUS);
+        return (x - BALL_RADIUS + xVelocity) <= leftLim;
     }
 
     public boolean checkCollisionsRight() {
-        return x == (rightLim - BALL_RADIUS);
+        return (x + BALL_RADIUS + xVelocity) >= rightLim;
     }
+
+    public boolean checkCollisionsPaddleLeft(){
+        boolean condX = pLeft.getX() <= (x + xVelocity) && (x + xVelocity) <= pLeft.getX() + pLeft.getPADDLE_WIDTH();
+        boolean condY = pLeft.getY() <= (y + yVelocity) && (y + yVelocity) <= pLeft.getY() + pLeft.getPADDLE_HEIGHT();
+        return (condX && condY);
+    }
+
+    public boolean checkCollisionsPaddleRight(){
+        boolean condX = pRight.getX() <= (x + xVelocity) && (x + xVelocity) <= pRight.getX() + pRight.getPADDLE_WIDTH();
+        boolean condY = pRight.getY() <= (y + yVelocity) && (y + yVelocity) <= pRight.getY() + pRight.getPADDLE_HEIGHT();
+        return (condX && condY);
+    }
+
+
 }
