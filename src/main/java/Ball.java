@@ -58,9 +58,13 @@ public class Ball {
     }
 
     private void bounceOffPaddleRight() {
+        x -= xVelocity;
+        y += yVelocity;
     }
 
     private void bounceOffPaddleLeft() {
+        x -= xVelocity;
+        y += yVelocity;
     }
 
     private void goalScoredRight() {
@@ -70,9 +74,15 @@ public class Ball {
     }
 
     private void bounceOffBottomBoundary() {
+        x += xVelocity;
+        y -= yVelocity;
     }
 
     private void bounceOffTopBoundary() {
+       // int pixelsFromTopBoundary = Math.abs(y - BALL_RADIUS - topLim);
+       // yVelocity = -yVelocity - 2*pixelsFromTopBoundary;
+        x += xVelocity;
+        y -= yVelocity;
     }
 
     public int getX() {

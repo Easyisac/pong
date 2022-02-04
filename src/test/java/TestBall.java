@@ -100,14 +100,78 @@ public class TestBall {
         assertEquals(true, ball.checkCollisionsPaddleRight());
     }
 
-    @Test
-    public void ball_bounced_top_boundary(){
-        // TODO
-        int final_positionX = 250;
-        int final_positionY = 250;
+    @ParameterizedTest
+    @CsvSource({"10, -10", "5, -30", "-50, -50", "30, -100", "100, -250"})
+    public void ball_bounced_top_boundary(int xVelocity, int yVelocity){
+        ball.setxVelocity(xVelocity);
+        ball.setyVelocity(yVelocity);
+        ball.setY(topLim+20);
+        ball.setX((rightLim+leftLim)/2);
+
+        int final_positionX = ball.getX() + xVelocity;
+        int final_positionY = ball.getY() - yVelocity;
+
+        ball.move();
+
         assertEquals(final_positionX, ball.getX());
         assertEquals(final_positionY, ball.getY());
     }
+
+
+    @ParameterizedTest
+    @CsvSource({"10, 10", "5, 30", "-50, 50", "30, 100", "100, 250"})
+    public void ball_bounced_bottom_boundary(int xVelocity, int yVelocity){
+        ball.setxVelocity(xVelocity);
+        ball.setyVelocity(yVelocity);
+        ball.setY(botLim-20);
+        ball.setX((rightLim+leftLim)/2);
+
+        int final_positionX = ball.getX() + xVelocity;
+        int final_positionY = ball.getY() - yVelocity;
+
+        ball.move();
+
+        assertEquals(final_positionX, ball.getX());
+        assertEquals(final_positionY, ball.getY());
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({"-10, 0", "-10, 10", "-15, 10", "-10, 25", "-10, -25"})
+    public void ball_bounced_paddle_left(int xVelocity, int yVelocity){
+        ball.setxVelocity(xVelocity);
+        ball.setyVelocity(yVelocity);
+        ball.setY(pLeft.getY() + pLeft.getPADDLE_HEIGHT()/2);
+        ball.setX(pLeft.getX() + pLeft.getPADDLE_WIDTH() + 10);
+
+        int final_positionX = ball.getX() - xVelocity;
+        int final_positionY = ball.getY() + yVelocity;
+
+        ball.move();
+
+        assertEquals(final_positionX, ball.getX());
+        assertEquals(final_positionY, ball.getY());
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({"10, 0", "10, 10", "15, 10", "10, 25", "10, -25"})
+    public void ball_bounced_paddle_right(int xVelocity, int yVelocity){
+        ball.setxVelocity(xVelocity);
+        ball.setyVelocity(yVelocity);
+        ball.setY(pRight.getY() + pRight.getPADDLE_HEIGHT()/2);
+        ball.setX(pRight.getX() - 10);
+
+        int final_positionX = ball.getX() - xVelocity;
+        int final_positionY = ball.getY() + yVelocity;
+
+        ball.move();
+
+        assertEquals(final_positionX, ball.getX());
+        assertEquals(final_positionY, ball.getY());
+    }
+
+
 
 /*    @ParameterizedTest
     @CsvSource({"10, 50", "50, 100", "100, 30"})
