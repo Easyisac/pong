@@ -9,7 +9,9 @@ public class TestPaddle {
     private final int leftLim = 0;
     private final int rightLim = 500;
 
-    private final Paddle p = new Paddle(1, topLim, botLim, leftLim, rightLim);
+    private final Player pl1 = new Player("Player1", 1);
+
+    private final Paddle p = new Paddle(pl1, topLim, botLim, leftLim, rightLim);
     private final int paddle_height = p.getPADDLE_HEIGHT();
 
     private final int yStart = p.getY();

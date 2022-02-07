@@ -12,13 +12,12 @@ public class PaddleMover{
     private boolean p0_down;
     private boolean p1_up;
     private boolean p1_down;
-    public int paddleSpeed = 5;
+    public static final int paddleSpeed = 5;
 
-
-    public void setPaddleVelocity(Paddle p) {
+    private void setPaddleVelocity(Paddle p) {
         boolean p_up;
         boolean p_down;
-        if (p.getId() == 0){
+        if (p.getPlayer().getId() == 0){
             p_up = p0_up;
             p_down = p0_down;
         } else {
@@ -38,19 +37,23 @@ public class PaddleMover{
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
                 p0_up = true;
-                //paddle0.setVelocity(-1);
+                p0_down = false;
+                setPaddleVelocity(paddle0);
                 break;
             case KeyEvent.VK_S:
                 p0_down = true;
-                //paddle0.setVelocity(1);
+                p0_up = false;
+                setPaddleVelocity(paddle0);
                 break;
             case KeyEvent.VK_UP:
                 p1_up = true;
-                //paddle1.setVelocity(-1);
+                p1_down = false;
+                setPaddleVelocity(paddle1);
                 break;
             case KeyEvent.VK_DOWN:
                 p1_down = true;
-                //paddle1.setVelocity(1);
+                p1_up = false;
+                setPaddleVelocity(paddle1);
                 break;
             default:
                 break;
@@ -62,18 +65,22 @@ public class PaddleMover{
             case KeyEvent.VK_W:
                 p0_up = false;
                 //paddle0.setVelocity(0);
+                setPaddleVelocity(paddle0);
                 break;
             case KeyEvent.VK_S:
                 p0_down = false;
                 //paddle0.setVelocity(0);
+                setPaddleVelocity(paddle0);
                 break;
             case KeyEvent.VK_UP:
                 p1_up = false;
                 //paddle1.setVelocity(0);
+                setPaddleVelocity(paddle1);
                 break;
             case KeyEvent.VK_DOWN:
                 p1_down = false;
                 //paddle1.setVelocity(0);
+                setPaddleVelocity(paddle1);
                 break;
             default:
                 break;
