@@ -75,6 +75,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         while (true) {
             p0.move();
             p1.move();
