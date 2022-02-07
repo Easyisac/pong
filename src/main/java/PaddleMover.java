@@ -17,7 +17,7 @@ public class PaddleMover{
     private void setPaddleVelocity(Paddle p) {
         boolean p_up;
         boolean p_down;
-        if (p.getId() == 0){
+        if (p.getPlayer().getId() == 0){
             p_up = p0_up;
             p_down = p0_down;
         } else {

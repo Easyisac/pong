@@ -12,8 +12,11 @@ public class TestBall {
     private int leftLim = 0;
     private int rightLim = 500;
 
-    private final Paddle pLeft = new Paddle(0, topLim, botLim, leftLim, rightLim);
-    private final Paddle pRight = new Paddle(1, topLim, botLim, leftLim, rightLim);
+    private final Player pl0 = new Player("Player0", 0);
+    private final Player pl1 = new Player("Player1", 1);
+
+    private final Paddle pLeft = new Paddle(pl0, topLim, botLim, leftLim, rightLim);
+    private final Paddle pRight = new Paddle(pl1, topLim, botLim, leftLim, rightLim);
     private final Ball ball = new Ball(topLim, botLim, leftLim, rightLim, pLeft, pRight);
     private final int xStart = ball.getxStart();
     private final int yStart = ball.getyStart();
