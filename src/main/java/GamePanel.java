@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
         pl1 = new Player("Player1", 1);
         p0 = new Paddle(pl0, topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder);
         p1 = new Paddle(pl1, topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder);
-        ball = new Ball(topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder, p0, p1);
+        ball = new Ball(topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder, p0, p1, pl0, pl1);
         pm = new PaddleMover(p0,p1);
         pd0 = new PaddleDrawer(p0);
         pd1 = new PaddleDrawer(p1);
