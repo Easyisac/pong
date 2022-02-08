@@ -67,7 +67,7 @@ public class Ball {
         int yImpact = y + yVelocity;
         int yMid = pRight.getY() + pRight.getPADDLE_HEIGHT()/2;
         int yRel = yImpact - yMid;
-        yVelocity = (yRel-pRight.getPADDLE_HEIGHT()/2)/pRight.getPADDLE_HEIGHT()/2 * Math.abs(xVelocity) + Math.abs(xVelocity);
+        yVelocity = (yRel-pRight.getPADDLE_HEIGHT()/2)/(pRight.getPADDLE_HEIGHT()/2) * Math.abs(xVelocity) + Math.abs(xVelocity);
         xVelocity = -xVelocity;
     }
 
