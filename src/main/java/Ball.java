@@ -1,9 +1,9 @@
+import java.util.Random;
+
 public class Ball {
     
-    private int x;
-    private int y;
-    private int xVelocity;
-    private int yVelocity;
+    private double x;
+    private double y;
     private final int xStart;
     private final int yStart;
     private final int topLim;
@@ -11,13 +11,21 @@ public class Ball {
     private final int leftLim;
     private final int rightLim;
 
+    private double velModule;
+    private double velAngle;
+
     private final Paddle pLeft;
     private final Paddle pRight;
+    private final Player playerLeft;
+    private final Player playerRight;
 
     private final int BALL_RADIUS = 10;
+    private final int bOff = BALL_RADIUS;
 
+    private final Random random = new Random();
 
-    public Ball(int topLim, int botLim, int leftLim, int rightLim, Paddle pLeft, Paddle pRight) {
+    public Ball(int topLim, int botLim, int leftLim, int rightLim, Paddle pLeft, Paddle pRight,
+                Player playerLeft, Player playerRight) {
         xStart = (rightLim + leftLim) / 2;
         yStart = (topLim + botLim) / 2;
         x = xStart;
@@ -28,22 +36,37 @@ public class Ball {
         this.rightLim = rightLim;
         this.pLeft = pLeft;
         this.pRight = pRight;
-        xVelocity = (int)(Math.random()*3)+1;
-        yVelocity = (int)(Math.random()*3)+1;
+        this.playerLeft = playerLeft;
+        this.playerRight = playerRight;
+        velAngle = generateStartingAngle(random.nextInt(1));
+        velModule = 2;
+    }
+
+    public double generateStartingAngle(int direction){
+        double range = 5/6.0;
+        double angle = (range * random.nextDouble() + (1-range)/2.0 + 1/2.0 + direction) % 2;
+        return angle * Math.PI;
     }
 
     public void move() {
-        if (checkCollisionsTop()){
-            bounceOffTopBoundary();
-        }
-        else if (checkCollisionsBottom()){
-            bounceOffBottomBoundary();
-        }
-        else if (checkCollisionsLeft()){
+        if (checkCollisionsLeft()){
             goalScoredLeft();
+            return ;
         }
         else if (checkCollisionsRight()){
             goalScoredRight();
+            return ;
+        }
+        else if (checkCollisionsTop() || checkCollisionsBottom()){
+            if (velAngle == 0) {
+                velAngle = Math.PI;
+            }
+            else if (velAngle == Math.PI) {
+                velAngle = 0;
+            }
+            else {
+                velAngle = 2.0 * Math.PI - velAngle;
+            }
         }
         else if (checkCollisionsPaddleLeft()){
             bounceOffPaddleLeft();
@@ -51,60 +74,64 @@ public class Ball {
         else if (checkCollisionsPaddleRight()){
             bounceOffPaddleRight();
         }
-        else {
-            y += yVelocity;
-            x += xVelocity;
-        }
+        y += Math.sin(velAngle) * velModule;
+        x += Math.cos(velAngle) * velModule;
     }
 
     private void bounceOffPaddleRight() {
-        xVelocity = -xVelocity;
-        x += xVelocity;
-        y += yVelocity;
+        double yImpact = y + Math.sin(velAngle) * velModule;
+        double yMid = pRight.getY() + pRight.getPADDLE_HEIGHT()/2.0;
+        double yRel = (yMid - yImpact)/(pRight.getPADDLE_HEIGHT()/2.0);
+        yRel = Math.min(1, yRel/2.0 + 0.5);
+        double range = 5/6.0;
+        velAngle = (range * yRel + (1-range)/2.0 + 1/2.0) * Math.PI;
     }
 
     private void bounceOffPaddleLeft() {
-        xVelocity = -xVelocity;
-        x += xVelocity;
-        y += yVelocity;
+        double yImpact = y + Math.sin(velAngle) * velModule;
+        double yMid = pLeft.getY() + pLeft.getPADDLE_HEIGHT()/2.0;
+        double yRel = (yMid - yImpact)/(pLeft.getPADDLE_HEIGHT()/2.0);
+        yRel = Math.min(1, yRel/2.0 + 0.5);
+        double range = 4.5/6.0;
+        velAngle = Math.PI * (2 - ((range * yRel + (1-range)/2.0 + 1/2.0 + 1) % 2));
     }
 
     private void goalScoredRight() {
-        reset();
+        playerLeft.incScore();
+        reset(0);
     }
 
     private void goalScoredLeft() {
-        reset();
+        playerRight.incScore();
+        reset(1);
     }
 
-    private void bounceOffBottomBoundary() {
-        x += xVelocity;
-        yVelocity = -yVelocity;
-        y += yVelocity;
-    }
-
-    private void bounceOffTopBoundary() {
-       // int pixelsFromTopBoundary = Math.abs(y - BALL_RADIUS - topLim);
-       // yVelocity = -yVelocity - 2*pixelsFromTopBoundary;
-        x += xVelocity;
-        yVelocity = -yVelocity;
-        y += yVelocity;
-    }
-
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public void setxVelocity(int xVelocity) { this.xVelocity = xVelocity; }
+    public double getVelModule() {
+        return velModule;
+    }
 
-    public void setyVelocity(int yVelocity) { this.yVelocity = yVelocity; }
+    public double getVelAngle() {
+        return velAngle;
+    }
 
-    public void setX(int x) { this.x = x; }
-    public void setY(int y) { this.y = y; }
+    public void setVelModule(double velModule) {
+        this.velModule = velModule;
+    }
+
+    public void setVelAngle(double velAngle) {
+        this.velAngle = velAngle % (2 * Math.PI);
+    }
+
+    public void setX(double x) { this.x = x; }
+    public void setY(double y) { this.y = y; }
 
     public int getxStart() { return xStart; }
 
@@ -112,42 +139,65 @@ public class Ball {
 
     public int getBALL_RADIUS() { return BALL_RADIUS; }
 
-    public void reset() {
+    public void reset(int direction) {
         x = xStart;
         y = yStart;
-        setyVelocity((int)(Math.random()*3)+1);
-        setxVelocity((int)(Math.random()*3)+1);
+        velAngle = generateStartingAngle(direction);
     }
 
     public boolean checkCollisionsTop() {
-        return (y - BALL_RADIUS + yVelocity) <= topLim;
+        return (y - BALL_RADIUS + Math.sin(velAngle) * velModule) <= topLim;
     }
 
     public boolean checkCollisionsBottom() {
-        return (y + BALL_RADIUS + yVelocity) >= botLim;
+        return (y + BALL_RADIUS + Math.sin(velAngle) * velModule) >= botLim;
     }
 
     public boolean checkCollisionsLeft() {
-        return (x - BALL_RADIUS + xVelocity) <= leftLim;
+        return (x - BALL_RADIUS + Math.cos(velAngle) * velModule) <= leftLim;
     }
 
     public boolean checkCollisionsRight() {
-        return (x + BALL_RADIUS + xVelocity) >= rightLim;
+        return (x + BALL_RADIUS + Math.cos(velAngle) * velModule) >= rightLim;
     }
 
     public boolean checkCollisionsPaddleLeft(){
-        boolean condX = pLeft.getX() <= (x - BALL_RADIUS/2 + xVelocity) &&
-                (x - BALL_RADIUS/2 + xVelocity) <= pLeft.getX() + pLeft.getPADDLE_WIDTH();
-        boolean condY = pLeft.getY() <= (y + yVelocity) && (y + yVelocity) <= pLeft.getY() + pLeft.getPADDLE_HEIGHT();
-        return (condX && condY);
+        return (checkCollisionsPaddleLeftHorizontalSide() || checkCollisionsPaddleLeftVerticalSide());
     }
 
     public boolean checkCollisionsPaddleRight(){
-        boolean condX = pRight.getX() <= (x + BALL_RADIUS/2 + xVelocity) &&
-                (x + BALL_RADIUS/2 +  xVelocity) <= pRight.getX() + pRight.getPADDLE_WIDTH();
-        boolean condY = pRight.getY() <= (y + yVelocity) && (y + yVelocity) <= pRight.getY() + pRight.getPADDLE_HEIGHT();
+        return (checkCollisionsPaddleRightHorizontalSide() || checkCollisionsPaddleRightVerticalSide());
+    }
+
+    public boolean checkCollisionsPaddleLeftVerticalSide(){
+        boolean condX = pLeft.getX() + pLeft.getPADDLE_WIDTH() <= (x + Math.cos(velAngle) * velModule) &&
+                (x + Math.cos(velAngle) * velModule) <= pLeft.getX() + pLeft.getPADDLE_WIDTH() + bOff;
+        boolean condY = pLeft.getY() <= (y + Math.sin(velAngle) * velModule) && (y + Math.sin(velAngle) * velModule) <= pLeft.getY() + pLeft.getPADDLE_HEIGHT();
         return (condX && condY);
     }
+
+    public boolean checkCollisionsPaddleLeftHorizontalSide(){
+        boolean condX = pLeft.getX() <= (x + Math.cos(velAngle) * velModule) && (x + Math.cos(velAngle) * velModule) <= pLeft.getX() + pLeft.getPADDLE_WIDTH() + bOff;
+        boolean condYTop = pLeft.getY() - bOff <= (y + Math.sin(velAngle) * velModule) && (y + Math.sin(velAngle) * velModule) <= pLeft.getY();
+        boolean condYBot = pLeft.getY() + pLeft.getPADDLE_HEIGHT() <= (y + Math.sin(velAngle) * velModule) &&
+                (y + Math.sin(velAngle) * velModule) <= pLeft.getY() + pLeft.getPADDLE_HEIGHT()+ bOff;
+        return (condX && (condYTop || condYBot));
+    }
+
+    public boolean checkCollisionsPaddleRightVerticalSide(){
+        boolean condX = pRight.getX() - bOff <= (x + Math.cos(velAngle) * velModule) && (x + Math.cos(velAngle) * velModule) <= pRight.getX();
+        boolean condY = pRight.getY() <= (y + Math.sin(velAngle) * velModule) && (y + Math.sin(velAngle) * velModule) <= pRight.getY() + pRight.getPADDLE_HEIGHT();
+        return (condX && condY);
+    }
+
+    public boolean checkCollisionsPaddleRightHorizontalSide(){
+        boolean condX = pRight.getX() - bOff <= (x + Math.cos(velAngle) * velModule) && (x + Math.cos(velAngle) * velModule) <= pRight.getX() + pRight.getPADDLE_WIDTH();
+        boolean condYTop = pRight.getY() - bOff <= (y + Math.sin(velAngle) * velModule) && (y + Math.sin(velAngle) * velModule) <= pRight.getY();
+        boolean condYBot = pRight.getY() + pRight.getPADDLE_HEIGHT() <= (y + Math.sin(velAngle) * velModule) &&
+                (y + Math.sin(velAngle) * velModule) <= pRight.getY() + pRight.getPADDLE_HEIGHT()+ bOff;
+        return (condX && (condYTop || condYBot));
+    }
+
 
 
 }
