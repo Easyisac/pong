@@ -21,7 +21,7 @@ public class Pong{
     }
 
     public static void startMenu() {
-        //jf.removeAll();
+        jf.getContentPane().removeAll();
         MenuPanel menuPanel = new MenuPanel();
         jf.add(menuPanel);
         jf.setResizable(false);
@@ -32,9 +32,25 @@ public class Pong{
         jf.setVisible(true);
     }
 
-    public static void startGame() {
+    public static void exitGame(Player pl0, Player pl1) {
+
+        boolean winner = pl0.getScore() < pl1.getScore();
+
         jf.getContentPane().removeAll();
-        GamePanel gamePanel = new GamePanel();
+        MenuPanel endPanel = new MenuPanel(pl0.getName(), pl1.getName(), winner);
+        jf.add(endPanel);
+        jf.setResizable(false);
+        jf.pack();
+        jf.setTitle("End of the game");
+        jf.setLocationRelativeTo(null);
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jf.setVisible(true);
+
+    }
+
+    public static void startGame(String sName0, String sName1) {
+        jf.getContentPane().removeAll();
+        GamePanel gamePanel = new GamePanel(sName0, sName1);
         jf.add(gamePanel);
         jf.setResizable(false);
         jf.pack();

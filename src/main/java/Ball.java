@@ -104,12 +104,12 @@ public class Ball {
 
     private void goalScoredRight() {
         playerLeft.incScore();
-        reset(0);
+        reset(1);
     }
 
     private void goalScoredLeft() {
         playerRight.incScore();
-        reset(1);
+        reset(0);
     }
 
     public double getX() {

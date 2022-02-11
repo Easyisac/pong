@@ -27,14 +27,14 @@ public class GamePanel extends JPanel implements Runnable {
     private Dimension panelSize = new Dimension(gameWidth + leftBorder + rightBorder,
             gameHeight + topBorder + botBorder);
 
-    public GamePanel(){
+    public GamePanel(String sName0, String sName1){
         setPreferredSize(panelSize);
         setBackground(Color.black);
         addKeyListener(new GameKeyListener());
         setFocusable(true);
         //setDoubleBuffered(true);
-        pl0 = new Player("Player0", 0);
-        pl1 = new Player("Player1", 1);
+        pl0 = new Player(sName0, 0);
+        pl1 = new Player(sName1, 1);
         p0 = new Paddle(pl0, topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder);
         p1 = new Paddle(pl1, topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder);
         ball = new Ball(topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder, p0, p1, pl0, pl1);
@@ -80,7 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        while (true) {
+        while (pl0.getScore() < 4 && pl1.getScore() < 4) {
             p0.move();
             p1.move();
             ball.move();
@@ -91,6 +91,7 @@ public class GamePanel extends JPanel implements Runnable {
                 e.printStackTrace();
             }
         }
+        Pong.exitGame(pl0,pl1);
     }
 
     public static class GameKeyListener extends KeyAdapter {

@@ -19,7 +19,7 @@ public class TestPaddleMover {
     private final Paddle p0 = new Paddle(pl0, topLim, botLim, leftLim, rightLim);
     private final Paddle p1 = new Paddle(pl1, topLim, botLim, leftLim, rightLim);
     private final PaddleMover pm = new PaddleMover(p0, p1);
-    private final GamePanel gp = new GamePanel();
+    private final GamePanel gp = new GamePanel("Player0", "Player1");
 
     @ParameterizedTest
     @MethodSource("provideParametersPressed")
