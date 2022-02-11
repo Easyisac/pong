@@ -39,7 +39,7 @@ public class Ball {
         this.playerLeft = playerLeft;
         this.playerRight = playerRight;
         velAngle = generateStartingAngle(random.nextInt(1));
-        velModule = 2;
+        velModule = 3;
     }
 
     public double generateStartingAngle(int direction){
@@ -82,18 +82,24 @@ public class Ball {
         double yImpact = y + Math.sin(velAngle) * velModule;
         double yMid = pRight.getY() + pRight.getPADDLE_HEIGHT()/2.0;
         double yRel = (yMid - yImpact)/(pRight.getPADDLE_HEIGHT()/2.0);
-        yRel = Math.min(1, yRel/2.0 + 0.5);
-        double range = 5/6.0;
+        yRel = yRel / 2.0 + 0.5;
+        yRel = Math.min(1, yRel);
+        yRel = Math.max(0, yRel);
+        double range = 2/3.0;
         velAngle = (range * yRel + (1-range)/2.0 + 1/2.0) * Math.PI;
+        velModule = 5;
     }
 
     private void bounceOffPaddleLeft() {
         double yImpact = y + Math.sin(velAngle) * velModule;
         double yMid = pLeft.getY() + pLeft.getPADDLE_HEIGHT()/2.0;
         double yRel = (yMid - yImpact)/(pLeft.getPADDLE_HEIGHT()/2.0);
-        yRel = Math.min(1, yRel/2.0 + 0.5);
-        double range = 4.5/6.0;
+        yRel = yRel/2.0 + 0.5;
+        yRel = Math.min(1, yRel);
+        yRel = Math.max(0, yRel);
+        double range = 2/3.0;
         velAngle = Math.PI * (2 - ((range * yRel + (1-range)/2.0 + 1/2.0 + 1) % 2));
+        velModule = 5;
     }
 
     private void goalScoredRight() {
@@ -143,6 +149,7 @@ public class Ball {
         x = xStart;
         y = yStart;
         velAngle = generateStartingAngle(direction);
+        velModule = 3;
     }
 
     public boolean checkCollisionsTop() {
