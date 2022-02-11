@@ -4,141 +4,148 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestBall {
 
-    private int topLim = 0;
-    private int botLim = 500;
-    private int leftLim = 0;
-    private int rightLim = 500;
+    private final int topLim = 0;
+    private final int botLim = 500;
+    private final int leftLim = 0;
+    private final int rightLim = 500;
 
     private final Player pl0 = new Player("Player0", 0);
     private final Player pl1 = new Player("Player1", 1);
 
     private final Paddle pLeft = new Paddle(pl0, topLim, botLim, leftLim, rightLim);
     private final Paddle pRight = new Paddle(pl1, topLim, botLim, leftLim, rightLim);
-    private final Ball ball = new Ball(topLim, botLim, leftLim, rightLim, pLeft, pRight);
+    private final Ball ball = new Ball(topLim, botLim, leftLim, rightLim, pLeft, pRight, pl0, pl1);
     private final int xStart = ball.getxStart();
     private final int yStart = ball.getyStart();
-
+    private final double eps = 1E-5;
 
     @ParameterizedTest
-    @CsvSource({"1, 1", "5, 5", "-10,20", "25, -30"})
-    public void ball_inside_panel_move_test(int xVelocity, int yVelocity) {
-        ball.setxVelocity(xVelocity);
-        ball.setyVelocity(yVelocity);
+    @CsvSource({"1, 1", "5, 5", "10,20", "25, 30"})
+    public void ball_inside_panel_move_test(double velAngle, double velModule) {
+        ball.setVelAngle(velAngle);
+        ball.setVelModule(velModule);
         ball.move();
 
-        assertEquals(xStart + xVelocity, ball.getX());
-        assertEquals(yStart + yVelocity, ball.getY());
+        assertEquals(xStart + Math.cos(velAngle) * velModule, ball.getX(), eps);
+        assertEquals(yStart + Math.sin(velAngle) * velModule, ball.getY(), eps);
     }
 
     @ParameterizedTest
     @CsvSource({"1, 1", "5, 5", "-10,20", "25, -30"})
-    public void ball_reset_test(int xVelocity, int yVelocity) {
-        ball.setxVelocity(xVelocity);
-        ball.setyVelocity(yVelocity);
+    public void ball_reset_test(double velAngle, double velModule) {
+        ball.setVelAngle(velAngle);
+        ball.setVelModule(velModule);
         ball.move();
-        ball.reset();
+        ball.reset(1);
 
         assertEquals(xStart, ball.getX());
         assertEquals(yStart, ball.getY());
     }
 
     @ParameterizedTest
-    @ValueSource(ints={-10, -20, -50, -250, -500})
-    public void ball_out_top_boundary(int yVelocity) {
-        ball.setyVelocity(yVelocity);
+    @ValueSource(ints={10, 20, 50, 250, 500})
+    public void ball_out_top_boundary(double velModule) {
+        ball.setVelModule(velModule);
+        ball.setVelAngle( 3/2.0 * Math.PI);
         ball.setY(topLim + 15);
 
-        assertEquals(true, ball.checkCollisionsTop());
+        assertTrue(ball.checkCollisionsTop());
     }
 
     @ParameterizedTest
     @ValueSource(ints={10, 20, 50, 250, 500})
-    public void ball_out_bottom_boundary(int yVelocity) {
-        ball.setyVelocity(yVelocity);
+    public void ball_out_bottom_boundary(double velModule) {
+        ball.setVelModule(velModule);
+        ball.setVelAngle(Math.PI/2);
         ball.setY(botLim - 15);
 
-        assertEquals(true, ball.checkCollisionsBottom());
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints={-5, -10, -50, -250, -500})
-    public void ball_out_left_boundary(int xVelocity) {
-        ball.setxVelocity(xVelocity); // ball hits boundary with left side
-        ball.setX(leftLim + 15);
-
-        assertEquals(true, ball.checkCollisionsLeft());
+        assertTrue(ball.checkCollisionsBottom());
     }
 
     @ParameterizedTest
     @ValueSource(ints={5, 10, 50, 250, 500})
-    public void ball_out_right_boundary(int xVelocity) {
-        ball.setxVelocity(xVelocity); // ball hits boundary with right side
+    public void ball_out_left_boundary(double velModule) {
+        ball.setVelModule(velModule);
+        ball.setVelAngle(Math.PI);
+        ball.setX(leftLim + 15);
+
+        assertTrue(ball.checkCollisionsLeft());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints={5, 10, 50, 250, 500})
+    public void ball_out_right_boundary(double velModule) {
+        ball.setVelModule(velModule);
+        ball.setVelAngle(0);
         ball.setX(rightLim - 15);
 
-        assertEquals(true, ball.checkCollisionsRight());
+        assertTrue(ball.checkCollisionsRight());
     }
 
     @ParameterizedTest
-    @CsvSource({"-10, 0", "-10, 10", "-15, 10", "-10, 25", "-10, -25"})
-    public void ball_collides_with_paddle_left(int xVelocity, int yVelocity) {
-        ball.setxVelocity(xVelocity);
-        ball.setyVelocity(yVelocity);
-        ball.setY(pLeft.getY() + pLeft.getPADDLE_HEIGHT()/2);
+    @CsvSource({"0.6, 2", "0.7, 4", "1, 6", "1.1, 7", "1.2, 8"})
+    public void ball_collides_with_paddle_left(double velAngle, double velModule) {
+        ball.setVelModule(velModule);
+        ball.setVelAngle(Math.PI*velAngle);
+        ball.setY(pLeft.getY() + pLeft.getPADDLE_HEIGHT()/2.0);
         ball.setX(pLeft.getX() + pLeft.getPADDLE_WIDTH() + 10);
 
-        assertEquals(true, ball.checkCollisionsPaddleLeft());
+        assertTrue(ball.checkCollisionsPaddleLeft());
     }
 
     @ParameterizedTest
-    @CsvSource({"10, 0", "10, 10", "15, 10", "10, 25", "10, -25"})
-    public void ball_collides_with_paddle_right(int xVelocity, int yVelocity) {
-        ball.setxVelocity(xVelocity);
-        ball.setyVelocity(yVelocity);
-        ball.setY(pRight.getY() + pRight.getPADDLE_HEIGHT()/2);
+    @CsvSource({"0.1, 2", "0.3, 4", "0.4, 6", "1.6, 7", "1.9, 8"})
+    public void ball_collides_with_paddle_right(double velAngle, double velModule) {
+        ball.setVelModule(velModule);
+        ball.setVelAngle(Math.PI*velAngle);
+        ball.setY(pRight.getY() + pRight.getPADDLE_HEIGHT()/2.0);
         ball.setX(pRight.getX() - 10);
 
-        assertEquals(true, ball.checkCollisionsPaddleRight());
+        assertTrue(ball.checkCollisionsPaddleRight());
     }
 
     @ParameterizedTest
-    @CsvSource({"10, -10", "5, -30", "-50, -50", "30, -100", "100, -250"})
-    public void ball_bounced_top_boundary(int xVelocity, int yVelocity){
-        ball.setxVelocity(xVelocity);
-        ball.setyVelocity(yVelocity);
-        ball.setY(topLim+20);
-        ball.setX((rightLim+leftLim)/2);
+    @CsvSource({"1.1, 1", "1.2, 2", "1.3, 3", "1.5, 4", "1.8, 5"})
+    public void ball_bounced_top_boundary(double velAngle, double velModule){
+        ball.setVelModule(velModule);
+        ball.setVelAngle(Math.PI*velAngle);
+        ball.setY(topLim+10);
+        ball.setX((rightLim+leftLim)/2.0);
 
-        int final_positionX = ball.getX() + xVelocity;
-        int final_positionY = ball.getY() - yVelocity;
+        double newAngle = 2 * Math.PI - ball.getVelAngle();
+        double final_positionX = ball.getX() + Math.cos(newAngle) * velModule;
+        double final_positionY = ball.getY() + Math.sin(newAngle) * velModule;
 
         ball.move();
 
-        assertEquals(final_positionX, ball.getX());
-        assertEquals(final_positionY, ball.getY());
+        assertEquals(final_positionX, ball.getX(), eps);
+        assertEquals(final_positionY, ball.getY(), eps);
     }
 
 
     @ParameterizedTest
-    @CsvSource({"10, 10", "5, 30", "-50, 50", "30, 100", "100, 250"})
-    public void ball_bounced_bottom_boundary(int xVelocity, int yVelocity){
-        ball.setxVelocity(xVelocity);
-        ball.setyVelocity(yVelocity);
-        ball.setY(botLim-20);
-        ball.setX((rightLim+leftLim)/2);
+    @CsvSource({"0.1, 1", "0.4, 2", "0.5, 3", "0.7, 4", "0.9, 5"})
+    public void ball_bounced_bottom_boundary(double velAngle, double velModule){
+        ball.setVelModule(velModule);
+        ball.setVelAngle(Math.PI*velAngle);
+        ball.setY(topLim-10);
+        ball.setX((rightLim+leftLim)/2.0);
 
-        int final_positionX = ball.getX() + xVelocity;
-        int final_positionY = ball.getY() - yVelocity;
+        double newAngle = 2 * Math.PI - ball.getVelAngle();
+        double final_positionX = ball.getX() + Math.cos(newAngle) * velModule;
+        double final_positionY = ball.getY() + Math.sin(newAngle) * velModule;
 
         ball.move();
 
-        assertEquals(final_positionX, ball.getX());
-        assertEquals(final_positionY, ball.getY());
+        assertEquals(final_positionX, ball.getX(), eps);
+        assertEquals(final_positionY, ball.getY(), eps);
     }
 
-
+/*
     @ParameterizedTest
     @CsvSource({"-10, 0", "-10, 10", "-15, 10", "-10, 25", "-10, -25"})
     public void ball_bounced_paddle_left(int xVelocity, int yVelocity){
@@ -172,6 +179,34 @@ public class TestBall {
 
         assertEquals(final_positionX, ball.getX());
         assertEquals(final_positionY, ball.getY());
+    }*/
+
+    @ParameterizedTest
+    @ValueSource(ints={1, 2, 3, 4, 6})
+    public void ball_score_on_left_on_straight_line(double velModule){
+        ball.setVelModule(velModule);
+        ball.setVelAngle(Math.PI);
+        ball.setY(topLim+10);
+        ball.setX(leftLim+10);
+
+        ball.move();
+
+        assertEquals(ball.getxStart(), ball.getX(), eps);
+        assertEquals(ball.getyStart(), ball.getY(), eps);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints={1, 2, 3, 4, 6})
+    public void ball_score_on_right_on_straight_line(double velModule){
+        ball.setVelModule(velModule);
+        ball.setVelAngle(0);
+        ball.setY(topLim+10);
+        ball.setX(rightLim-10);
+
+        ball.move();
+
+        assertEquals(ball.getxStart(), ball.getX(), eps);
+        assertEquals(ball.getyStart(), ball.getY(), eps);
     }
 
 
