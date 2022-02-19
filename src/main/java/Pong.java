@@ -7,17 +7,6 @@ public class Pong{
     public static void main(String[] args) {
         jf = new JFrame();
         startMenu();
-        //jf.add(gamePanel);
-        /*jf.setResizable(false);
-        jf.pack();
-        jf.setTitle("PONG");
-        jf.setLocationRelativeTo(null);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.setVisible(true);*/
-        //GamePanel gamePanel = new GamePanel();
-        //Thread game = new Thread(gamePanel);
-        //game.start();
-
     }
 
     public static void startMenu() {
@@ -41,7 +30,6 @@ public class Pong{
         jf.add(endPanel);
         jf.setResizable(false);
         jf.pack();
-        jf.setTitle("End of the game");
         jf.setLocationRelativeTo(null);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setVisible(true);
@@ -54,7 +42,6 @@ public class Pong{
         jf.add(gamePanel);
         jf.setResizable(false);
         jf.pack();
-        //jf.setTitle("PONG");
         jf.setLocationRelativeTo(null);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setVisible(true);

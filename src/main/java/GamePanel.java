@@ -37,7 +37,8 @@ public class GamePanel extends JPanel implements Runnable {
         pl1 = new Player(sName1, 1);
         p0 = new Paddle(pl0, topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder);
         p1 = new Paddle(pl1, topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder);
-        ball = new Ball(topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder, p0, p1, pl0, pl1);
+        ball = new Ball(topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder,
+                p0, p1, pl0, pl1, MenuPanel.velModule);
         pm = new PaddleMover(p0,p1);
         pd0 = new PaddleDrawer(p0);
         pd1 = new PaddleDrawer(p1);
@@ -80,7 +81,7 @@ public class GamePanel extends JPanel implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        while (pl0.getScore() < 4 && pl1.getScore() < 4) {
+        while (pl0.getScore() < MenuPanel.maxScore && pl1.getScore() < MenuPanel.maxScore) {
             p0.move();
             p1.move();
             ball.move();

@@ -25,7 +25,7 @@ public class Ball {
     private final Random random = new Random();
 
     public Ball(int topLim, int botLim, int leftLim, int rightLim, Paddle pLeft, Paddle pRight,
-                Player playerLeft, Player playerRight) {
+                Player playerLeft, Player playerRight, int velModule) {
         xStart = (rightLim + leftLim) / 2;
         yStart = (topLim + botLim) / 2;
         x = xStart;
@@ -39,7 +39,7 @@ public class Ball {
         this.playerLeft = playerLeft;
         this.playerRight = playerRight;
         velAngle = generateStartingAngle(random.nextInt(1));
-        velModule = 3;
+        this.velModule = velModule;
     }
 
     public double generateStartingAngle(int direction){
@@ -87,7 +87,6 @@ public class Ball {
         yRel = Math.max(0, yRel);
         double range = 2/3.0;
         velAngle = (range * yRel + (1-range)/2.0 + 1/2.0) * Math.PI;
-        velModule = 5;
     }
 
     private void bounceOffPaddleLeft() {
@@ -99,7 +98,6 @@ public class Ball {
         yRel = Math.max(0, yRel);
         double range = 2/3.0;
         velAngle = Math.PI * (2 - ((range * yRel + (1-range)/2.0 + 1/2.0 + 1) % 2));
-        velModule = 5;
     }
 
     private void goalScoredRight() {
@@ -149,7 +147,6 @@ public class Ball {
         x = xStart;
         y = yStart;
         velAngle = generateStartingAngle(direction);
-        velModule = 3;
     }
 
     public boolean checkCollisionsTop() {
