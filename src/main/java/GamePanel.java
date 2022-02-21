@@ -31,6 +31,8 @@ public class GamePanel extends JPanel implements Runnable {
     private int maxScore = 10;
     private static boolean pause = false;
 
+    private static Bot bot;
+
     public GamePanel(){
         setPreferredSize(panelSize);
         setBackground(Color.black);
@@ -51,6 +53,9 @@ public class GamePanel extends JPanel implements Runnable {
         bd = new BallDrawer(ball);
         pld0 = new PlayerDrawer(pl0, topBorder, leftBorder, rightBorder, gameWidth);
         pld1 = new PlayerDrawer(pl1, topBorder, leftBorder, rightBorder, gameWidth);
+
+        bot = new Bot(p1, ball, this, pm);
+
         Thread game = new Thread(this);
         game.start();
     }
@@ -112,6 +117,8 @@ public class GamePanel extends JPanel implements Runnable {
                 p0.move();
                 p1.move();
                 ball.move();
+
+                bot.move();
             }
             repaint();
             try {
