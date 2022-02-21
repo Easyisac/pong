@@ -18,19 +18,18 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     private TextField name0;
     private TextField name1;
-    private String sName0;
-    private String sName1;
     private JSlider velSlider;
     private JSlider maxScoreSlider;
 
-    public static int velModule = 3;
-    public static int maxScore = 10;
+    private String sName0;
+    private String sName1;
+    private GamePanel gamePanel;
 
-    private String winner;
 
 
-    public MenuPanel(){
 
+    public MenuPanel(GamePanel gamepanel){
+        this.gamePanel = gamepanel;
         setPreferredSize(panelSize);
         setBackground(Color.black);
 
@@ -41,20 +40,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     }
 
-    public MenuPanel(String n0, String n1, boolean flagWinner) {
-        sName0 = n0;
-        sName1 = n1;
-        winner = flagWinner ? n1 : n0;
-
-        setPreferredSize(panelSize);
-        setBackground(Color.black);
-
-        setLayout(null);
-
-        endMenu();
-    }
-
-    private void startMenu() {
+    public void startMenu() {
         this.removeAll();
         repaint();
 
@@ -98,9 +84,11 @@ public class MenuPanel extends JPanel implements ActionListener {
         add(title);
     }
 
-    private void endMenu(){
+    public void endMenu(String sName0, String sName1, String winner){
         this.removeAll();
         repaint();
+        this.sName0 = sName0;
+        this.sName1 = sName1;
 
         int height = 50;
         int width = 100;
@@ -215,7 +203,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         selectBallVelocity.setForeground(Color.WHITE);
         selectBallVelocity.setHorizontalAlignment(JLabel.CENTER);
 
-        velSlider = new JSlider(1,maxVelocity,velModule);
+        velSlider = new JSlider(1,maxVelocity, gamePanel.getVelModule());
         velSlider.setBounds(center, posy, width, height);
         velSlider.setMinorTickSpacing(1);
         velSlider.setSnapToTicks(true);
@@ -237,7 +225,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         selectMaxScore.setForeground(Color.WHITE);
         selectMaxScore.setHorizontalAlignment(JLabel.CENTER);
 
-        maxScoreSlider = new JSlider(5,20,maxScore);
+        maxScoreSlider = new JSlider(5,20, gamePanel.getMaxScore());
         maxScoreSlider.setBounds(center, posy+gap, width, height);
         maxScoreSlider.setMinorTickSpacing(5);
         maxScoreSlider.setSnapToTicks(true);
@@ -287,8 +275,8 @@ public class MenuPanel extends JPanel implements ActionListener {
                 settingsMenu();
                 break;
             case "Save":
-                velModule = velSlider.getValue();
-                maxScore = maxScoreSlider.getValue();
+                gamePanel.setVelModule(velSlider.getValue());
+                gamePanel.setMaxScore(maxScoreSlider.getValue());
                 startMenu();
                 break;
             default:
