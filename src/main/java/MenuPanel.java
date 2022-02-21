@@ -57,7 +57,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         title.setFont(new Font("Arial", Font.PLAIN, 28));
 
         Button buttonP1 = new Button("One Player");
-        buttonP1.setBounds(center,posy,width,height);
+        buttonP1.setBounds(center, posy, width, height);
         buttonP1.addActionListener(this);
         buttonP1.setActionCommand("One Player");
 
@@ -99,7 +99,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         title.setFont(new Font("Arial", Font.PLAIN, 20));
 
         Button buttonPlayAgain = new Button("Play Again");
-        buttonPlayAgain.setBounds(center,posy,width,height);
+        buttonPlayAgain.setBounds(center, posy, width, height);
         buttonPlayAgain.addActionListener(this);
         buttonPlayAgain.setActionCommand("Play Again");
 
@@ -133,13 +133,13 @@ public class MenuPanel extends JPanel implements ActionListener {
         title.setFont(new Font("Arial", Font.PLAIN, 20));
 
         name0 = new TextField("Player1");
-        name0.setBounds(center-(width+gap)/2,posy, width, height/2);
+        name0.setBounds(center-(width+gap)/2, posy, width, height/2);
 
         name1 = new TextField("Player2");
-        name1.setBounds(center+(width+gap)/2,posy, width, height/2);
+        name1.setBounds(center+(width+gap)/2, posy, width, height/2);
 
         Button buttonPlay = new Button("Play");
-        buttonPlay.setBounds(center,posy + gap,width,height);
+        buttonPlay.setBounds(center,posy + gap, width, height);
         buttonPlay.addActionListener(this);
         buttonPlay.setActionCommand("Play");
 
