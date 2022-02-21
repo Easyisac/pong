@@ -27,6 +27,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     private String sName0;
     private String sName1;
+    private boolean singlePlayer;
     private final GamePanel gamePanel;
 
 
@@ -58,6 +59,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         Button buttonP1 = new Button("One Player");
         buttonP1.setBounds(center,posy,width,height);
         buttonP1.addActionListener(this);
+        buttonP1.setActionCommand("One Player");
 
         Button buttonP2 = new Button("Two Players");
         buttonP2.setBounds(center,posy + gap, width, height);
@@ -81,11 +83,12 @@ public class MenuPanel extends JPanel implements ActionListener {
         add(title);
     }
 
-    public void endMenu(String sName0, String sName1, String winner){
+    public void endMenu(String sName0, String sName1, String winner, boolean singlePlayer){
         this.removeAll();
         repaint();
         this.sName0 = sName0;
         this.sName1 = sName1;
+        this.singlePlayer = singlePlayer;
 
         JLabel title = new JLabel("The winner is " + winner);
         title.setBounds(leftBorder, topBorder, 500,100);
@@ -228,7 +231,7 @@ public class MenuPanel extends JPanel implements ActionListener {
     private void startGame(){
         String sName0 = name0.getText();
         String sName1 = name1.getText();
-        Pong.startGame(sName0, sName1);
+        Pong.startGame(sName0, sName1, false);
     }
 
 
@@ -242,6 +245,7 @@ public class MenuPanel extends JPanel implements ActionListener {
                 insertNameMenu();
                 break;
             case "One Player":
+                Pong.startGame("Player", "COM", true);
                 break;
             case "Play":
                 startGame();
@@ -250,7 +254,7 @@ public class MenuPanel extends JPanel implements ActionListener {
                 startMenu();
                 break;
             case "Play Again":
-                Pong.startGame(sName0, sName1);
+                Pong.startGame(sName0, sName1, singlePlayer);
                 break;
             case "Settings":
                 settingsMenu();

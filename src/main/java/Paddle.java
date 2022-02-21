@@ -12,7 +12,7 @@ public class Paddle {
     private final int PADDLE_WIDTH = 10;
     private final int OFFSET = 50;
 
-    private int velocity;
+    private double velocity;
 
     public Paddle(Player p) {
         velocity = 0;
@@ -39,13 +39,13 @@ public class Paddle {
         return y;
     }
 
-    public int getVelocity() { return velocity; }
+    public double getVelocity() { return velocity; }
 
     public int getPADDLE_HEIGHT() { return PADDLE_HEIGHT; }
 
     public int getPADDLE_WIDTH() { return PADDLE_WIDTH; }
 
-    public void setVelocity(int velocity){
+    public void setVelocity(double velocity){
         this.velocity = velocity;
     }
 }

@@ -28,6 +28,9 @@ public class GamePanel extends JPanel implements Runnable {
     private int velModule = 3;
     private int maxScore = 10;
     private static boolean pause = false;
+    private static boolean singlePlayer;
+
+    private static Bot bot;
 
     public GamePanel(){
         Dimension panelSize = new Dimension(gameWidth + leftBorder + rightBorder,
@@ -38,7 +41,8 @@ public class GamePanel extends JPanel implements Runnable {
         setFocusable(true);
     }
 
-    public void startGame(String sName0, String sName1){
+    public void startGame(String sName0, String sName1, boolean singlePlayer){
+
         pl0 = new Player(sName0, 0);
         pl1 = new Player(sName1, 1);
         p0 = new Paddle(pl0);
@@ -48,6 +52,14 @@ public class GamePanel extends JPanel implements Runnable {
         pd0 = new PaddleDrawer(p0);
         pd1 = new PaddleDrawer(p1);
         bd = new BallDrawer(ball);
+        pld0 = new PlayerDrawer(pl0);
+        pld1 = new PlayerDrawer(pl1);
+        GamePanel.singlePlayer = singlePlayer;
+        if(singlePlayer){
+            bot = new Bot(p1, ball, this, pm);
+            pm.setPaddle1Speed(velModule/2);
+        }
+
         pld0 = new PlayerDrawer(pl0);
         pld1 = new PlayerDrawer(pl1);
         Thread game = new Thread(this);
@@ -111,6 +123,7 @@ public class GamePanel extends JPanel implements Runnable {
                 p0.move();
                 p1.move();
                 ball.move();
+                if (singlePlayer) bot.move();
             }
             repaint();
             try {
@@ -121,14 +134,16 @@ public class GamePanel extends JPanel implements Runnable {
 
         }
         String winner = (pl0.getScore() > pl1.getScore())? pl0.getName(): pl1.getName();
-        Pong.exitGame(pl0.getName(), pl1.getName(), winner);
+        Pong.exitGame(pl0.getName(), pl1.getName(), winner, singlePlayer);
     }
 
     public static class GameKeyListener extends KeyAdapter {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            pm.keyPressed(e);
+            if (!(singlePlayer && (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN))){
+                pm.keyPressed(e);
+            }
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE){
                 pause = !pause;
             }
