@@ -2,8 +2,8 @@ import java.awt.*;
 
 public class BallDrawer {
 
-    private Ball ball;
-    private int ballRadius;
+    private final Ball ball;
+    private final int ballRadius;
 
     public BallDrawer(Ball ball) {
 

@@ -2,17 +2,12 @@ import java.awt.*;
 
 public class PlayerDrawer {
     Player player;
-    int topBorder;
-    int leftBorder;
-    int rightBorder;
-    int gameWidth;
+    int topBorder = GameProperties.TOP_BORDER;
+    int leftBorder = GameProperties.LEFT_BORDER;
+    int gameWidth = GameProperties.GAME_WIDTH;
 
-    public PlayerDrawer(Player player, int topBorder, int leftBorder, int rightBorder, int gameWidth) {
+    public PlayerDrawer(Player player) {
         this.player = player;
-        this.topBorder = topBorder;
-        this.leftBorder = leftBorder;
-        this.rightBorder = rightBorder;
-        this.gameWidth = gameWidth;
     }
 
     public void draw(Graphics2D g2){

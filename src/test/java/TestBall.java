@@ -8,17 +8,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestBall {
 
-    private final int topLim = 0;
-    private final int botLim = 500;
-    private final int leftLim = 0;
-    private final int rightLim = 500;
+    private final int topLim = GameProperties.TOP_LIM;
+    private final int botLim = GameProperties.BOT_LIM;
+    private final int leftLim = GameProperties.LEFT_LIM;
+    private final int rightLim = GameProperties.RIGHT_LIM;
 
     private final Player pl0 = new Player("Player0", 0);
     private final Player pl1 = new Player("Player1", 1);
 
-    private final Paddle pLeft = new Paddle(pl0, topLim, botLim, leftLim, rightLim);
-    private final Paddle pRight = new Paddle(pl1, topLim, botLim, leftLim, rightLim);
-    private final Ball ball = new Ball(topLim, botLim, leftLim, rightLim, pLeft, pRight, pl0, pl1, 5);
+    private final Paddle pLeft = new Paddle(pl0);
+    private final Paddle pRight = new Paddle(pl1);
+    private final Ball ball = new Ball(pLeft, pRight, pl0, pl1, 5);
     private final int xStart = ball.getxStart();
     private final int yStart = ball.getyStart();
     private final double eps = 1E-5;
