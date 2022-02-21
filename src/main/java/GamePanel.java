@@ -27,24 +27,47 @@ public class GamePanel extends JPanel implements Runnable {
     private Dimension panelSize = new Dimension(gameWidth + leftBorder + rightBorder,
             gameHeight + topBorder + botBorder);
 
-    public GamePanel(String sName0, String sName1){
+    private int velModule = 3;
+    private int maxScore = 10;
+
+    public GamePanel(){
         setPreferredSize(panelSize);
         setBackground(Color.black);
         addKeyListener(new GameKeyListener());
         setFocusable(true);
-        //setDoubleBuffered(true);
+    }
+
+    public void startGame(String sName0, String sName1){
         pl0 = new Player(sName0, 0);
         pl1 = new Player(sName1, 1);
         p0 = new Paddle(pl0, topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder);
         p1 = new Paddle(pl1, topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder);
         ball = new Ball(topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder,
-                p0, p1, pl0, pl1, MenuPanel.velModule);
+                p0, p1, pl0, pl1, velModule);
         pm = new PaddleMover(p0,p1);
         pd0 = new PaddleDrawer(p0);
         pd1 = new PaddleDrawer(p1);
         bd = new BallDrawer(ball);
         pld0 = new PlayerDrawer(pl0, topBorder, leftBorder, rightBorder, gameWidth);
         pld1 = new PlayerDrawer(pl1, topBorder, leftBorder, rightBorder, gameWidth);
+        Thread game = new Thread(this);
+        game.start();
+    }
+
+    public int getVelModule() {
+        return velModule;
+    }
+
+    public int getMaxScore() {
+        return maxScore;
+    }
+
+    public void setVelModule(int velModule) {
+        this.velModule = velModule;
+    }
+
+    public void setMaxScore(int maxScore) {
+        this.maxScore = maxScore;
     }
 
     //Standard method, draws static images, calls draw function
@@ -81,7 +104,7 @@ public class GamePanel extends JPanel implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        while (pl0.getScore() < MenuPanel.maxScore && pl1.getScore() < MenuPanel.maxScore) {
+        while (pl0.getScore() < maxScore && pl1.getScore() < maxScore) {
             p0.move();
             p1.move();
             ball.move();
@@ -92,7 +115,8 @@ public class GamePanel extends JPanel implements Runnable {
                 e.printStackTrace();
             }
         }
-        Pong.exitGame(pl0,pl1);
+        String winner = (pl0.getScore() > pl1.getScore())? pl0.getName(): pl1.getName();
+        Pong.exitGame(pl0.getName(), pl1.getName(), winner);
     }
 
     public static class GameKeyListener extends KeyAdapter {
