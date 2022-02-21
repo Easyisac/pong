@@ -12,17 +12,38 @@ public class PaddleMover{
     private boolean p0_down;
     private boolean p1_up;
     private boolean p1_down;
-    public static final int paddleSpeed = 5;
+    public static int speed = 5;
+    private double paddle0Speed = speed;
+    private double paddle1Speed = speed;
+
+    public double getPaddle0Speed() {
+        return paddle0Speed;
+    }
+
+    public void setPaddle0Speed(double paddle0Speed) {
+        this.paddle0Speed = paddle0Speed;
+    }
+
+    public double getPaddle1Speed() {
+        return paddle1Speed;
+    }
+
+    public void setPaddle1Speed(double paddle1Speed) {
+        this.paddle1Speed = paddle1Speed;
+    }
 
     private void setPaddleVelocity(Paddle p) {
         boolean p_up;
         boolean p_down;
+        double paddleSpeed;
         if (p.getPlayer().getId() == 0){
             p_up = p0_up;
             p_down = p0_down;
+            paddleSpeed = paddle0Speed;
         } else {
             p_up = p1_up;
             p_down = p1_down;
+            paddleSpeed = paddle1Speed;
         }
         if (!p_up && !p_down) {
             p.setVelocity(0);

@@ -2,23 +2,19 @@ public class Paddle {
 
     private final int x;
     private int y;
-    private final int topLim;
-    private final int botLim;
-    private final int leftLim;
-    private final int rightLim;
+    private final int topLim = GameProperties.TOP_LIM;
+    private final int botLim = GameProperties.BOT_LIM;
+    private final int leftLim = GameProperties.LEFT_LIM;
+    private final int rightLim = GameProperties.RIGHT_LIM;
     private final Player player;
 
     private final int PADDLE_HEIGHT = 50;
     private final int PADDLE_WIDTH = 10;
     private final int OFFSET = 50;
 
-    private int velocity;
+    private double velocity;
 
-    public Paddle(Player p, int topLim, int botLim, int leftLim, int rightLim) {
-        this.topLim = topLim;
-        this.botLim = botLim;
-        this.leftLim = leftLim;
-        this.rightLim = rightLim;
+    public Paddle(Player p) {
         velocity = 0;
         player = p;
         x = (player.getId() == 0) ? leftLim + OFFSET : rightLim - OFFSET - PADDLE_WIDTH;
@@ -43,13 +39,13 @@ public class Paddle {
         return y;
     }
 
-    public int getVelocity() { return velocity; }
+    public double getVelocity() { return velocity; }
 
     public int getPADDLE_HEIGHT() { return PADDLE_HEIGHT; }
 
     public int getPADDLE_WIDTH() { return PADDLE_WIDTH; }
 
-    public void setVelocity(int velocity){
+    public void setVelocity(double velocity){
         this.velocity = velocity;
     }
 }

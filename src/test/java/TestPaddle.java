@@ -4,14 +4,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class TestPaddle {
 
-    private final int topLim = 0;
-    private final int botLim = 500;
-    private final int leftLim = 0;
-    private final int rightLim = 500;
+    private final int topLim = GameProperties.TOP_LIM;
+    private final int botLim = GameProperties.BOT_LIM;
+    private final int leftLim = GameProperties.LEFT_LIM;
+    private final int rightLim = GameProperties.RIGHT_LIM;
 
     private final Player pl1 = new Player("Player1", 1);
 
-    private final Paddle p = new Paddle(pl1, topLim, botLim, leftLim, rightLim);
+    private final Paddle p = new Paddle(pl1);
     private final int paddle_height = p.getPADDLE_HEIGHT();
 
     private final int yStart = p.getY();

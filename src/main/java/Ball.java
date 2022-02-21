@@ -6,10 +6,10 @@ public class Ball {
     private double y;
     private final int xStart;
     private final int yStart;
-    private final int topLim;
-    private final int botLim;
-    private final int leftLim;
-    private final int rightLim;
+    private final int topLim = GameProperties.TOP_LIM;
+    private final int botLim = GameProperties.BOT_LIM;
+    private final int leftLim = GameProperties.LEFT_LIM;
+    private final int rightLim = GameProperties.RIGHT_LIM;
 
     private double velModule;
     private double velAngle;
@@ -24,16 +24,11 @@ public class Ball {
 
     private final Random random = new Random();
 
-    public Ball(int topLim, int botLim, int leftLim, int rightLim, Paddle pLeft, Paddle pRight,
-                Player playerLeft, Player playerRight, int velModule) {
+    public Ball(Paddle pLeft, Paddle pRight, Player playerLeft, Player playerRight, int velModule) {
         xStart = (rightLim + leftLim) / 2;
         yStart = (topLim + botLim) / 2;
         x = xStart;
         y = yStart;
-        this.topLim = topLim;
-        this.botLim = botLim;
-        this.leftLim = leftLim;
-        this.rightLim = rightLim;
         this.pLeft = pLeft;
         this.pRight = pRight;
         this.playerLeft = playerLeft;
