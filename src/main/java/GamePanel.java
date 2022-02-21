@@ -18,20 +18,20 @@ public class GamePanel extends JPanel implements Runnable {
 
     private static PaddleMover pm;
 
-    public int gameHeight = 500;
-    public int gameWidth = 500;
-    public int topBorder = 100;
-    public int botBorder = 50;
-    public int leftBorder = 50;
-    public int rightBorder = 50;
-    private Dimension panelSize = new Dimension(gameWidth + leftBorder + rightBorder,
-            gameHeight + topBorder + botBorder);
+    public int gameHeight = GameProperties.GAME_HEIGHT;
+    public int gameWidth = GameProperties.GAME_WIDTH;
+    public int topBorder = GameProperties.TOP_BORDER;
+    public int botBorder = GameProperties.BOT_BORDER;
+    public int leftBorder = GameProperties.LEFT_BORDER;
+    public int rightBorder = GameProperties.RIGHT_BORDER;
 
     private int velModule = 3;
     private int maxScore = 10;
     private static boolean pause = false;
 
     public GamePanel(){
+        Dimension panelSize = new Dimension(gameWidth + leftBorder + rightBorder,
+                gameHeight + topBorder + botBorder);
         setPreferredSize(panelSize);
         setBackground(Color.black);
         addKeyListener(new GameKeyListener());
@@ -41,16 +41,15 @@ public class GamePanel extends JPanel implements Runnable {
     public void startGame(String sName0, String sName1){
         pl0 = new Player(sName0, 0);
         pl1 = new Player(sName1, 1);
-        p0 = new Paddle(pl0, topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder);
-        p1 = new Paddle(pl1, topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder);
-        ball = new Ball(topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder,
-                p0, p1, pl0, pl1, velModule);
+        p0 = new Paddle(pl0);
+        p1 = new Paddle(pl1);
+        ball = new Ball(p0, p1, pl0, pl1, velModule);
         pm = new PaddleMover(p0,p1);
         pd0 = new PaddleDrawer(p0);
         pd1 = new PaddleDrawer(p1);
         bd = new BallDrawer(ball);
-        pld0 = new PlayerDrawer(pl0, topBorder, leftBorder, rightBorder, gameWidth);
-        pld1 = new PlayerDrawer(pl1, topBorder, leftBorder, rightBorder, gameWidth);
+        pld0 = new PlayerDrawer(pl0);
+        pld1 = new PlayerDrawer(pl1);
         Thread game = new Thread(this);
         game.start();
     }

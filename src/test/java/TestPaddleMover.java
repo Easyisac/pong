@@ -9,15 +9,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestPaddleMover {
 
-    private static final int topLim = 0;
-    private static final int botLim = 500;
-    private static final int leftLim = 0;
-    private static final int rightLim = 500;
+    private static final int topLim = GameProperties.TOP_LIM;
+    private static final int botLim = GameProperties.BOT_LIM;
+    private static final int leftLim = GameProperties.LEFT_LIM;
+    private static final int rightLim = GameProperties.RIGHT_LIM;
     private final Player pl0 = new Player("Player0", 0);
     private final Player pl1 = new Player("Player1", 1);
 
-    private final Paddle p0 = new Paddle(pl0, topLim, botLim, leftLim, rightLim);
-    private final Paddle p1 = new Paddle(pl1, topLim, botLim, leftLim, rightLim);
+    private final Paddle p0 = new Paddle(pl0);
+    private final Paddle p1 = new Paddle(pl1);
     private final PaddleMover pm = new PaddleMover(p0, p1);
     private final GamePanel gp = new GamePanel();
 

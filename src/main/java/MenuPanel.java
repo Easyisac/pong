@@ -7,14 +7,18 @@ import java.util.stream.IntStream;
 
 public class MenuPanel extends JPanel implements ActionListener {
 
-    public int gameHeight = 500;
-    public int gameWidth = 500;
-    public int topBorder = 100;
-    public int botBorder = 50;
-    public int leftBorder = 50;
-    public int rightBorder = 50;
-    private Dimension panelSize = new Dimension(gameWidth + leftBorder + rightBorder,
-            gameHeight + topBorder + botBorder);
+    public int gameHeight = GameProperties.GAME_HEIGHT;
+    public int gameWidth = GameProperties.GAME_WIDTH;
+    public int topBorder = GameProperties.TOP_BORDER;
+    public int botBorder = GameProperties.BOT_BORDER;
+    public int leftBorder = GameProperties.LEFT_BORDER;
+    public int rightBorder = GameProperties.RIGHT_BORDER;
+
+    private final int height = 50;
+    private final int width = 100;
+    private final int center = (gameWidth + leftBorder + rightBorder)/2 - width/2;
+    private final int posy = 2*topBorder;
+    private final int gap = height+10;
 
     private TextField name0;
     private TextField name1;
@@ -23,13 +27,13 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     private String sName0;
     private String sName1;
-    private GamePanel gamePanel;
-
-
+    private final GamePanel gamePanel;
 
 
     public MenuPanel(GamePanel gamepanel){
         this.gamePanel = gamepanel;
+        Dimension panelSize = new Dimension(gameWidth + leftBorder + rightBorder,
+                gameHeight + topBorder + botBorder);
         setPreferredSize(panelSize);
         setBackground(Color.black);
 
@@ -42,12 +46,6 @@ public class MenuPanel extends JPanel implements ActionListener {
     public void startMenu() {
         this.removeAll();
         repaint();
-
-        int height = 50;
-        int width = 100;
-        int center = (gameWidth + leftBorder + rightBorder)/2 - width/2;
-        int posy = 2*topBorder;
-        int gap = height+10;
 
         JLabel title = new JLabel("Ping");
         title.setBounds(center, topBorder, 100,100);
@@ -89,12 +87,6 @@ public class MenuPanel extends JPanel implements ActionListener {
         this.sName0 = sName0;
         this.sName1 = sName1;
 
-        int height = 50;
-        int width = 100;
-        int center = (gameWidth + leftBorder + rightBorder)/2 - width/2;
-        int posy = 2*topBorder;
-        int gap = height+10;
-
         JLabel title = new JLabel("The winner is " + winner);
         title.setBounds(leftBorder, topBorder, 500,100);
         title.setBackground(Color.white);
@@ -128,12 +120,6 @@ public class MenuPanel extends JPanel implements ActionListener {
     private void insertNameMenu() {
         this.removeAll();
         repaint();
-
-        int height = 50;
-        int width = 100;
-        int center = (gameWidth + leftBorder + rightBorder)/2 - width/2;
-        int posy = 2*topBorder;
-        int gap = height+10;
 
         JLabel title = new JLabel("Insert names");
         title.setBounds(center-25, topBorder, 150,100);
@@ -171,10 +157,6 @@ public class MenuPanel extends JPanel implements ActionListener {
         this.removeAll();
         repaint();
 
-        int height = 50;
-        int width = 100;
-        int center = (gameWidth + leftBorder + rightBorder)/2 - width/2;
-        int posy = 2*topBorder;
         int gap = height+50;
         int maxVelocity = 5;
 
