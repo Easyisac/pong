@@ -16,7 +16,7 @@ public class PlayerDrawer {
     }
 
     public void draw(Graphics2D g2){
-        g2.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+        g2.setFont(new Font("Arial", Font.PLAIN, 20));
         int stringWidth = g2.getFontMetrics().stringWidth(player.getName());
         int stringHeight = g2.getFontMetrics().getHeight();
         if (player.getId() == 0){

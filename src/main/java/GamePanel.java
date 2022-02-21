@@ -27,23 +27,48 @@ public class GamePanel extends JPanel implements Runnable {
     private Dimension panelSize = new Dimension(gameWidth + leftBorder + rightBorder,
             gameHeight + topBorder + botBorder);
 
+    private int velModule = 3;
+    private int maxScore = 10;
+    private static boolean pause = false;
+
     public GamePanel(){
         setPreferredSize(panelSize);
         setBackground(Color.black);
         addKeyListener(new GameKeyListener());
         setFocusable(true);
-        //setDoubleBuffered(true);
-        pl0 = new Player("Player0", 0);
-        pl1 = new Player("Player1", 1);
+    }
+
+    public void startGame(String sName0, String sName1){
+        pl0 = new Player(sName0, 0);
+        pl1 = new Player(sName1, 1);
         p0 = new Paddle(pl0, topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder);
         p1 = new Paddle(pl1, topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder);
-        ball = new Ball(topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder, p0, p1, pl0, pl1);
+        ball = new Ball(topBorder, gameHeight + topBorder, leftBorder, gameWidth + leftBorder,
+                p0, p1, pl0, pl1, velModule);
         pm = new PaddleMover(p0,p1);
         pd0 = new PaddleDrawer(p0);
         pd1 = new PaddleDrawer(p1);
         bd = new BallDrawer(ball);
         pld0 = new PlayerDrawer(pl0, topBorder, leftBorder, rightBorder, gameWidth);
         pld1 = new PlayerDrawer(pl1, topBorder, leftBorder, rightBorder, gameWidth);
+        Thread game = new Thread(this);
+        game.start();
+    }
+
+    public int getVelModule() {
+        return velModule;
+    }
+
+    public int getMaxScore() {
+        return maxScore;
+    }
+
+    public void setVelModule(int velModule) {
+        this.velModule = velModule;
+    }
+
+    public void setMaxScore(int maxScore) {
+        this.maxScore = maxScore;
     }
 
     //Standard method, draws static images, calls draw function
@@ -54,13 +79,15 @@ public class GamePanel extends JPanel implements Runnable {
         g2.setColor(Color.white);
         g2.setStroke(new BasicStroke(1));
         g2.drawRect(leftBorder, topBorder, gameWidth, gameHeight);
-        // Test sulle posizioni delle barrette e della palla
-        /*g2.drawLine(100,50,100,550); //righe verticali per le barrette
-        g2.drawLine(500,50,500,550);
-        g2.drawLine(110,50,110,550);
-        g2.drawLine(490,50,490,550);
-        g2.drawLine(50,50,550,550); //linee diagonali per la palla
-        g2.drawLine(550,50,50,550);*/
+        if (pause){
+            String pauseString = "PAUSE";
+            g2.setFont(new Font("Arial", Font.PLAIN, 40));
+            int stringWidth = g2.getFontMetrics().stringWidth(pauseString);
+            int stringHeight = g2.getFontMetrics().getHeight();
+            g2.drawString(pauseString, leftBorder+gameWidth/2 - stringWidth/2,
+                    topBorder+gameHeight/2 + stringHeight/4);
+        }
+
         draw(g2);
     }
 
@@ -75,17 +102,27 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            p0.move();
-            p1.move();
-            ball.move();
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        while (pl0.getScore() < maxScore && pl1.getScore() < maxScore) {
+            if (!pause) {
+                p0.move();
+                p1.move();
+                ball.move();
+            }
             repaint();
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
         }
+        String winner = (pl0.getScore() > pl1.getScore())? pl0.getName(): pl1.getName();
+        Pong.exitGame(pl0.getName(), pl1.getName(), winner);
     }
 
     public static class GameKeyListener extends KeyAdapter {
@@ -93,6 +130,9 @@ public class GamePanel extends JPanel implements Runnable {
         @Override
         public void keyPressed(KeyEvent e) {
             pm.keyPressed(e);
+            if (e.getKeyCode() == KeyEvent.VK_ESCAPE){
+                pause = !pause;
+            }
         }
 
         @Override

@@ -18,7 +18,7 @@ public class TestBall {
 
     private final Paddle pLeft = new Paddle(pl0, topLim, botLim, leftLim, rightLim);
     private final Paddle pRight = new Paddle(pl1, topLim, botLim, leftLim, rightLim);
-    private final Ball ball = new Ball(topLim, botLim, leftLim, rightLim, pLeft, pRight, pl0, pl1);
+    private final Ball ball = new Ball(topLim, botLim, leftLim, rightLim, pLeft, pRight, pl0, pl1, 5);
     private final int xStart = ball.getxStart();
     private final int yStart = ball.getyStart();
     private final double eps = 1E-5;
