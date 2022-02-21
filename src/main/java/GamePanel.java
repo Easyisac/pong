@@ -29,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     private int velModule = 3;
     private int maxScore = 10;
+    private static boolean pause = false;
 
     public GamePanel(){
         setPreferredSize(panelSize);
@@ -78,13 +79,15 @@ public class GamePanel extends JPanel implements Runnable {
         g2.setColor(Color.white);
         g2.setStroke(new BasicStroke(1));
         g2.drawRect(leftBorder, topBorder, gameWidth, gameHeight);
-        // Test sulle posizioni delle barrette e della palla
-        /*g2.drawLine(100,50,100,550); //righe verticali per le barrette
-        g2.drawLine(500,50,500,550);
-        g2.drawLine(110,50,110,550);
-        g2.drawLine(490,50,490,550);
-        g2.drawLine(50,50,550,550); //linee diagonali per la palla
-        g2.drawLine(550,50,50,550);*/
+        if (pause){
+            String pauseString = "PAUSE";
+            g2.setFont(new Font("Arial", Font.PLAIN, 40));
+            int stringWidth = g2.getFontMetrics().stringWidth(pauseString);
+            int stringHeight = g2.getFontMetrics().getHeight();
+            g2.drawString(pauseString, leftBorder+gameWidth/2 - stringWidth/2,
+                    topBorder+gameHeight/2 + stringHeight/4);
+        }
+
         draw(g2);
     }
 
@@ -105,15 +108,18 @@ public class GamePanel extends JPanel implements Runnable {
             e.printStackTrace();
         }
         while (pl0.getScore() < maxScore && pl1.getScore() < maxScore) {
-            p0.move();
-            p1.move();
-            ball.move();
+            if (!pause) {
+                p0.move();
+                p1.move();
+                ball.move();
+            }
             repaint();
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
         }
         String winner = (pl0.getScore() > pl1.getScore())? pl0.getName(): pl1.getName();
         Pong.exitGame(pl0.getName(), pl1.getName(), winner);
@@ -124,6 +130,9 @@ public class GamePanel extends JPanel implements Runnable {
         @Override
         public void keyPressed(KeyEvent e) {
             pm.keyPressed(e);
+            if (e.getKeyCode() == KeyEvent.VK_ESCAPE){
+                pause = !pause;
+            }
         }
 
         @Override

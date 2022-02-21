@@ -37,7 +37,6 @@ public class MenuPanel extends JPanel implements ActionListener {
 
         startMenu();
 
-
     }
 
     public void startMenu() {
