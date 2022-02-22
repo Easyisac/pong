@@ -14,104 +14,80 @@ public class MenuPanel extends JPanel implements ActionListener {
     public int leftBorder = GameProperties.LEFT_BORDER;
     public int rightBorder = GameProperties.RIGHT_BORDER;
 
-    private final int height = 50;
-    private final int width = 100;
-    private final int center = (gameWidth + leftBorder + rightBorder)/2 - width/2;
-    private final int posy = 2*topBorder;
-    private final int gap = height+10;
+    private final int buttonHeight = 50;
+    private final int buttonWidth = 100;
+    private final int buttonXPosition = (gameWidth + leftBorder + rightBorder)/2 - buttonWidth /2;
+    private final int buttonYPosition = 2 * topBorder;
+    private final int gapBetweenButtons = buttonHeight + 10;
 
-    private TextField name0;
-    private TextField name1;
-    private JSlider velSlider;
+    private TextField player0NameField;
+    private TextField player1NameField;
+    private JSlider velocitySlider;
     private JSlider maxScoreSlider;
 
-    private String sName0;
-    private String sName1;
-    private boolean singlePlayer;
+    private String player0Name;
+    private String player1Name;
+    private boolean singlePlayerModeFlag;
     private final GamePanel gamePanel;
 
 
-    public MenuPanel(GamePanel gamepanel){
-        this.gamePanel = gamepanel;
+    public MenuPanel(GamePanel gamePanel){
+        this.gamePanel = gamePanel;
         Dimension panelSize = new Dimension(gameWidth + leftBorder + rightBorder,
                 gameHeight + topBorder + botBorder);
         setPreferredSize(panelSize);
         setBackground(Color.black);
-
         setLayout(null);
-
         startMenu();
+    }
 
+    private Button createButton(String name, int yPosition){
+        Button button = new Button(name);
+        button.setBounds(buttonXPosition, yPosition, buttonWidth, buttonHeight);
+        button.addActionListener(this);
+        button.setActionCommand(name);
+        return button;
+    }
+
+    private JLabel createLabel(String text, int yPosition, int fontSize){
+        JLabel label = new JLabel(text);
+        label.setBounds(leftBorder, yPosition, 500,100);
+        label.setBackground(Color.white);
+        label.setForeground(Color.WHITE);
+        label.setVerticalAlignment(JLabel.TOP);
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setFont(new Font("Arial", Font.PLAIN, fontSize));
+        return label;
     }
 
     public void startMenu() {
         this.removeAll();
         repaint();
 
-        JLabel title = new JLabel("Ping");
-        title.setBounds(center, topBorder, 100,100);
-        title.setBackground(Color.white);
-        title.setForeground(Color.WHITE);
-        title.setVerticalAlignment(JLabel.TOP);
-        title.setHorizontalAlignment(JLabel.CENTER);
-        title.setFont(new Font("Arial", Font.PLAIN, 28));
+        JLabel title = createLabel("Ping", topBorder, 28);
+        Button buttonOnePlayer = createButton("One Player", buttonYPosition);
+        Button buttonTwoPlayers = createButton("Two Players", buttonYPosition + gapBetweenButtons);
+        Button buttonSettings = createButton("Settings", buttonYPosition + gapBetweenButtons *2);
+        Button buttonQuit = createButton("Quit", buttonYPosition + gapBetweenButtons *3);
 
-        Button buttonP1 = new Button("One Player");
-        buttonP1.setBounds(center, posy, width, height);
-        buttonP1.addActionListener(this);
-        buttonP1.setActionCommand("One Player");
-
-        Button buttonP2 = new Button("Two Players");
-        buttonP2.setBounds(center,posy + gap, width, height);
-        buttonP2.addActionListener(this);
-        buttonP2.setActionCommand("Two Players");
-
-        Button buttonSettings = new Button("Settings");
-        buttonSettings.setBounds(center,posy + gap*2, width, height);
-        buttonSettings.addActionListener(this);
-        buttonSettings.setActionCommand("Settings");
-
-        Button buttonQuit = new Button("Quit");
-        buttonQuit.setBounds(center,posy + gap*3, width, height);
-        buttonQuit.addActionListener(this);
-        buttonQuit.setActionCommand("Quit");
-
-        add(buttonP1);
-        add(buttonP2);
+        add(buttonOnePlayer);
+        add(buttonTwoPlayers);
         add(buttonSettings);
         add(buttonQuit);
         add(title);
     }
 
-    public void endMenu(String sName0, String sName1, String winner, boolean singlePlayer){
+    public void endMenu(String player0Name, String player1Name, String winnerName, boolean singlePlayerModeFlag){
         this.removeAll();
         repaint();
-        this.sName0 = sName0;
-        this.sName1 = sName1;
-        this.singlePlayer = singlePlayer;
+        this.player0Name = player0Name;
+        this.player1Name = player1Name;
+        this.singlePlayerModeFlag = singlePlayerModeFlag;
 
-        JLabel title = new JLabel("The winner is " + winner);
-        title.setBounds(leftBorder, topBorder, 500,100);
-        title.setBackground(Color.white);
-        title.setForeground(Color.WHITE);
-        title.setVerticalAlignment(JLabel.TOP);
-        title.setHorizontalAlignment(JLabel.CENTER);
-        title.setFont(new Font("Arial", Font.PLAIN, 20));
-
-        Button buttonPlayAgain = new Button("Play Again");
-        buttonPlayAgain.setBounds(center, posy, width, height);
-        buttonPlayAgain.addActionListener(this);
-        buttonPlayAgain.setActionCommand("Play Again");
-
-        Button buttonMainMenu = new Button("Main Menu");
-        buttonMainMenu.setBounds(center,posy + gap, width, height);
-        buttonMainMenu.addActionListener(this);
-        buttonMainMenu.setActionCommand("Main Menu");
-
-        Button buttonQuit = new Button("Quit");
-        buttonQuit.setBounds(center,posy + gap*2, width, height);
-        buttonQuit.addActionListener(this);
-        buttonQuit.setActionCommand("Quit");
+        JLabel title = createLabel("The winner is " + winnerName, topBorder, 20);
+        Button buttonPlayAgain = createButton("Play Again", buttonYPosition);
+        Button buttonMainMenu = createButton("Main Menu", buttonYPosition + gapBetweenButtons);
+        Button buttonQuit = createButton("Quit", buttonYPosition + gapBetweenButtons *2);
 
         add(buttonPlayAgain);
         add(buttonMainMenu);
@@ -124,35 +100,21 @@ public class MenuPanel extends JPanel implements ActionListener {
         this.removeAll();
         repaint();
 
-        JLabel title = new JLabel("Insert names");
-        title.setBounds(center-25, topBorder, 150,100);
-        title.setBackground(Color.white);
-        title.setForeground(Color.WHITE);
-        title.setVerticalAlignment(JLabel.TOP);
-        title.setHorizontalAlignment(JLabel.CENTER);
-        title.setFont(new Font("Arial", Font.PLAIN, 20));
+        JLabel title = createLabel("Insert names", topBorder, 20);
 
-        name0 = new TextField("Player1");
-        name0.setBounds(center-(width+gap)/2, posy, width, height/2);
+        player0NameField = new TextField("Player1");
+        player0NameField.setBounds(buttonXPosition -(buttonWidth + gapBetweenButtons)/2, buttonYPosition /2 + gapBetweenButtons, buttonWidth, buttonHeight/2);
 
-        name1 = new TextField("Player2");
-        name1.setBounds(center+(width+gap)/2, posy, width, height/2);
+        player1NameField = new TextField("Player2");
+        player1NameField.setBounds(buttonXPosition +(buttonWidth + gapBetweenButtons)/2, buttonYPosition /2 + gapBetweenButtons, buttonWidth, buttonHeight/2);
 
-        Button buttonPlay = new Button("Play");
-        buttonPlay.setBounds(center,posy + gap, width, height);
-        buttonPlay.addActionListener(this);
-        buttonPlay.setActionCommand("Play");
-
-        Button buttonBack = new Button("Back");
-        buttonBack.setBounds(center,posy + gap*2, width, height);
-        buttonBack.addActionListener(this);
-        buttonBack.setActionCommand("Main Menu");
-
+        Button buttonPlay = createButton("Play", buttonYPosition + gapBetweenButtons);
+        Button buttonBack = createButton("Main Menu", buttonYPosition + gapBetweenButtons *2);
 
         add(buttonPlay);
         add(buttonBack);
-        add(name0);
-        add(name1);
+        add(player0NameField);
+        add(player1NameField);
         add(title);
     }
 
@@ -160,42 +122,28 @@ public class MenuPanel extends JPanel implements ActionListener {
         this.removeAll();
         repaint();
 
-        int gap = height+50;
+        int gap = buttonHeight +50;
         int maxVelocity = 5;
 
-        JLabel title = new JLabel("Settings");
-        title.setBounds(leftBorder, topBorder, 500,100);
-        title.setBackground(Color.white);
-        title.setForeground(Color.WHITE);
-        title.setVerticalAlignment(JLabel.TOP);
-        title.setHorizontalAlignment(JLabel.CENTER);
-        title.setFont(new Font("Arial", Font.PLAIN, 20));
-
-        Button buttonSave = new Button("Save");
-        buttonSave.setBounds(center,posy + gap*2, width, height);
-        buttonSave.addActionListener(this);
-        buttonSave.setActionCommand("Save");
+        JLabel title = createLabel("Settings", topBorder, 20);
+        Button buttonSave = createButton("Save", buttonYPosition + gap*2);
 
         Hashtable<Integer, JLabel> velLabels = new Hashtable<>();
         IntStream.range(1,maxVelocity+1).forEach(
                 x -> velLabels.put(x, new JLabel(Integer.toString(x)))
         );
 
-        JLabel selectBallVelocity = new JLabel("Select ball velocity");
-        selectBallVelocity.setBounds(center-width/2, posy-40, width*2, height);
-        selectBallVelocity.setBackground(Color.white);
-        selectBallVelocity.setForeground(Color.WHITE);
-        selectBallVelocity.setHorizontalAlignment(JLabel.CENTER);
+        JLabel selectBallVelocity = createLabel("Select ball velocity", buttonYPosition - 28, 15);
 
-        velSlider = new JSlider(1,maxVelocity, gamePanel.getVelModule());
-        velSlider.setBounds(center, posy, width, height);
-        velSlider.setMinorTickSpacing(1);
-        velSlider.setSnapToTicks(true);
-        velSlider.setOpaque(true);
-        velSlider.setPaintLabels(true);
-        velSlider.setPaintTrack(true);
-        velSlider.setPaintTicks(true);
-        velSlider.setLabelTable(velLabels);
+        velocitySlider = new JSlider(1,maxVelocity, gamePanel.getVelModule());
+        velocitySlider.setBounds(buttonXPosition, buttonYPosition, buttonWidth, buttonHeight);
+        velocitySlider.setMinorTickSpacing(1);
+        velocitySlider.setSnapToTicks(true);
+        velocitySlider.setOpaque(true);
+        velocitySlider.setPaintLabels(true);
+        velocitySlider.setPaintTrack(true);
+        velocitySlider.setPaintTicks(true);
+        velocitySlider.setLabelTable(velLabels);
 
 
         Hashtable<Integer, JLabel> maxScoreLabels = new Hashtable<>();
@@ -203,14 +151,10 @@ public class MenuPanel extends JPanel implements ActionListener {
                 x -> maxScoreLabels.put(x*5, new JLabel(Integer.toString(x*5)))
         );
 
-        JLabel selectMaxScore = new JLabel("Select maximum score");
-        selectMaxScore.setBounds(center-width/2, posy+gap-40, width*2, height);
-        selectMaxScore.setBackground(Color.white);
-        selectMaxScore.setForeground(Color.WHITE);
-        selectMaxScore.setHorizontalAlignment(JLabel.CENTER);
+        JLabel selectMaxScore = createLabel("Select maximum score", buttonYPosition + gap - 28, 15);
 
         maxScoreSlider = new JSlider(5,20, gamePanel.getMaxScore());
-        maxScoreSlider.setBounds(center, posy+gap, width, height);
+        maxScoreSlider.setBounds(buttonXPosition, buttonYPosition +gap, buttonWidth, buttonHeight);
         maxScoreSlider.setMinorTickSpacing(5);
         maxScoreSlider.setSnapToTicks(true);
         maxScoreSlider.setOpaque(true);
@@ -221,7 +165,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 
 
         add(buttonSave);
-        add(velSlider);
+        add(velocitySlider);
         add(maxScoreSlider);
         add(selectBallVelocity);
         add(selectMaxScore);
@@ -229,15 +173,15 @@ public class MenuPanel extends JPanel implements ActionListener {
     }
 
     private void startGame(){
-        String sName0 = name0.getText();
-        String sName1 = name1.getText();
-        Pong.startGame(sName0, sName1, false);
+        String player0Name = player0NameField.getText();
+        String player1Name = player1NameField.getText();
+        Pong.startGame(player0Name, player1Name, false);
     }
 
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
+    public void actionPerformed(ActionEvent actionEvent) {
+        switch (actionEvent.getActionCommand()) {
             case "Quit":
                 System.exit(0);
                 break;
@@ -254,13 +198,13 @@ public class MenuPanel extends JPanel implements ActionListener {
                 startMenu();
                 break;
             case "Play Again":
-                Pong.startGame(sName0, sName1, singlePlayer);
+                Pong.startGame(player0Name, player1Name, singlePlayerModeFlag);
                 break;
             case "Settings":
                 settingsMenu();
                 break;
             case "Save":
-                gamePanel.setVelModule(velSlider.getValue());
+                gamePanel.setVelModule(velocitySlider.getValue());
                 gamePanel.setMaxScore(maxScoreSlider.getValue());
                 startMenu();
                 break;
