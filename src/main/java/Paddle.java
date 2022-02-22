@@ -48,4 +48,6 @@ public class Paddle {
     public void setVelocity(double velocity){
         this.velocity = velocity;
     }
+
+    public void setY(int y) { this.y = y; }
 }
