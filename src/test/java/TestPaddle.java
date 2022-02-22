@@ -14,7 +14,7 @@ public class TestPaddle {
     private final Paddle p = new Paddle(pl1);
     private final int paddle_height = p.getPADDLE_HEIGHT();
 
-    private final int yStart = p.getY();
+    private final int yStart = p.getyPosition();
 
     @ParameterizedTest
     @ValueSource(ints={1,2,3,4,-4,20,-30})
@@ -22,7 +22,7 @@ public class TestPaddle {
         p.setVelocity(velocity);
         p.move();
 
-        assertEquals(yStart + velocity, p.getY());
+        assertEquals(yStart + velocity, p.getyPosition());
     }
 
     @ParameterizedTest
@@ -31,7 +31,7 @@ public class TestPaddle {
         p.setVelocity(velocity);
         p.move();
 
-        assertEquals(topLim, p.getY());
+        assertEquals(topLim, p.getyPosition());
     }
 
     @ParameterizedTest
@@ -40,6 +40,6 @@ public class TestPaddle {
         p.setVelocity(velocity);
         p.move();
 
-        assertEquals(botLim - paddle_height, p.getY());
+        assertEquals(botLim - paddle_height, p.getyPosition());
     }
 }

@@ -17,11 +17,11 @@ public class BotShould {
     @ParameterizedTest
     @CsvSource({"120, 120", "300, 400", "400, 300", "200, 500"})
     public void move_paddle_closer_to_ball(int paddleRightYPosition, double ballYPosition) {
-        paddleRight.setY(paddleRightYPosition);
+        paddleRight.setyPosition(paddleRightYPosition);
         ball.setY(ballYPosition);
-        double distanceBeforeMove = Math.abs(paddleRight.getY() - ball.getY());
+        double distanceBeforeMove = Math.abs(paddleRight.getyPosition() - ball.getY());
         bot.makeMove();
-        double distanceAfterMove = Math.abs(paddleRight.getY() - ball.getY());
+        double distanceAfterMove = Math.abs(paddleRight.getyPosition() - ball.getY());
         assert(distanceAfterMove <= distanceBeforeMove);
     }
 

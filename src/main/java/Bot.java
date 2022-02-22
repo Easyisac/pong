@@ -17,7 +17,7 @@ public class Bot {
     public void makeMove() {
 
         double ballPosition = ball.getY();
-        int paddlePosition = paddle.getY() + paddle.getPADDLE_HEIGHT()/2;
+        int paddlePosition = paddle.getyPosition() + paddle.getPADDLE_HEIGHT()/2;
         double distancePaddleBall = ballPosition - paddlePosition;
         int key = (distancePaddleBall<0) ?  KeyEvent.VK_UP : KeyEvent.VK_DOWN;
 

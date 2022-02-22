@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -91,8 +90,8 @@ public class TestBall {
     public void ball_collides_with_paddle_left(double velAngle, double velModule) {
         ball.setVelModule(velModule);
         ball.setVelAngle(Math.PI*velAngle);
-        ball.setY(pLeft.getY() + pLeft.getPADDLE_HEIGHT()/2.0);
-        ball.setX(pLeft.getX() + pLeft.getPADDLE_WIDTH() + 10);
+        ball.setY(pLeft.getyPosition() + pLeft.getPADDLE_HEIGHT()/2.0);
+        ball.setX(pLeft.getxPosition() + pLeft.getPADDLE_WIDTH() + 10);
 
         assertTrue(ball.checkCollisionsPaddleLeft());
     }
@@ -102,8 +101,8 @@ public class TestBall {
     public void ball_collides_with_paddle_right(double velAngle, double velModule) {
         ball.setVelModule(velModule);
         ball.setVelAngle(Math.PI*velAngle);
-        ball.setY(pRight.getY() + pRight.getPADDLE_HEIGHT()/2.0);
-        ball.setX(pRight.getX() - 10);
+        ball.setY(pRight.getyPosition() + pRight.getPADDLE_HEIGHT()/2.0);
+        ball.setX(pRight.getxPosition() - 10);
 
         assertTrue(ball.checkCollisionsPaddleRight());
     }

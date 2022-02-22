@@ -78,7 +78,7 @@ public class Ball {
 
     private void bounceOffPaddle(Paddle paddle, boolean side){
         double yImpact = y + Math.sin(velAngle) * velModule;
-        double yMid = paddle.getY() + paddle.getPADDLE_HEIGHT() / 2.0;
+        double yMid = paddle.getyPosition() + paddle.getPADDLE_HEIGHT() / 2.0;
         double yRel = (yMid - yImpact) / (paddle.getPADDLE_HEIGHT() / 2.0);
         yRel = yRel /2.0 + 0.5;
         yRel = Math.min(1, yRel);
@@ -168,8 +168,8 @@ public class Ball {
         double nextX = x + Math.cos(velAngle) * velModule;
         double nextY = y + Math.sin(velAngle) * velModule;
 
-        boolean condX = pLeft.getX() + pLeft.getPADDLE_WIDTH() <= nextX && nextX <= pLeft.getX() + pLeft.getPADDLE_WIDTH() + bOff;
-        boolean condY = pLeft.getY() <= nextY && nextY <= pLeft.getY() + pLeft.getPADDLE_HEIGHT();
+        boolean condX = pLeft.getxPosition() + pLeft.getPADDLE_WIDTH() <= nextX && nextX <= pLeft.getxPosition() + pLeft.getPADDLE_WIDTH() + bOff;
+        boolean condY = pLeft.getyPosition() <= nextY && nextY <= pLeft.getyPosition() + pLeft.getPADDLE_HEIGHT();
         return (condX && condY);
     }
 
@@ -178,8 +178,8 @@ public class Ball {
         double nextX = x + Math.cos(velAngle) * velModule;
         double nextY = y + Math.sin(velAngle) * velModule;
 
-        boolean condX = pRight.getX() - bOff <= nextX && nextX <= pRight.getX();
-        boolean condY = pRight.getY() <= nextY && nextY <= pRight.getY() + pRight.getPADDLE_HEIGHT();
+        boolean condX = pRight.getxPosition() - bOff <= nextX && nextX <= pRight.getxPosition();
+        boolean condY = pRight.getyPosition() <= nextY && nextY <= pRight.getyPosition() + pRight.getPADDLE_HEIGHT();
         return (condX && condY);
     }
 
@@ -190,13 +190,13 @@ public class Ball {
         double nextY = y + Math.sin(velAngle) * velModule;
 
         if (side){
-            condX = paddle.getX() - bOff <= nextX && nextX <= paddle.getX() + paddle.getPADDLE_WIDTH();
+            condX = paddle.getxPosition() - bOff <= nextX && nextX <= paddle.getxPosition() + paddle.getPADDLE_WIDTH();
         } else {
-            condX = paddle.getX() <= nextX && nextX <= paddle.getX() + paddle.getPADDLE_WIDTH() + bOff;
+            condX = paddle.getxPosition() <= nextX && nextX <= paddle.getxPosition() + paddle.getPADDLE_WIDTH() + bOff;
         }
 
-        boolean condYTop = paddle.getY() - bOff <= nextY && nextY <= paddle.getY();
-        boolean condYBot = paddle.getY() + paddle.getPADDLE_HEIGHT() <= nextY && nextY <= paddle.getY() + paddle.getPADDLE_HEIGHT()+ bOff;
+        boolean condYTop = paddle.getyPosition() - bOff <= nextY && nextY <= paddle.getyPosition();
+        boolean condYBot = paddle.getyPosition() + paddle.getPADDLE_HEIGHT() <= nextY && nextY <= paddle.getyPosition() + paddle.getPADDLE_HEIGHT()+ bOff;
         return (condX && (condYTop || condYBot));
 
     }
