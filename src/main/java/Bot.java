@@ -14,15 +14,15 @@ public class Bot {
         this.paddleMover = paddleMover;
     }
 
-    public void move() {
+    public void makeMove() {
 
         double ballPosition = ball.getY();
         int paddlePosition = paddle.getY() + paddle.getPADDLE_HEIGHT()/2;
         double distancePaddleBall = ballPosition - paddlePosition;
         int key = (distancePaddleBall<0) ?  KeyEvent.VK_UP : KeyEvent.VK_DOWN;
 
-        KeyEvent k = new KeyEvent(gamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, key, 'Z');
-        paddleMover.keyPressed(k);
+        KeyEvent keyEvent = new KeyEvent(gamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, key, 'Z');
+        paddleMover.keyPressed(keyEvent);
     }
 
 

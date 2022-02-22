@@ -123,7 +123,7 @@ public class GamePanel extends JPanel implements Runnable {
                 p0.move();
                 p1.move();
                 ball.move();
-                if (singlePlayer) bot.move();
+                if (singlePlayer) bot.makeMove();
             }
             repaint();
             try {

@@ -20,7 +20,7 @@ public class BotShould {
         paddleRight.setY(paddleRightYPosition);
         ball.setY(ballYPosition);
         double distanceBeforeMove = Math.abs(paddleRight.getY() - ball.getY());
-        bot.move();
+        bot.makeMove();
         double distanceAfterMove = Math.abs(paddleRight.getY() - ball.getY());
         assert(distanceAfterMove <= distanceBeforeMove);
     }
