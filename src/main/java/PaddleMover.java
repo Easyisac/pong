@@ -1,20 +1,21 @@
 import java.awt.event.KeyEvent;
-public class PaddleMover{
+public class PaddleMover {
 
-    private final Paddle paddle0;
-    private final Paddle paddle1;
-    public PaddleMover(Paddle p0, Paddle p1) {
-        paddle0 = p0;
-        paddle1 = p1;
+    private final Paddle paddleLeft;
+    private final Paddle paddleRight;
+
+    private boolean paddleLeftUpFlag;
+    private boolean paddleLeftDownFlag;
+    private boolean paddleRightUpFlag;
+    private boolean paddleRightDownFlag;
+
+    private double paddle0Speed = 5;
+    private double paddle1Speed = 5;
+
+    public PaddleMover(Paddle paddleLeft, Paddle paddleRight) {
+        this.paddleLeft = paddleLeft;
+        this.paddleRight = paddleRight;
     }
-
-    private boolean p0_up;
-    private boolean p0_down;
-    private boolean p1_up;
-    private boolean p1_down;
-    public static int speed = 5;
-    private double paddle0Speed = speed;
-    private double paddle1Speed = speed;
 
     public double getPaddle0Speed() {
         return paddle0Speed;
@@ -32,49 +33,49 @@ public class PaddleMover{
         this.paddle1Speed = paddle1Speed;
     }
 
-    private void setPaddleVelocity(Paddle p) {
+    private void setPaddleVelocity(Paddle paddle) {
         boolean p_up;
         boolean p_down;
         double paddleSpeed;
-        if (p.getPlayer().getId() == 0){
-            p_up = p0_up;
-            p_down = p0_down;
+        if (paddle.getPlayer().getId() == 0){
+            p_up = paddleLeftUpFlag;
+            p_down = paddleLeftDownFlag;
             paddleSpeed = paddle0Speed;
         } else {
-            p_up = p1_up;
-            p_down = p1_down;
+            p_up = paddleRightUpFlag;
+            p_down = paddleRightDownFlag;
             paddleSpeed = paddle1Speed;
         }
         if (!p_up && !p_down) {
-            p.setVelocity(0);
+            paddle.setVelocity(0);
         } else if (p_up) {
-            p.setVelocity(-paddleSpeed);
+            paddle.setVelocity(-paddleSpeed);
         } else if (p_down) {
-            p.setVelocity(paddleSpeed);
+            paddle.setVelocity(paddleSpeed);
         }
     }
 
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
-                p0_up = true;
-                p0_down = false;
-                setPaddleVelocity(paddle0);
+                paddleLeftUpFlag = true;
+                paddleLeftDownFlag = false;
+                setPaddleVelocity(paddleLeft);
                 break;
             case KeyEvent.VK_S:
-                p0_down = true;
-                p0_up = false;
-                setPaddleVelocity(paddle0);
+                paddleLeftDownFlag = true;
+                paddleLeftUpFlag = false;
+                setPaddleVelocity(paddleLeft);
                 break;
             case KeyEvent.VK_UP:
-                p1_up = true;
-                p1_down = false;
-                setPaddleVelocity(paddle1);
+                paddleRightUpFlag = true;
+                paddleRightDownFlag = false;
+                setPaddleVelocity(paddleRight);
                 break;
             case KeyEvent.VK_DOWN:
-                p1_down = true;
-                p1_up = false;
-                setPaddleVelocity(paddle1);
+                paddleRightDownFlag = true;
+                paddleRightUpFlag = false;
+                setPaddleVelocity(paddleRight);
                 break;
             default:
                 break;
@@ -84,24 +85,20 @@ public class PaddleMover{
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
-                p0_up = false;
-                //paddle0.setVelocity(0);
-                setPaddleVelocity(paddle0);
+                paddleLeftUpFlag = false;
+                setPaddleVelocity(paddleLeft);
                 break;
             case KeyEvent.VK_S:
-                p0_down = false;
-                //paddle0.setVelocity(0);
-                setPaddleVelocity(paddle0);
+                paddleLeftDownFlag = false;
+                setPaddleVelocity(paddleLeft);
                 break;
             case KeyEvent.VK_UP:
-                p1_up = false;
-                //paddle1.setVelocity(0);
-                setPaddleVelocity(paddle1);
+                paddleRightUpFlag = false;
+                setPaddleVelocity(paddleRight);
                 break;
             case KeyEvent.VK_DOWN:
-                p1_down = false;
-                //paddle1.setVelocity(0);
-                setPaddleVelocity(paddle1);
+                paddleRightDownFlag = false;
+                setPaddleVelocity(paddleRight);
                 break;
             default:
                 break;
