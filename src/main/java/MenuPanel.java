@@ -135,7 +135,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 
         JLabel selectBallVelocity = createLabel("Select ball velocity", buttonYPosition - 28, 15);
 
-        velocitySlider = new JSlider(1,maxVelocity, gamePanel.getVelModule());
+        velocitySlider = new JSlider(1,maxVelocity, gamePanel.getVelocityModule());
         velocitySlider.setBounds(buttonXPosition, buttonYPosition, buttonWidth, buttonHeight);
         velocitySlider.setMinorTickSpacing(1);
         velocitySlider.setSnapToTicks(true);
@@ -204,7 +204,7 @@ public class MenuPanel extends JPanel implements ActionListener {
                 settingsMenu();
                 break;
             case "Save":
-                gamePanel.setVelModule(velocitySlider.getValue());
+                gamePanel.setVelocityModule(velocitySlider.getValue());
                 gamePanel.setMaxScore(maxScoreSlider.getValue());
                 startMenu();
                 break;

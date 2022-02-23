@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class BallDrawer {
+public class BallDrawer implements Drawer {
 
     private final Ball ball;
     private final int ballRadius;

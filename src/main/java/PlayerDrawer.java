@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class PlayerDrawer {
+public class PlayerDrawer implements Drawer {
     Player player;
     int topBorder = GameProperties.TOP_FRAME;
     int leftBorder = GameProperties.LEFT_FRAME;
