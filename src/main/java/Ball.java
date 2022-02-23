@@ -195,7 +195,7 @@ public class Ball {
     }
 
     private void goalScored(Player player, boolean side){
-        player.incScore();
+        player.increaseScore();
         if (side) { // right
             reset(0); // angle 0
         } else { //left

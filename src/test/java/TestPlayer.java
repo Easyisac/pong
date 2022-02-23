@@ -12,7 +12,7 @@ public class TestPlayer {
     public void test_player_score(int points) {
         int startScore = p0.getScore();
         for(int i = 0; i < points; i++) {
-            p0.incScore();
+            p0.increaseScore();
         }
         assertEquals(p0.getScore(), startScore+points);
     }
