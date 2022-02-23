@@ -23,10 +23,10 @@ public class Pong{
         jf.setVisible(true);
     }
 
-    public static void exitGame(String sName0, String sName1, String winner, boolean singlePlayer) {
+    public static void exitGame(String sName0, String sName1, String winner, boolean singlePlayerModeFlag) {
         jf.getContentPane().removeAll();
         jf.add(menuPanel);
-        menuPanel.endMenu(sName0, sName1, winner, singlePlayer);
+        menuPanel.endMenu(sName0, sName1, winner, singlePlayerModeFlag);
         jf.setResizable(false);
         jf.pack();
         jf.setLocationRelativeTo(null);
@@ -35,10 +35,10 @@ public class Pong{
 
     }
 
-    public static void startGame(String sName0, String sName1, boolean singlePlayer) {
+    public static void startGame(String sName0, String sName1, boolean singlePlayerModeFlag) {
         jf.getContentPane().removeAll();
         jf.add(gamePanel);
-        gamePanel.startGame(sName0, sName1, singlePlayer);
+        gamePanel.startGame(sName0, sName1, singlePlayerModeFlag);
         jf.setResizable(false);
         jf.pack();
         jf.setLocationRelativeTo(null);

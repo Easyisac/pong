@@ -17,8 +17,8 @@ public class GamePanel extends JPanel implements Runnable {
     public int leftFrame = GameProperties.LEFT_FRAME;
     public int rightFrame = GameProperties.RIGHT_FRAME;
 
-    private Player player0;
-    private Player player1;
+    private Player playerLeft;
+    private Player playerRight;
     private Paddle paddleLeft;
     private Paddle paddleRight;
     private Ball ball;
@@ -35,20 +35,20 @@ public class GamePanel extends JPanel implements Runnable {
         setFocusable(true);
     }
 
-    public void startGame(String player0Name, String player1Name, boolean singlePlayerModeFlag) {
+    public void startGame(String playerLeftName, String playerRightName, boolean singlePlayerModeFlag) {
 
-        player0 = new Player(player0Name, 0);
-        player1 = new Player(player1Name, 1);
-        paddleLeft = new Paddle(player0);
-        paddleRight = new Paddle(player1);
-        ball = new Ball(paddleLeft, paddleRight, player0, player1, velocityModule);
+        playerLeft = new Player(playerLeftName, 0);
+        playerRight = new Player(playerRightName, 1);
+        paddleLeft = new Paddle(playerLeft);
+        paddleRight = new Paddle(playerRight);
+        ball = new Ball(paddleLeft, paddleRight, playerLeft, playerRight, velocityModule);
         paddleMover = new PaddleMover(paddleLeft, paddleRight);
 
         drawers[0] = new PaddleDrawer(paddleLeft);
         drawers[1] = new PaddleDrawer(paddleRight);
         drawers[2] = new BallDrawer(ball);
-        drawers[3] = new PlayerDrawer(player0);
-        drawers[4] = new PlayerDrawer(player1);
+        drawers[3] = new PlayerDrawer(playerLeft);
+        drawers[4] = new PlayerDrawer(playerRight);
 
         GamePanel.singlePlayerModeFlag = singlePlayerModeFlag;
         if (singlePlayerModeFlag) {
@@ -105,7 +105,7 @@ public class GamePanel extends JPanel implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        while (player0.getScore() < maxScore && player1.getScore() < maxScore) {
+        while (playerLeft.getScore() < maxScore && playerRight.getScore() < maxScore) {
             if (!pauseFlag) {
                 paddleLeft.move();
                 paddleRight.move();
@@ -126,8 +126,8 @@ public class GamePanel extends JPanel implements Runnable {
             e.printStackTrace();
         }
 
-        String winner = (player0.getScore() > player1.getScore()) ? player0.getName() : player1.getName();
-        Pong.exitGame(player0.getName(), player1.getName(), winner, singlePlayerModeFlag);
+        String winner = (playerLeft.getScore() > playerRight.getScore()) ? playerLeft.getName() : playerRight.getName();
+        Pong.exitGame(playerLeft.getName(), playerRight.getName(), winner, singlePlayerModeFlag);
     }
 
     public static class GameKeyListener extends KeyAdapter {

@@ -20,13 +20,13 @@ public class MenuPanel extends JPanel implements ActionListener {
     private final int buttonYPosition = 2 * topBorder;
     private final int gapBetweenButtons = buttonHeight + 10;
 
-    private TextField player0NameField;
-    private TextField player1NameField;
+    private TextField playerLeftNameField;
+    private TextField playerRightNameField;
     private JSlider velocitySlider;
     private JSlider maxScoreSlider;
 
-    private String player0Name;
-    private String player1Name;
+    private String playerLeftName;
+    private String playerRightName;
     private boolean singlePlayerModeFlag;
     private final GamePanel gamePanel;
 
@@ -77,11 +77,11 @@ public class MenuPanel extends JPanel implements ActionListener {
         add(title);
     }
 
-    public void endMenu(String player0Name, String player1Name, String winnerName, boolean singlePlayerModeFlag){
+    public void endMenu(String playerLeftName, String playerRightName, String winnerName, boolean singlePlayerModeFlag){
         this.removeAll();
         repaint();
-        this.player0Name = player0Name;
-        this.player1Name = player1Name;
+        this.playerLeftName = playerLeftName;
+        this.playerRightName = playerRightName;
         this.singlePlayerModeFlag = singlePlayerModeFlag;
 
         JLabel title = createLabel("The winner is " + winnerName, topBorder, 20);
@@ -102,19 +102,19 @@ public class MenuPanel extends JPanel implements ActionListener {
 
         JLabel title = createLabel("Insert names", topBorder, 28);
 
-        player0NameField = new TextField("Player1");
-        player0NameField.setBounds(buttonXPosition -(buttonWidth + gapBetweenButtons)/2, buttonYPosition /2 + gapBetweenButtons, buttonWidth, buttonHeight/2);
+        playerLeftNameField = new TextField("Player1");
+        playerLeftNameField.setBounds(buttonXPosition -(buttonWidth + gapBetweenButtons)/2, buttonYPosition /2 + gapBetweenButtons, buttonWidth, buttonHeight/2);
 
-        player1NameField = new TextField("Player2");
-        player1NameField.setBounds(buttonXPosition +(buttonWidth + gapBetweenButtons)/2, buttonYPosition /2 + gapBetweenButtons, buttonWidth, buttonHeight/2);
+        playerRightNameField = new TextField("Player2");
+        playerRightNameField.setBounds(buttonXPosition +(buttonWidth + gapBetweenButtons)/2, buttonYPosition /2 + gapBetweenButtons, buttonWidth, buttonHeight/2);
 
         Button buttonPlay = createButton("Play", buttonYPosition + gapBetweenButtons);
         Button buttonBack = createButton("Main Menu", buttonYPosition + gapBetweenButtons *2);
 
         add(buttonPlay);
         add(buttonBack);
-        add(player0NameField);
-        add(player1NameField);
+        add(playerLeftNameField);
+        add(playerRightNameField);
         add(title);
     }
 
@@ -173,9 +173,9 @@ public class MenuPanel extends JPanel implements ActionListener {
     }
 
     private void startGame(){
-        String player0Name = player0NameField.getText();
-        String player1Name = player1NameField.getText();
-        Pong.startGame(player0Name, player1Name, false);
+        playerLeftName = playerLeftNameField.getText();
+        playerRightName = playerRightNameField.getText();
+        Pong.startGame(playerLeftName, playerRightName, false);
     }
 
 
@@ -198,7 +198,7 @@ public class MenuPanel extends JPanel implements ActionListener {
                 startMenu();
                 break;
             case "Play Again":
-                Pong.startGame(player0Name, player1Name, singlePlayerModeFlag);
+                Pong.startGame(playerLeftName, playerRightName, singlePlayerModeFlag);
                 break;
             case "Settings":
                 settingsMenu();
