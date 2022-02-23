@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TestBall {
 
     private final int topLim = GameProperties.GAME_COURT_TOP_LIMIT;
-    private final int botLim = GameProperties.BOTTOM_LIMIT;
-    private final int leftLim = GameProperties.LEFT_LIMIT;
-    private final int rightLim = GameProperties.RIGHT_LIMIT;
+    private final int botLim = GameProperties.GAME_COURT_BOTTOM_LIMIT;
+    private final int leftLim = GameProperties.GAME_COURT_LEFT_LIMIT;
+    private final int rightLim = GameProperties.GAME_COURT_RIGHT_LIMIT;
 
     private final Player pl0 = new Player("Player0", 0);
     private final Player pl1 = new Player("Player1", 1);
@@ -25,7 +25,7 @@ public class TestBall {
     @ParameterizedTest
     @CsvSource({"1, 1", "5, 5", "10,20", "25, 30"})
     public void ball_inside_panel_move_test(double velAngle, double velModule) {
-        ball.setVelAngle(velAngle);
+        ball.setVelocityAngle(velAngle);
         ball.setVelModule(velModule);
         ball.move();
 
@@ -36,7 +36,7 @@ public class TestBall {
     @ParameterizedTest
     @CsvSource({"1, 1", "5, 5", "-10,20", "25, -30"})
     public void ball_reset_test(double velAngle, double velModule) {
-        ball.setVelAngle(velAngle);
+        ball.setVelocityAngle(velAngle);
         ball.setVelModule(velModule);
         ball.move();
         ball.reset(1);
@@ -49,47 +49,47 @@ public class TestBall {
     @ValueSource(ints={10, 20, 50, 250, 500})
     public void ball_out_top_boundary(double velModule) {
         ball.setVelModule(velModule);
-        ball.setVelAngle( 3/2.0 * Math.PI);
+        ball.setVelocityAngle( 3/2.0 * Math.PI);
         ball.setyPosition(topLim + 15);
 
-        assertTrue(ball.checkCollisionsTop());
+        assertTrue(ball.checkCollisionsTopLimit());
     }
 
     @ParameterizedTest
     @ValueSource(ints={10, 20, 50, 250, 500})
     public void ball_out_bottom_boundary(double velModule) {
         ball.setVelModule(velModule);
-        ball.setVelAngle(Math.PI/2);
+        ball.setVelocityAngle(Math.PI/2);
         ball.setyPosition(botLim - 15);
 
-        assertTrue(ball.checkCollisionsBottom());
+        assertTrue(ball.checkCollisionsBottomLimit());
     }
 
     @ParameterizedTest
     @ValueSource(ints={5, 10, 50, 250, 500})
     public void ball_out_left_boundary(double velModule) {
         ball.setVelModule(velModule);
-        ball.setVelAngle(Math.PI);
+        ball.setVelocityAngle(Math.PI);
         ball.setxPosition(leftLim + 15);
 
-        assertTrue(ball.checkCollisionsLeft());
+        assertTrue(ball.checkCollisionsLeftLimit());
     }
 
     @ParameterizedTest
     @ValueSource(ints={5, 10, 50, 250, 500})
     public void ball_out_right_boundary(double velModule) {
         ball.setVelModule(velModule);
-        ball.setVelAngle(0);
+        ball.setVelocityAngle(0);
         ball.setxPosition(rightLim - 15);
 
-        assertTrue(ball.checkCollisionsRight());
+        assertTrue(ball.checkCollisionsRightLimit());
     }
 
     @ParameterizedTest
     @CsvSource({"0.6, 2", "0.7, 4", "1, 6", "1.1, 7", "1.2, 8"})
     public void ball_collides_with_paddle_left(double velAngle, double velModule) {
         ball.setVelModule(velModule);
-        ball.setVelAngle(Math.PI*velAngle);
+        ball.setVelocityAngle(Math.PI*velAngle);
         ball.setyPosition(pLeft.getyPosition() + pLeft.getPADDLE_HEIGHT()/2.0);
         ball.setxPosition(pLeft.getxPosition() + pLeft.getPADDLE_WIDTH() + 10);
 
@@ -100,7 +100,7 @@ public class TestBall {
     @CsvSource({"0.1, 2", "0.3, 4", "0.4, 6", "1.6, 7", "1.9, 8"})
     public void ball_collides_with_paddle_right(double velAngle, double velModule) {
         ball.setVelModule(velModule);
-        ball.setVelAngle(Math.PI*velAngle);
+        ball.setVelocityAngle(Math.PI*velAngle);
         ball.setyPosition(pRight.getyPosition() + pRight.getPADDLE_HEIGHT()/2.0);
         ball.setxPosition(pRight.getxPosition() - 10);
 
@@ -111,11 +111,11 @@ public class TestBall {
     @CsvSource({"1.1, 1", "1.2, 2", "1.3, 3", "1.5, 4", "1.8, 5"})
     public void ball_bounced_top_boundary(double velAngle, double velModule){
         ball.setVelModule(velModule);
-        ball.setVelAngle(Math.PI*velAngle);
+        ball.setVelocityAngle(Math.PI*velAngle);
         ball.setyPosition(topLim+10);
         ball.setxPosition((rightLim+leftLim)/2.0);
 
-        double newAngle = 2 * Math.PI - ball.getVelAngle();
+        double newAngle = 2 * Math.PI - ball.getVelocityAngle();
         double final_positionX = ball.getxPosition() + Math.cos(newAngle) * velModule;
         double final_positionY = ball.getyPosition() + Math.sin(newAngle) * velModule;
 
@@ -130,11 +130,11 @@ public class TestBall {
     @CsvSource({"0.1, 1", "0.4, 2", "0.5, 3", "0.7, 4", "0.9, 5"})
     public void ball_bounced_bottom_boundary(double velAngle, double velModule){
         ball.setVelModule(velModule);
-        ball.setVelAngle(Math.PI*velAngle);
+        ball.setVelocityAngle(Math.PI*velAngle);
         ball.setyPosition(topLim-10);
         ball.setxPosition((rightLim+leftLim)/2.0);
 
-        double newAngle = 2 * Math.PI - ball.getVelAngle();
+        double newAngle = 2 * Math.PI - ball.getVelocityAngle();
         double final_positionX = ball.getxPosition() + Math.cos(newAngle) * velModule;
         double final_positionY = ball.getyPosition() + Math.sin(newAngle) * velModule;
 
@@ -184,7 +184,7 @@ public class TestBall {
     @ValueSource(ints={1, 2, 3, 4, 6})
     public void ball_score_on_left_on_straight_line(double velModule){
         ball.setVelModule(velModule);
-        ball.setVelAngle(Math.PI);
+        ball.setVelocityAngle(Math.PI);
         ball.setyPosition(topLim+10);
         ball.setxPosition(leftLim+10);
 
@@ -198,7 +198,7 @@ public class TestBall {
     @ValueSource(ints={1, 2, 3, 4, 6})
     public void ball_score_on_right_on_straight_line(double velModule){
         ball.setVelModule(velModule);
-        ball.setVelAngle(0);
+        ball.setVelocityAngle(0);
         ball.setyPosition(topLim+10);
         ball.setxPosition(rightLim-10);
 

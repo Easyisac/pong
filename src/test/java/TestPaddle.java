@@ -5,9 +5,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class TestPaddle {
 
     private final int topLim = GameProperties.GAME_COURT_TOP_LIMIT;
-    private final int botLim = GameProperties.BOTTOM_LIMIT;
-    private final int leftLim = GameProperties.LEFT_LIMIT;
-    private final int rightLim = GameProperties.RIGHT_LIMIT;
+    private final int botLim = GameProperties.GAME_COURT_BOTTOM_LIMIT;
+    private final int leftLim = GameProperties.GAME_COURT_LEFT_LIMIT;
+    private final int rightLim = GameProperties.GAME_COURT_RIGHT_LIMIT;
 
     private final Player pl1 = new Player("Player1", 1);
 
