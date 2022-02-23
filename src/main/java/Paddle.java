@@ -8,10 +8,10 @@ public class Paddle {
     private int yPosition;
     private double velocity;
 
-    private final int topLim = GameProperties.TOP_LIM;
-    private final int botLim = GameProperties.BOT_LIM;
-    private final int leftLim = GameProperties.LEFT_LIM;
-    private final int rightLim = GameProperties.RIGHT_LIM;
+    private final int topLim = GameProperties.GAME_COURT_TOP_LIMIT;
+    private final int botLim = GameProperties.BOTTOM_LIMIT;
+    private final int leftLim = GameProperties.LEFT_LIMIT;
+    private final int rightLim = GameProperties.RIGHT_LIMIT;
 
     private final Player player;
 

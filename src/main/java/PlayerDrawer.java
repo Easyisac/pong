@@ -2,9 +2,9 @@ import java.awt.*;
 
 public class PlayerDrawer {
     Player player;
-    int topBorder = GameProperties.TOP_BORDER;
-    int leftBorder = GameProperties.LEFT_BORDER;
-    int gameWidth = GameProperties.GAME_WIDTH;
+    int topBorder = GameProperties.TOP_FRAME;
+    int leftBorder = GameProperties.LEFT_FRAME;
+    int gameWidth = GameProperties.GAME_COURT_WIDTH;
 
     public PlayerDrawer(Player player) {
         this.player = player;

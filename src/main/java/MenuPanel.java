@@ -7,12 +7,12 @@ import java.util.stream.IntStream;
 
 public class MenuPanel extends JPanel implements ActionListener {
 
-    public int gameHeight = GameProperties.GAME_HEIGHT;
-    public int gameWidth = GameProperties.GAME_WIDTH;
-    public int topBorder = GameProperties.TOP_BORDER;
-    public int botBorder = GameProperties.BOT_BORDER;
-    public int leftBorder = GameProperties.LEFT_BORDER;
-    public int rightBorder = GameProperties.RIGHT_BORDER;
+    public int gameHeight = GameProperties.GAME_COURT_HEIGHT;
+    public int gameWidth = GameProperties.GAME_COURT_WIDTH;
+    public int topBorder = GameProperties.TOP_FRAME;
+    public int botBorder = GameProperties.BOTTOM_FRAME;
+    public int leftBorder = GameProperties.LEFT_FRAME;
+    public int rightBorder = GameProperties.RIGHT_FRAME;
 
     private final int buttonHeight = 50;
     private final int buttonWidth = 100;
@@ -64,7 +64,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         this.removeAll();
         repaint();
 
-        JLabel title = createLabel("Ping", topBorder, 28);
+        JLabel title = createLabel("Pong", topBorder, 40);
         Button buttonOnePlayer = createButton("One Player", buttonYPosition);
         Button buttonTwoPlayers = createButton("Two Players", buttonYPosition + gapBetweenButtons);
         Button buttonSettings = createButton("Settings", buttonYPosition + gapBetweenButtons *2);
@@ -100,7 +100,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         this.removeAll();
         repaint();
 
-        JLabel title = createLabel("Insert names", topBorder, 20);
+        JLabel title = createLabel("Insert names", topBorder, 28);
 
         player0NameField = new TextField("Player1");
         player0NameField.setBounds(buttonXPosition -(buttonWidth + gapBetweenButtons)/2, buttonYPosition /2 + gapBetweenButtons, buttonWidth, buttonHeight/2);
@@ -125,7 +125,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         int gap = buttonHeight +50;
         int maxVelocity = 5;
 
-        JLabel title = createLabel("Settings", topBorder, 20);
+        JLabel title = createLabel("Settings", topBorder, 28);
         Button buttonSave = createButton("Save", buttonYPosition + gap*2);
 
         Hashtable<Integer, JLabel> velLabels = new Hashtable<>();

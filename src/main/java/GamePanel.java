@@ -18,12 +18,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     private static PaddleMover pm;
 
-    public int gameHeight = GameProperties.GAME_HEIGHT;
-    public int gameWidth = GameProperties.GAME_WIDTH;
-    public int topBorder = GameProperties.TOP_BORDER;
-    public int botBorder = GameProperties.BOT_BORDER;
-    public int leftBorder = GameProperties.LEFT_BORDER;
-    public int rightBorder = GameProperties.RIGHT_BORDER;
+    public int gameHeight = GameProperties.GAME_COURT_HEIGHT;
+    public int gameWidth = GameProperties.GAME_COURT_WIDTH;
+    public int topBorder = GameProperties.TOP_FRAME;
+    public int botBorder = GameProperties.BOTTOM_FRAME;
+    public int leftBorder = GameProperties.LEFT_FRAME;
+    public int rightBorder = GameProperties.RIGHT_FRAME;
 
     private int velModule = 3;
     private int maxScore = 10;

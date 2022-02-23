@@ -18,10 +18,10 @@ public class BotShould {
     @CsvSource({"120, 120", "300, 400", "400, 300", "200, 500"})
     public void move_paddle_closer_to_ball(int paddleRightYPosition, double ballYPosition) {
         paddleRight.setyPosition(paddleRightYPosition);
-        ball.setY(ballYPosition);
-        double distanceBeforeMove = Math.abs(paddleRight.getyPosition() - ball.getY());
+        ball.setyPosition(ballYPosition);
+        double distanceBeforeMove = Math.abs(paddleRight.getyPosition() - ball.getyPosition());
         bot.makeMove();
-        double distanceAfterMove = Math.abs(paddleRight.getyPosition() - ball.getY());
+        double distanceAfterMove = Math.abs(paddleRight.getyPosition() - ball.getyPosition());
         assert(distanceAfterMove <= distanceBeforeMove);
     }
 

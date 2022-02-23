@@ -7,10 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestBall {
 
-    private final int topLim = GameProperties.TOP_LIM;
-    private final int botLim = GameProperties.BOT_LIM;
-    private final int leftLim = GameProperties.LEFT_LIM;
-    private final int rightLim = GameProperties.RIGHT_LIM;
+    private final int topLim = GameProperties.GAME_COURT_TOP_LIMIT;
+    private final int botLim = GameProperties.BOTTOM_LIMIT;
+    private final int leftLim = GameProperties.LEFT_LIMIT;
+    private final int rightLim = GameProperties.RIGHT_LIMIT;
 
     private final Player pl0 = new Player("Player0", 0);
     private final Player pl1 = new Player("Player1", 1);
@@ -18,8 +18,8 @@ public class TestBall {
     private final Paddle pLeft = new Paddle(pl0);
     private final Paddle pRight = new Paddle(pl1);
     private final Ball ball = new Ball(pLeft, pRight, pl0, pl1, 5);
-    private final int xStart = ball.getxStart();
-    private final int yStart = ball.getyStart();
+    private final int xStart = ball.getxPositionStart();
+    private final int yStart = ball.getyPositionStart();
     private final double eps = 1E-5;
 
     @ParameterizedTest
@@ -29,8 +29,8 @@ public class TestBall {
         ball.setVelModule(velModule);
         ball.move();
 
-        assertEquals(xStart + Math.cos(velAngle) * velModule, ball.getX(), eps);
-        assertEquals(yStart + Math.sin(velAngle) * velModule, ball.getY(), eps);
+        assertEquals(xStart + Math.cos(velAngle) * velModule, ball.getxPosition(), eps);
+        assertEquals(yStart + Math.sin(velAngle) * velModule, ball.getyPosition(), eps);
     }
 
     @ParameterizedTest
@@ -41,8 +41,8 @@ public class TestBall {
         ball.move();
         ball.reset(1);
 
-        assertEquals(xStart, ball.getX());
-        assertEquals(yStart, ball.getY());
+        assertEquals(xStart, ball.getxPosition());
+        assertEquals(yStart, ball.getyPosition());
     }
 
     @ParameterizedTest
@@ -50,7 +50,7 @@ public class TestBall {
     public void ball_out_top_boundary(double velModule) {
         ball.setVelModule(velModule);
         ball.setVelAngle( 3/2.0 * Math.PI);
-        ball.setY(topLim + 15);
+        ball.setyPosition(topLim + 15);
 
         assertTrue(ball.checkCollisionsTop());
     }
@@ -60,7 +60,7 @@ public class TestBall {
     public void ball_out_bottom_boundary(double velModule) {
         ball.setVelModule(velModule);
         ball.setVelAngle(Math.PI/2);
-        ball.setY(botLim - 15);
+        ball.setyPosition(botLim - 15);
 
         assertTrue(ball.checkCollisionsBottom());
     }
@@ -70,7 +70,7 @@ public class TestBall {
     public void ball_out_left_boundary(double velModule) {
         ball.setVelModule(velModule);
         ball.setVelAngle(Math.PI);
-        ball.setX(leftLim + 15);
+        ball.setxPosition(leftLim + 15);
 
         assertTrue(ball.checkCollisionsLeft());
     }
@@ -80,7 +80,7 @@ public class TestBall {
     public void ball_out_right_boundary(double velModule) {
         ball.setVelModule(velModule);
         ball.setVelAngle(0);
-        ball.setX(rightLim - 15);
+        ball.setxPosition(rightLim - 15);
 
         assertTrue(ball.checkCollisionsRight());
     }
@@ -90,8 +90,8 @@ public class TestBall {
     public void ball_collides_with_paddle_left(double velAngle, double velModule) {
         ball.setVelModule(velModule);
         ball.setVelAngle(Math.PI*velAngle);
-        ball.setY(pLeft.getyPosition() + pLeft.getPADDLE_HEIGHT()/2.0);
-        ball.setX(pLeft.getxPosition() + pLeft.getPADDLE_WIDTH() + 10);
+        ball.setyPosition(pLeft.getyPosition() + pLeft.getPADDLE_HEIGHT()/2.0);
+        ball.setxPosition(pLeft.getxPosition() + pLeft.getPADDLE_WIDTH() + 10);
 
         assertTrue(ball.checkCollisionsPaddleLeft());
     }
@@ -101,8 +101,8 @@ public class TestBall {
     public void ball_collides_with_paddle_right(double velAngle, double velModule) {
         ball.setVelModule(velModule);
         ball.setVelAngle(Math.PI*velAngle);
-        ball.setY(pRight.getyPosition() + pRight.getPADDLE_HEIGHT()/2.0);
-        ball.setX(pRight.getxPosition() - 10);
+        ball.setyPosition(pRight.getyPosition() + pRight.getPADDLE_HEIGHT()/2.0);
+        ball.setxPosition(pRight.getxPosition() - 10);
 
         assertTrue(ball.checkCollisionsPaddleRight());
     }
@@ -112,17 +112,17 @@ public class TestBall {
     public void ball_bounced_top_boundary(double velAngle, double velModule){
         ball.setVelModule(velModule);
         ball.setVelAngle(Math.PI*velAngle);
-        ball.setY(topLim+10);
-        ball.setX((rightLim+leftLim)/2.0);
+        ball.setyPosition(topLim+10);
+        ball.setxPosition((rightLim+leftLim)/2.0);
 
         double newAngle = 2 * Math.PI - ball.getVelAngle();
-        double final_positionX = ball.getX() + Math.cos(newAngle) * velModule;
-        double final_positionY = ball.getY() + Math.sin(newAngle) * velModule;
+        double final_positionX = ball.getxPosition() + Math.cos(newAngle) * velModule;
+        double final_positionY = ball.getyPosition() + Math.sin(newAngle) * velModule;
 
         ball.move();
 
-        assertEquals(final_positionX, ball.getX(), eps);
-        assertEquals(final_positionY, ball.getY(), eps);
+        assertEquals(final_positionX, ball.getxPosition(), eps);
+        assertEquals(final_positionY, ball.getyPosition(), eps);
     }
 
 
@@ -131,17 +131,17 @@ public class TestBall {
     public void ball_bounced_bottom_boundary(double velAngle, double velModule){
         ball.setVelModule(velModule);
         ball.setVelAngle(Math.PI*velAngle);
-        ball.setY(topLim-10);
-        ball.setX((rightLim+leftLim)/2.0);
+        ball.setyPosition(topLim-10);
+        ball.setxPosition((rightLim+leftLim)/2.0);
 
         double newAngle = 2 * Math.PI - ball.getVelAngle();
-        double final_positionX = ball.getX() + Math.cos(newAngle) * velModule;
-        double final_positionY = ball.getY() + Math.sin(newAngle) * velModule;
+        double final_positionX = ball.getxPosition() + Math.cos(newAngle) * velModule;
+        double final_positionY = ball.getyPosition() + Math.sin(newAngle) * velModule;
 
         ball.move();
 
-        assertEquals(final_positionX, ball.getX(), eps);
-        assertEquals(final_positionY, ball.getY(), eps);
+        assertEquals(final_positionX, ball.getxPosition(), eps);
+        assertEquals(final_positionY, ball.getyPosition(), eps);
     }
 
 /*
@@ -185,13 +185,13 @@ public class TestBall {
     public void ball_score_on_left_on_straight_line(double velModule){
         ball.setVelModule(velModule);
         ball.setVelAngle(Math.PI);
-        ball.setY(topLim+10);
-        ball.setX(leftLim+10);
+        ball.setyPosition(topLim+10);
+        ball.setxPosition(leftLim+10);
 
         ball.move();
 
-        assertEquals(ball.getxStart(), ball.getX(), eps);
-        assertEquals(ball.getyStart(), ball.getY(), eps);
+        assertEquals(ball.getxPositionStart(), ball.getxPosition(), eps);
+        assertEquals(ball.getyPositionStart(), ball.getyPosition(), eps);
     }
 
     @ParameterizedTest
@@ -199,13 +199,13 @@ public class TestBall {
     public void ball_score_on_right_on_straight_line(double velModule){
         ball.setVelModule(velModule);
         ball.setVelAngle(0);
-        ball.setY(topLim+10);
-        ball.setX(rightLim-10);
+        ball.setyPosition(topLim+10);
+        ball.setxPosition(rightLim-10);
 
         ball.move();
 
-        assertEquals(ball.getxStart(), ball.getX(), eps);
-        assertEquals(ball.getyStart(), ball.getY(), eps);
+        assertEquals(ball.getxPositionStart(), ball.getxPosition(), eps);
+        assertEquals(ball.getyPositionStart(), ball.getyPosition(), eps);
     }
 
 

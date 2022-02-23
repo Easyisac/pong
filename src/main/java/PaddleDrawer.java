@@ -1,6 +1,7 @@
 import java.awt.*;
 
 public class PaddleDrawer {
+
     private Paddle paddle;
 
     public PaddleDrawer(Paddle paddle) {
