@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class PaddleDrawer {
+public class PaddleDrawer implements Drawer {
 
     private Paddle paddle;
 
