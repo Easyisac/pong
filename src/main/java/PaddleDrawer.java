@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class PaddleDrawer implements Drawer {
 
-    private Paddle paddle;
+    private final Paddle paddle;
 
     public PaddleDrawer(Paddle paddle) {
         this.paddle = paddle;
