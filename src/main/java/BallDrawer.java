@@ -8,7 +8,7 @@ public class BallDrawer implements Drawer {
     public BallDrawer(Ball ball) {
 
         this.ball = ball;
-        ballRadius = ball.getBallRadius();
+        ballRadius = ball.getBALL_RADIUS();
     }
 
     public void draw(Graphics2D g2){
