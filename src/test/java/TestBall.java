@@ -24,7 +24,7 @@ public class TestBall {
 
     @ParameterizedTest
     @CsvSource({"1, 1", "5, 5", "10,20", "25, 30"})
-    public void ball_inside_panel_move_test(double velAngle, double velModule) {
+    public void ball_movement_inside_panel(double velAngle, double velModule) {
         ball.setVelocityAngle(velAngle);
         ball.setVelModule(velModule);
         ball.move();
@@ -35,7 +35,7 @@ public class TestBall {
 
     @ParameterizedTest
     @CsvSource({"1, 1", "5, 5", "-10,20", "25, -30"})
-    public void ball_reset_test(double velAngle, double velModule) {
+    public void ball_reset(double velAngle, double velModule) {
         ball.setVelocityAngle(velAngle);
         ball.setVelModule(velModule);
         ball.move();
