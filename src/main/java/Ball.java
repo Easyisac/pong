@@ -17,6 +17,9 @@ public class Ball {
     private final int BALL_RADIUS = 10;
     private final boolean LEFT = false;
     private final boolean RIGHT = true;
+    private final double STARTING_RANGE = 5/6.0;
+    private final double BOUNCE_RANGE = 2 / 3.0;
+
     private final int xPositionStart;
     private final int yPositionStart;
     private double xCenter;
@@ -72,8 +75,7 @@ public class Ball {
     public void setyCenter(double yCenter) { this.yCenter = yCenter; }
 
     public double generateStartingAngle(int direction){
-        double range = 5/6.0;
-        double angle = (range * random.nextDouble() + (1-range)/2.0 + 1/2.0 + direction) % 2;
+        double angle = (STARTING_RANGE * random.nextDouble() + (1-STARTING_RANGE)/2.0 + 1/2.0 + direction) % 2;
         return angle * Math.PI;
     }
 
@@ -172,17 +174,15 @@ public class Ball {
     }
 
     private void bounceOffPaddle(Paddle paddle, boolean side){
-        double range = 2 / 3.0;
         double yPositionPaddleCenter = paddle.getyPosition() + paddle.getPADDLE_HEIGHT() / 2.0;
-        double yRelative = (yPositionPaddleCenter - nextYCenter()) / (paddle.getPADDLE_HEIGHT() / 2.0);
-        yRelative = yRelative /2.0 + 0.5;
+        double yRelative = (yPositionPaddleCenter - nextYCenter()) / (paddle.getPADDLE_HEIGHT() / 2.0) /2.0 + 0.5;
         yRelative = Math.min(1, yRelative);
         yRelative = Math.max(0, yRelative);
 
         if (side){ // right
-            velocityAngle = (range * yRelative + (1- range)/2.0 + 1/2.0) * Math.PI;
+            velocityAngle = Math.PI * (BOUNCE_RANGE * yRelative + (1- BOUNCE_RANGE)/2.0 + 1/2.0);
         } else { // left
-            velocityAngle = Math.PI * (2 - ((range * yRelative + (1- range)/2.0 + 1/2.0 + 1) % 2));
+            velocityAngle = Math.PI * (2 - ((BOUNCE_RANGE * yRelative + (1- BOUNCE_RANGE)/2.0 + 1/2.0 + 1) % 2));
         }
     }
 
