@@ -131,29 +131,32 @@ public class Ball {
         return (checkCollisionsHorizontalSide(paddleRight, right) || checkCollisionsPaddleRightVerticalSide());
     }
 
-    public boolean checkCollisionsPaddleLeftVerticalSide(){
+    private double nextXBallCenter() {
+        return xPosition + Math.cos(velocityAngle) * velocityModule;
+    }
 
-        double nextXBallCenter = xPosition + Math.cos(velocityAngle) * velocityModule;
-        double nextYBallCenter = yPosition + Math.sin(velocityAngle) * velocityModule;
+    private double nextYBallCenter() {
+        return yPosition + Math.sin(velocityAngle) * velocityModule;
+    }
+
+    public boolean checkCollisionsPaddleLeftVerticalSide(){
+        // feature envy? consider making a method in paddle that outputs these three values
         double collisionZoneLeftLimit  = paddleLeft.getxPosition() + paddleLeft.getPADDLE_WIDTH();
         double collisionZoneRightLimit = paddleLeft.getxPosition() + paddleLeft.getPADDLE_WIDTH() + ballRadius;
         double collisionZoneBottomLimit = paddleLeft.getyPosition() + paddleLeft.getPADDLE_HEIGHT();
 
-        boolean xBallCenterInsideCollisionZone =  collisionZoneLeftLimit <= nextXBallCenter && nextXBallCenter <= collisionZoneRightLimit;
-        boolean yBallCenterInsideCollisionZone = paddleLeft.getyPosition() <= nextYBallCenter && nextYBallCenter <= collisionZoneBottomLimit;
+        boolean xBallCenterInsideCollisionZone =  collisionZoneLeftLimit <= nextXBallCenter() && nextXBallCenter() <= collisionZoneRightLimit;
+        boolean yBallCenterInsideCollisionZone = paddleLeft.getyPosition() <= nextYBallCenter() && nextYBallCenter() <= collisionZoneBottomLimit;
 
         return (xBallCenterInsideCollisionZone && yBallCenterInsideCollisionZone);
     }
 
     public boolean checkCollisionsPaddleRightVerticalSide(){
-
-        double nextXBallCenter = xPosition + Math.cos(velocityAngle) * velocityModule;
-        double nextYBallCenter = yPosition + Math.sin(velocityAngle) * velocityModule;
         double collisionZoneLeftLimit  = paddleRight.getxPosition() - ballRadius;
         double collisionZoneBottomLimit = paddleRight.getyPosition() + paddleRight.getPADDLE_HEIGHT();
 
-        boolean xBallCenterInsideCollisionZone = collisionZoneLeftLimit <= nextXBallCenter && nextXBallCenter <= paddleRight.getxPosition();
-        boolean yBallCenterInsideCollisionZone = paddleRight.getyPosition() <= nextYBallCenter && nextYBallCenter <= collisionZoneBottomLimit;
+        boolean xBallCenterInsideCollisionZone = collisionZoneLeftLimit <= nextXBallCenter() && nextXBallCenter() <= paddleRight.getxPosition();
+        boolean yBallCenterInsideCollisionZone = paddleRight.getyPosition() <= nextYBallCenter() && nextYBallCenter() <= collisionZoneBottomLimit;
 
         return (xBallCenterInsideCollisionZone && yBallCenterInsideCollisionZone);
     }
@@ -161,28 +164,25 @@ public class Ball {
     public boolean checkCollisionsHorizontalSide(Paddle paddle, boolean side){
 
         boolean xBallCenterInsideCollisionZones;
-        double nextXBallCenter = xPosition + Math.cos(velocityAngle) * velocityModule;
-        double nextYBallCenter = yPosition + Math.sin(velocityAngle) * velocityModule;
 
         if (side) { // right
-            xBallCenterInsideCollisionZones = paddle.getxPosition() - ballRadius <= nextXBallCenter
-                                              && nextXBallCenter <= paddle.getxPosition() + paddle.getPADDLE_WIDTH();
+            xBallCenterInsideCollisionZones = paddle.getxPosition() - ballRadius <= nextXBallCenter()
+                                              && nextXBallCenter() <= paddle.getxPosition() + paddle.getPADDLE_WIDTH();
         } else { // left
-            xBallCenterInsideCollisionZones = paddle.getxPosition() <= nextXBallCenter
-                                              && nextXBallCenter <= paddle.getxPosition() + paddle.getPADDLE_WIDTH() + ballRadius;
+            xBallCenterInsideCollisionZones = paddle.getxPosition() <= nextXBallCenter()
+                                              && nextXBallCenter() <= paddle.getxPosition() + paddle.getPADDLE_WIDTH() + ballRadius;
         }
 
-        boolean yBallCenterInsideTopCollisionZone    = paddle.getyPosition() - ballRadius <= nextYBallCenter && nextYBallCenter <= paddle.getyPosition();
-        boolean yBallCenterInsideBottomCollisionZone = paddle.getyPosition() + paddle.getPADDLE_HEIGHT() <= nextYBallCenter && nextYBallCenter <= paddle.getyPosition() + paddle.getPADDLE_HEIGHT()+ ballRadius;
+        boolean yBallCenterInsideTopCollisionZone    = paddle.getyPosition() - ballRadius <= nextYBallCenter() && nextYBallCenter() <= paddle.getyPosition();
+        boolean yBallCenterInsideBottomCollisionZone = paddle.getyPosition() + paddle.getPADDLE_HEIGHT() <= nextYBallCenter() && nextYBallCenter() <= paddle.getyPosition() + paddle.getPADDLE_HEIGHT()+ ballRadius;
 
         return (xBallCenterInsideCollisionZones && (yBallCenterInsideTopCollisionZone || yBallCenterInsideBottomCollisionZone));
     }
 
     private void bounceOffPaddle(Paddle paddle, boolean side){
         double range = 2 / 3.0;
-        double yPositionBallImpact = yPosition + Math.sin(velocityAngle) * velocityModule;
         double yPositionPaddleCenter = paddle.getyPosition() + paddle.getPADDLE_HEIGHT() / 2.0;
-        double yRelative = (yPositionPaddleCenter - yPositionBallImpact) / (paddle.getPADDLE_HEIGHT() / 2.0);
+        double yRelative = (yPositionPaddleCenter - nextYBallCenter()) / (paddle.getPADDLE_HEIGHT() / 2.0);
         yRelative = yRelative /2.0 + 0.5;
         yRelative = Math.min(1, yRelative);
         yRelative = Math.max(0, yRelative);
@@ -193,6 +193,8 @@ public class Ball {
             velocityAngle = Math.PI * (2 - ((range * yRelative + (1- range)/2.0 + 1/2.0 + 1) % 2));
         }
     }
+
+    // single responsibility principle?
 
     private void goalScored(Player player, boolean side){
         player.increaseScore();
@@ -208,6 +210,5 @@ public class Ball {
         yPosition = yPositionStart;
         velocityAngle = generateStartingAngle(direction);
     }
-
 
 }
