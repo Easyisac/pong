@@ -30,8 +30,8 @@ public class TestPaddleMover {
 
     private Stream<Arguments> provideParametersPressed() {
         return Stream.of(
-                Arguments.of(KeyEvent.VK_UP, -pm.getPaddle1Speed()),
-                Arguments.of(KeyEvent.VK_DOWN, pm.getPaddle1Speed())
+                Arguments.of(KeyEvent.VK_UP, -pm.getPaddleRightSpeed()),
+                Arguments.of(KeyEvent.VK_DOWN, pm.getPaddleRightSpeed())
         );
     }
 
@@ -40,7 +40,7 @@ public class TestPaddleMover {
     public void paddle_mover_key_released_test(int key, double result) {
         PaddleMover pm = new PaddleMover(p0, p1);
         KeyEvent ke = new KeyEvent(gp, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, key, 'Z');
-        p1.setVelocity(pm.getPaddle1Speed());
+        p1.setVelocity(pm.getPaddleRightSpeed());
         pm.keyReleased(ke);
         assertEquals(result, p1.getVelocity());
     }
@@ -67,10 +67,10 @@ public class TestPaddleMover {
 
     private Stream<Arguments> provideParametersPressedContemporary() {
         return Stream.of(
-                Arguments.of(KeyEvent.VK_UP, new double[]{0,-pm.getPaddle1Speed()}),
-                Arguments.of(KeyEvent.VK_DOWN, new double[]{0, pm.getPaddle1Speed()}),
-                Arguments.of(KeyEvent.VK_W, new double[]{-pm.getPaddle0Speed(),0}),
-                Arguments.of(KeyEvent.VK_S, new double[]{pm.getPaddle0Speed(),0})
+                Arguments.of(KeyEvent.VK_UP, new double[]{0,-pm.getPaddleRightSpeed()}),
+                Arguments.of(KeyEvent.VK_DOWN, new double[]{0, pm.getPaddleRightSpeed()}),
+                Arguments.of(KeyEvent.VK_W, new double[]{-pm.getPaddleLeftSpeed(),0}),
+                Arguments.of(KeyEvent.VK_S, new double[]{pm.getPaddleLeftSpeed(),0})
         );
     }
 
@@ -81,8 +81,8 @@ public class TestPaddleMover {
         p0.setVelocity(0);
         p1.setVelocity(0);
         KeyEvent ke = new KeyEvent(gp, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, key, 'Z');
-        p0.setVelocity(pm.getPaddle0Speed());
-        p1.setVelocity(pm.getPaddle1Speed());
+        p0.setVelocity(pm.getPaddleLeftSpeed());
+        p1.setVelocity(pm.getPaddleRightSpeed());
         pm.keyReleased(ke);
         assertEquals(result[0], p0.getVelocity());
         assertEquals(result[1], p1.getVelocity());
@@ -90,10 +90,10 @@ public class TestPaddleMover {
 
     private Stream<Arguments> provideParametersReleasedContemporary() {
         return Stream.of(
-                Arguments.of(KeyEvent.VK_UP, new double[]{pm.getPaddle1Speed(),0}),
-                Arguments.of(KeyEvent.VK_DOWN, new double[]{pm.getPaddle1Speed(),0}),
-                Arguments.of(KeyEvent.VK_W, new double[]{0, pm.getPaddle0Speed()}),
-                Arguments.of(KeyEvent.VK_S, new double[]{0, pm.getPaddle0Speed()})
+                Arguments.of(KeyEvent.VK_UP, new double[]{pm.getPaddleRightSpeed(),0}),
+                Arguments.of(KeyEvent.VK_DOWN, new double[]{pm.getPaddleRightSpeed(),0}),
+                Arguments.of(KeyEvent.VK_W, new double[]{0, pm.getPaddleLeftSpeed()}),
+                Arguments.of(KeyEvent.VK_S, new double[]{0, pm.getPaddleLeftSpeed()})
         );
     }
 

@@ -9,28 +9,28 @@ public class PaddleMover {
     private boolean paddleRightUpFlag;
     private boolean paddleRightDownFlag;
 
-    private double paddle0Speed = 5;
-    private double paddle1Speed = 5;
+    private double paddleLeftSpeed = 5;
+    private double paddleRightSpeed = 5;
 
     public PaddleMover(Paddle paddleLeft, Paddle paddleRight) {
         this.paddleLeft = paddleLeft;
         this.paddleRight = paddleRight;
     }
 
-    public double getPaddle0Speed() {
-        return paddle0Speed;
+    public double getPaddleLeftSpeed() {
+        return paddleLeftSpeed;
     }
 
-    public void setPaddle0Speed(double paddle0Speed) {
-        this.paddle0Speed = paddle0Speed;
+    public void setPaddleLeftSpeed(double paddleLeftSpeed) {
+        this.paddleLeftSpeed = paddleLeftSpeed;
     }
 
-    public double getPaddle1Speed() {
-        return paddle1Speed;
+    public double getPaddleRightSpeed() {
+        return paddleRightSpeed;
     }
 
-    public void setPaddle1Speed(double paddle1Speed) {
-        this.paddle1Speed = paddle1Speed;
+    public void setPaddleRightSpeed(double paddleRightSpeed) {
+        this.paddleRightSpeed = paddleRightSpeed;
     }
 
     private void setPaddleVelocity(Paddle paddle) {
@@ -40,11 +40,11 @@ public class PaddleMover {
         if (paddle.getPlayer().getId() == 0){
             p_up = paddleLeftUpFlag;
             p_down = paddleLeftDownFlag;
-            paddleSpeed = paddle0Speed;
+            paddleSpeed = paddleLeftSpeed;
         } else {
             p_up = paddleRightUpFlag;
             p_down = paddleRightDownFlag;
-            paddleSpeed = paddle1Speed;
+            paddleSpeed = paddleRightSpeed;
         }
         if (!p_up && !p_down) {
             paddle.setVelocity(0);

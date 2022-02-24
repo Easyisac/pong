@@ -53,7 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
         GamePanel.singlePlayerModeFlag = singlePlayerModeFlag;
         if (singlePlayerModeFlag) {
             bot = new Bot(paddleRight, ball, this, paddleMover);
-            paddleMover.setPaddle1Speed(velocityModule / 2.0);
+            paddleMover.setPaddleRightSpeed(velocityModule / 2.0);
         }
 
         Thread game = new Thread(this);
