@@ -50,7 +50,7 @@ public class PaddleMover {
             paddle.setVelocity(0);
         } else if (p_up) {
             paddle.setVelocity(-paddleSpeed);
-        } else if (p_down) {
+        } else {
             paddle.setVelocity(paddleSpeed);
         }
     }

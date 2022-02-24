@@ -2,10 +2,10 @@ import java.awt.event.KeyEvent;
 
 public class Bot {
 
-    private Paddle paddle;
-    private Ball ball;
-    private GamePanel gamePanel;
-    private PaddleMover paddleMover;
+    private final Paddle paddle;
+    private final Ball ball;
+    private final GamePanel gamePanel;
+    private final PaddleMover paddleMover;
 
     public Bot(Paddle paddle, Ball ball, GamePanel gamePanel, PaddleMover paddleMover) {
         this.paddle = paddle;

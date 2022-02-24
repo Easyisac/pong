@@ -4,42 +4,42 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class TestPaddle {
 
-    private final int topLim = GameProperties.GAME_COURT_TOP_LIMIT;
-    private final int botLim = GameProperties.GAME_COURT_BOTTOM_LIMIT;
-    private final int leftLim = GameProperties.GAME_COURT_LEFT_LIMIT;
-    private final int rightLim = GameProperties.GAME_COURT_RIGHT_LIMIT;
+    private final int topLimit = GameProperties.GAME_COURT_TOP_LIMIT;
+    private final int bottomLimit = GameProperties.GAME_COURT_BOTTOM_LIMIT;
+    private final int leftLimit = GameProperties.GAME_COURT_LEFT_LIMIT;
+    private final int rightLimit = GameProperties.GAME_COURT_RIGHT_LIMIT;
 
-    private final Player pl1 = new Player("Player1", 1);
+    private final Player playerRight = new Player("Player1", 1);
 
-    private final Paddle p = new Paddle(pl1);
-    private final int paddle_height = p.getPADDLE_HEIGHT();
+    private final Paddle paddle = new Paddle(playerRight);
+    private final int paddle_height = paddle.getPADDLE_HEIGHT();
 
-    private final int yStart = p.getyPosition();
+    private final int yStart = paddle.getyPosition();
 
     @ParameterizedTest
     @ValueSource(ints={1,2,3,4,-4,20,-30})
-    public void paddle_inside_panel_move_test(int velocity){
-        p.setVelocity(velocity);
-        p.move();
+    public void paddle_shift_position_after_move_command(int velocity){
+        paddle.setVelocity(velocity);
+        paddle.move();
 
-        assertEquals(yStart + velocity, p.getyPosition());
+        assertEquals(yStart + velocity, paddle.getyPosition());
     }
 
     @ParameterizedTest
     @ValueSource(ints={-451, -500, -550, -600})
-    public void paddle_outside_top_panel_move_test(int velocity){
-        p.setVelocity(velocity);
-        p.move();
+    public void paddle_stops_when_hitting_top_boundary(int velocity){
+        paddle.setVelocity(velocity);
+        paddle.move();
 
-        assertEquals(topLim, p.getyPosition());
+        assertEquals(topLimit, paddle.getyPosition());
     }
 
     @ParameterizedTest
     @ValueSource(ints={451, 500, 550, 600})
-    public void paddle_outside_bot_panel_move_test(int velocity){
-        p.setVelocity(velocity);
-        p.move();
+    public void paddle_stops_when_hitting_bot_boundary(int velocity){
+        paddle.setVelocity(velocity);
+        paddle.move();
 
-        assertEquals(botLim - paddle_height, p.getyPosition());
+        assertEquals(bottomLimit - paddle_height, paddle.getyPosition());
     }
 }
