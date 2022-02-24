@@ -19,16 +19,16 @@ public class Ball {
     private final boolean RIGHT = true;
     private final int xPositionStart;
     private final int yPositionStart;
-    private double xPosition;
-    private double yPosition;
+    private double xCenter;
+    private double yCenter;
     private double velocityModule;
     private double velocityAngle;
 
     public Ball(Paddle paddleLeft, Paddle paddleRight, Player playerLeft, Player playerRight, int velocityModule) {
         xPositionStart = (rightLimit + leftLimit) / 2;
         yPositionStart = (topLimit + bottomLimit) / 2;
-        xPosition = xPositionStart;
-        yPosition = yPositionStart;
+        xCenter = xPositionStart;
+        yCenter = yPositionStart;
         this.paddleLeft = paddleLeft;
         this.paddleRight = paddleRight;
         this.playerLeft = playerLeft;
@@ -43,12 +43,12 @@ public class Ball {
 
     public int getBALL_RADIUS() { return BALL_RADIUS; }
 
-    public double getxPosition() {
-        return xPosition;
+    public double getxCenter() {
+        return xCenter;
     }
 
-    public double getyPosition() {
-        return yPosition;
+    public double getyCenter() {
+        return yCenter;
     }
 
     public double getVelocityModule() {
@@ -67,9 +67,9 @@ public class Ball {
         this.velocityAngle = velocityAngle % (2 * Math.PI);
     }
 
-    public void setxPosition(double xPosition) { this.xPosition = xPosition; }
+    public void setxCenter(double xCenter) { this.xCenter = xCenter; }
 
-    public void setyPosition(double yPosition) { this.yPosition = yPosition; }
+    public void setyCenter(double yCenter) { this.yCenter = yCenter; }
 
     public double generateStartingAngle(int direction){
         double range = 5/6.0;
@@ -98,29 +98,29 @@ public class Ball {
                 bounceOffPaddle(paddleRight, RIGHT);
             }
 
-            yPosition += Math.sin(velocityAngle) * velocityModule;
-            xPosition += Math.cos(velocityAngle) * velocityModule;
+            xCenter = nextXCenter();
+            yCenter = nextYCenter();
         }
     }
 
     public boolean checkCollisionsTopLimit() {
-        double nextYBallTopEdge = yPosition - BALL_RADIUS + Math.sin(velocityAngle) * velocityModule;
-        return nextYBallTopEdge <= topLimit;
+        double nextYTopEdge = yCenter - BALL_RADIUS + Math.sin(velocityAngle) * velocityModule;
+        return nextYTopEdge <= topLimit;
     }
 
     public boolean checkCollisionsBottomLimit() {
-        double nextYBallBottomEdge = yPosition + BALL_RADIUS + Math.sin(velocityAngle) * velocityModule;
-        return nextYBallBottomEdge >= bottomLimit;
+        double nextYBottomEdge = yCenter + BALL_RADIUS + Math.sin(velocityAngle) * velocityModule;
+        return nextYBottomEdge >= bottomLimit;
     }
 
     public boolean checkCollisionsLeftLimit() {
-        double nextXBallLeftEdge = xPosition - BALL_RADIUS + Math.cos(velocityAngle) * velocityModule;
-        return nextXBallLeftEdge <= leftLimit;
+        double nextXLeftEdge = xCenter - BALL_RADIUS + Math.cos(velocityAngle) * velocityModule;
+        return nextXLeftEdge <= leftLimit;
     }
 
     public boolean checkCollisionsRightLimit() {
-        double nextXBallRightEdge = xPosition + BALL_RADIUS + Math.cos(velocityAngle) * velocityModule;
-        return nextXBallRightEdge >= rightLimit;
+        double nextXRightEdge = xCenter + BALL_RADIUS + Math.cos(velocityAngle) * velocityModule;
+        return nextXRightEdge >= rightLimit;
     }
 
     public boolean checkCollisionsPaddleLeft(){
@@ -131,50 +131,50 @@ public class Ball {
         return (checkCollisionsHorizontalSide(paddleRight, RIGHT) || checkCollisionsPaddleRightVerticalSide());
     }
 
-    private double nextXBallCenter() {
-        return xPosition + Math.cos(velocityAngle) * velocityModule;
+    private double nextXCenter() {
+        return xCenter + Math.cos(velocityAngle) * velocityModule;
     }
 
-    private double nextYBallCenter() {
-        return yPosition + Math.sin(velocityAngle) * velocityModule;
+    private double nextYCenter() {
+        return yCenter + Math.sin(velocityAngle) * velocityModule;
     }
 
     public boolean checkCollisionsPaddleLeftVerticalSide(){
-        boolean xBallCenterInsideCollisionZone =  paddleLeft.getRightEdgePosition() <= nextXBallCenter() && nextXBallCenter() <= paddleLeft.getRightEdgePosition() + BALL_RADIUS;
-        boolean yBallCenterInsideCollisionZone = paddleLeft.getyPosition() <= nextYBallCenter() && nextYBallCenter() <= paddleLeft.getBottomEdgePosition();
+        boolean xCenterInsideCollisionZone =  paddleLeft.getRightEdgePosition() <= nextXCenter() && nextXCenter() <= paddleLeft.getRightEdgePosition() + BALL_RADIUS;
+        boolean yCenterInsideCollisionZone = paddleLeft.getyPosition() <= nextYCenter() && nextYCenter() <= paddleLeft.getBottomEdgePosition();
 
-        return (xBallCenterInsideCollisionZone && yBallCenterInsideCollisionZone);
+        return (xCenterInsideCollisionZone && yCenterInsideCollisionZone);
     }
 
     public boolean checkCollisionsPaddleRightVerticalSide(){
-        boolean xBallCenterInsideCollisionZone = paddleRight.getxPosition() - BALL_RADIUS <= nextXBallCenter() && nextXBallCenter() <= paddleRight.getxPosition();
-        boolean yBallCenterInsideCollisionZone = paddleRight.getyPosition() <= nextYBallCenter() && nextYBallCenter() <= paddleRight.getBottomEdgePosition();
+        boolean xCenterInsideCollisionZone = paddleRight.getxPosition() - BALL_RADIUS <= nextXCenter() && nextXCenter() <= paddleRight.getxPosition();
+        boolean yCenterInsideCollisionZone = paddleRight.getyPosition() <= nextYCenter() && nextYCenter() <= paddleRight.getBottomEdgePosition();
 
-        return (xBallCenterInsideCollisionZone && yBallCenterInsideCollisionZone);
+        return (xCenterInsideCollisionZone && yCenterInsideCollisionZone);
     }
 
     public boolean checkCollisionsHorizontalSide(Paddle paddle, boolean side){
 
-        boolean xBallCenterInsideCollisionZones;
+        boolean xCenterInsideCollisionZones;
 
         if (side) { // right
-            xBallCenterInsideCollisionZones = paddle.getxPosition() - BALL_RADIUS <= nextXBallCenter()
-                                              && nextXBallCenter() <= paddle.getRightEdgePosition();
+            xCenterInsideCollisionZones = paddle.getxPosition() - BALL_RADIUS <= nextXCenter()
+                                              && nextXCenter() <= paddle.getRightEdgePosition();
         } else { // left
-            xBallCenterInsideCollisionZones = paddle.getxPosition() <= nextXBallCenter()
-                                              && nextXBallCenter() <= paddle.getRightEdgePosition() + BALL_RADIUS;
+            xCenterInsideCollisionZones = paddle.getxPosition() <= nextXCenter()
+                                              && nextXCenter() <= paddle.getRightEdgePosition() + BALL_RADIUS;
         }
 
-        boolean yBallCenterInsideTopCollisionZone    = paddle.getyPosition() - BALL_RADIUS <= nextYBallCenter() && nextYBallCenter() <= paddle.getyPosition();
-        boolean yBallCenterInsideBottomCollisionZone = paddle.getBottomEdgePosition() <= nextYBallCenter() && nextYBallCenter() <= paddle.getBottomEdgePosition()+ BALL_RADIUS;
+        boolean yCenterInsideTopCollisionZone    = paddle.getyPosition() - BALL_RADIUS <= nextYCenter() && nextYCenter() <= paddle.getyPosition();
+        boolean yCenterInsideBottomCollisionZone = paddle.getBottomEdgePosition() <= nextYCenter() && nextYCenter() <= paddle.getBottomEdgePosition()+ BALL_RADIUS;
 
-        return (xBallCenterInsideCollisionZones && (yBallCenterInsideTopCollisionZone || yBallCenterInsideBottomCollisionZone));
+        return (xCenterInsideCollisionZones && (yCenterInsideTopCollisionZone || yCenterInsideBottomCollisionZone));
     }
 
     private void bounceOffPaddle(Paddle paddle, boolean side){
         double range = 2 / 3.0;
         double yPositionPaddleCenter = paddle.getyPosition() + paddle.getPADDLE_HEIGHT() / 2.0;
-        double yRelative = (yPositionPaddleCenter - nextYBallCenter()) / (paddle.getPADDLE_HEIGHT() / 2.0);
+        double yRelative = (yPositionPaddleCenter - nextYCenter()) / (paddle.getPADDLE_HEIGHT() / 2.0);
         yRelative = yRelative /2.0 + 0.5;
         yRelative = Math.min(1, yRelative);
         yRelative = Math.max(0, yRelative);
@@ -196,8 +196,8 @@ public class Ball {
     }
 
     public void reset(int direction) {
-        xPosition = xPositionStart;
-        yPosition = yPositionStart;
+        xCenter = xPositionStart;
+        yCenter = yPositionStart;
         velocityAngle = generateStartingAngle(direction);
     }
 
