@@ -57,4 +57,8 @@ public class Paddle {
     public Player getPlayer() {
         return player;
     }
+
+    public int getBottomEdgePosition() { return yPosition + PADDLE_HEIGHT; }
+
+    public int getRightEdgePosition() { return xPosition + PADDLE_WIDTH; }
 }
