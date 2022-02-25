@@ -5,7 +5,6 @@ import drawers.Drawer;
 import drawers.PaddleDrawer;
 import drawers.PlayerDrawer;
 import entities.*;
-import pong.GameProperties;
 import pong.Pong;
 import javax.swing.*;
 import java.awt.*;
@@ -14,17 +13,21 @@ import java.awt.event.KeyEvent;
 
 public class GamePanel extends JPanel implements Runnable {
 
+    public static final int GAME_COURT_HEIGHT = 500;
+    public static final int GAME_COURT_WIDTH = 800;
+    public static final int TOP_FRAME = 100;
+    public static final int BOTTOM_FRAME = 50;
+    public static final int LEFT_FRAME = 50;
+    public static final int RIGHT_FRAME = 50;
+    public static final int GAME_COURT_TOP_LIMIT = TOP_FRAME;
+    public static final int GAME_COURT_BOTTOM_LIMIT = GAME_COURT_HEIGHT + TOP_FRAME;
+    public static final int GAME_COURT_LEFT_LIMIT = LEFT_FRAME;
+    public static final int GAME_COURT_RIGHT_LIMIT = GAME_COURT_WIDTH + LEFT_FRAME;
+
     private static PaddleMover paddleMover;
     private static boolean pauseFlag = false;
     private static boolean singlePlayerModeFlag;
     private final Drawer[] drawers = new Drawer[5];
-
-    public int gameHeight = GameProperties.GAME_COURT_HEIGHT;
-    public int gameWidth = GameProperties.GAME_COURT_WIDTH;
-    public int topFrame = GameProperties.TOP_FRAME;
-    public int bottomFrame = GameProperties.BOTTOM_FRAME;
-    public int leftFrame = GameProperties.LEFT_FRAME;
-    public int rightFrame = GameProperties.RIGHT_FRAME;
 
     private Player playerLeft;
     private Player playerRight;
@@ -36,8 +39,8 @@ public class GamePanel extends JPanel implements Runnable {
     private Bot bot;
 
     public GamePanel() {
-        Dimension panelSize = new Dimension(gameWidth + leftFrame + rightFrame,
-                gameHeight + topFrame + bottomFrame);
+        Dimension panelSize = new Dimension(GAME_COURT_WIDTH + LEFT_FRAME + RIGHT_FRAME,
+                GAME_COURT_HEIGHT + TOP_FRAME + BOTTOM_FRAME);
         setPreferredSize(panelSize);
         setBackground(Color.black);
         addKeyListener(new GameKeyListener());
@@ -61,7 +64,7 @@ public class GamePanel extends JPanel implements Runnable {
         GamePanel.singlePlayerModeFlag = singlePlayerModeFlag;
         if (singlePlayerModeFlag) {
             bot = new Bot(paddleRight, ball, this, paddleMover);
-            paddleMover.setPaddleRightSpeed(velocityModule * 0.75);
+            paddleMover.setPaddleRightSpeed(velocityModule * 0.6);
         }
         Thread game = new Thread(this);
         game.start();
@@ -89,20 +92,20 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.white);
         g2.setStroke(new BasicStroke(2));
-        g2.drawRect(leftFrame, topFrame, gameWidth, gameHeight);
+        g2.drawRect(LEFT_FRAME, TOP_FRAME, GAME_COURT_WIDTH, GAME_COURT_HEIGHT);
         if (pauseFlag) {
             String pauseString = "PAUSE";
             g2.setFont(new Font("Arial", Font.PLAIN, 40));
             int stringWidth = g2.getFontMetrics().stringWidth(pauseString);
             int stringHeight = g2.getFontMetrics().getHeight();
-            g2.drawString(pauseString, leftFrame + gameWidth / 2 - stringWidth / 2,
-                    topFrame + gameHeight / 2 + stringHeight / 4);
+            g2.drawString(pauseString, LEFT_FRAME + GAME_COURT_WIDTH / 2 - stringWidth / 2,
+                    TOP_FRAME + GAME_COURT_HEIGHT / 2 + stringHeight / 4);
         }
         int pixelLine = 5;
         int offset = 20;
-        int halfCourt = GameProperties.GAME_COURT_WIDTH / 2 + GameProperties.LEFT_FRAME;
-        for (int i = 0; i < GameProperties.GAME_COURT_HEIGHT / (pixelLine + offset); i++) {
-            g2.drawLine(halfCourt, GameProperties.TOP_FRAME + i * (pixelLine + offset), halfCourt, GameProperties.TOP_FRAME + i * (pixelLine + offset) + pixelLine);
+        int halfCourt = GAME_COURT_WIDTH / 2 + LEFT_FRAME;
+        for (int i = 0; i < GAME_COURT_HEIGHT / (pixelLine + offset); i++) {
+            g2.drawLine(halfCourt, TOP_FRAME + i * (pixelLine + offset), halfCourt, TOP_FRAME + i * (pixelLine + offset) + pixelLine);
         }
 
         for (Drawer drawer : drawers) {

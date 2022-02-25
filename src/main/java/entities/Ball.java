@@ -1,14 +1,14 @@
 package entities;
 
-import pong.GameProperties;
+import panels.GamePanel;
 import java.util.Random;
 
 public class Ball {
 
-    private final int topLimit = GameProperties.GAME_COURT_TOP_LIMIT;
-    private final int bottomLimit = GameProperties.GAME_COURT_BOTTOM_LIMIT;
-    private final int leftLimit = GameProperties.GAME_COURT_LEFT_LIMIT;
-    private final int rightLimit = GameProperties.GAME_COURT_RIGHT_LIMIT;
+    private final int topLimit = GamePanel.GAME_COURT_TOP_LIMIT;
+    private final int bottomLimit = GamePanel.GAME_COURT_BOTTOM_LIMIT;
+    private final int leftLimit = GamePanel.GAME_COURT_LEFT_LIMIT;
+    private final int rightLimit = GamePanel.GAME_COURT_RIGHT_LIMIT;
 
     private final Paddle paddleLeft;
     private final Paddle paddleRight;

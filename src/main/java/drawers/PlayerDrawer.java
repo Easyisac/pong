@@ -1,7 +1,7 @@
 package drawers;
 
 import entities.Player;
-import pong.GameProperties;
+import panels.GamePanel;
 
 import java.awt.*;
 
@@ -18,9 +18,9 @@ public class PlayerDrawer implements Drawer {
         g2.setFont(new Font("Arial", Font.PLAIN, 20));
         int stringWidth = g2.getFontMetrics().stringWidth(player.getName());
         int stringHeight = g2.getFontMetrics().getHeight();
-        int topFrame = GameProperties.TOP_FRAME;
-        int leftFrame = GameProperties.LEFT_FRAME;
-        int gameWidth = GameProperties.GAME_COURT_WIDTH;
+        int topFrame = GamePanel.TOP_FRAME;
+        int leftFrame = GamePanel.LEFT_FRAME;
+        int gameWidth = GamePanel.GAME_COURT_WIDTH;
         int position;
         position = player.getId() == 0 ? gameWidth / 4 + leftFrame - stringWidth / 2
                 : leftFrame + (gameWidth / 4) * 3 - stringWidth / 2;

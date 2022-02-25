@@ -4,17 +4,17 @@ import entities.Player;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import pong.GameProperties;
+import panels.GamePanel;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestBall {
 
-    private final int topLimit = GameProperties.GAME_COURT_TOP_LIMIT;
-    private final int bottomLimit = GameProperties.GAME_COURT_BOTTOM_LIMIT;
-    private final int leftLimit = GameProperties.GAME_COURT_LEFT_LIMIT;
-    private final int rightLimit = GameProperties.GAME_COURT_RIGHT_LIMIT;
+    private final int topLimit = GamePanel.GAME_COURT_TOP_LIMIT;
+    private final int bottomLimit = GamePanel.GAME_COURT_BOTTOM_LIMIT;
+    private final int leftLimit = GamePanel.GAME_COURT_LEFT_LIMIT;
+    private final int rightLimit = GamePanel.GAME_COURT_RIGHT_LIMIT;
 
     private final Player playerLeft = new Player("Player0", 0);
     private final Player playerRight = new Player("Player1", 1);

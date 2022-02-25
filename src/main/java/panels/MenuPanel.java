@@ -1,6 +1,5 @@
 package panels;
 
-import pong.GameProperties;
 import pong.Pong;
 import javax.swing.*;
 import java.awt.*;
@@ -13,12 +12,12 @@ import java.util.stream.IntStream;
 
 public class MenuPanel extends JPanel implements ActionListener {
 
-    public int gameHeight = GameProperties.GAME_COURT_HEIGHT;
-    public int gameWidth = GameProperties.GAME_COURT_WIDTH;
-    public int topBorder = GameProperties.TOP_FRAME;
-    public int botBorder = GameProperties.BOTTOM_FRAME;
-    public int leftBorder = GameProperties.LEFT_FRAME;
-    public int rightBorder = GameProperties.RIGHT_FRAME;
+    public int gameHeight = GamePanel.GAME_COURT_HEIGHT;
+    public int gameWidth = GamePanel.GAME_COURT_WIDTH;
+    public int topBorder = GamePanel.TOP_FRAME;
+    public int botBorder = GamePanel.BOTTOM_FRAME;
+    public int leftBorder = GamePanel.LEFT_FRAME;
+    public int rightBorder = GamePanel.RIGHT_FRAME;
 
     private final int buttonHeight = 50;
     private final int buttonWidth = 100;
@@ -56,7 +55,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     private JLabel createLabel(String text, int yPosition, int fontSize) {
         JLabel label = new JLabel(text);
-        label.setBounds(leftBorder, yPosition, GameProperties.GAME_COURT_WIDTH, 100);
+        label.setBounds(leftBorder, yPosition, GamePanel.GAME_COURT_WIDTH, 100);
         label.setBackground(Color.white);
         label.setForeground(Color.WHITE);
         label.setVerticalAlignment(JLabel.TOP);
