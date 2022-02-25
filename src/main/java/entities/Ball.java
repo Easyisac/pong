@@ -5,11 +5,6 @@ import java.util.Random;
 
 public class Ball {
 
-    private final int topLimit = GamePanel.GAME_COURT_TOP_LIMIT;
-    private final int bottomLimit = GamePanel.GAME_COURT_BOTTOM_LIMIT;
-    private final int leftLimit = GamePanel.GAME_COURT_LEFT_LIMIT;
-    private final int rightLimit = GamePanel.GAME_COURT_RIGHT_LIMIT;
-
     private final Paddle paddleLeft;
     private final Paddle paddleRight;
     private final Player playerLeft;
@@ -23,16 +18,14 @@ public class Ball {
     private final double STARTING_RANGE = 5 / 6.0;
     private final double BOUNCE_RANGE = 2 / 3.0;
 
-    private final int xPositionStart;
-    private final int yPositionStart;
+    private final int xPositionStart = (GamePanel.GAME_COURT_RIGHT_LIMIT + GamePanel.GAME_COURT_LEFT_LIMIT) / 2;
+    private final int yPositionStart = (GamePanel.GAME_COURT_TOP_LIMIT + GamePanel.GAME_COURT_BOTTOM_LIMIT) / 2;
     private double xCenter;
     private double yCenter;
     private double velocityModule;
     private double velocityAngle;
 
     public Ball(Paddle paddleLeft, Paddle paddleRight, Player playerLeft, Player playerRight, int velocityModule) {
-        xPositionStart = (rightLimit + leftLimit) / 2;
-        yPositionStart = (topLimit + bottomLimit) / 2;
         xCenter = xPositionStart;
         yCenter = yPositionStart;
         this.paddleLeft = paddleLeft;
@@ -89,8 +82,7 @@ public class Ball {
 
     // Generates a random angle for the ball velocity, centered in 0 or PI, with aperture within STARTING_RANGE.
     public double generateStartingAngle(int direction) {
-        double angle = (STARTING_RANGE * random.nextDouble() + (1 - STARTING_RANGE) / 2.0 + 1 / 2.0 + direction) % 2;
-        return angle * Math.PI;
+        return ((STARTING_RANGE * random.nextDouble() + (1 - STARTING_RANGE) / 2.0 + 1 / 2.0 + direction) % 2) * Math.PI;
     }
 
     // Checks for goals and collisions and moves the ball to the next position.
@@ -120,22 +112,22 @@ public class Ball {
 
     public boolean checkCollisionsTopLimit() {
         double nextYTopEdge = yCenter - BALL_RADIUS + Math.sin(velocityAngle) * velocityModule;
-        return nextYTopEdge <= topLimit;
+        return nextYTopEdge <= GamePanel.GAME_COURT_TOP_LIMIT;
     }
 
     public boolean checkCollisionsBottomLimit() {
         double nextYBottomEdge = yCenter + BALL_RADIUS + Math.sin(velocityAngle) * velocityModule;
-        return nextYBottomEdge >= bottomLimit;
+        return nextYBottomEdge >= GamePanel.GAME_COURT_BOTTOM_LIMIT;
     }
 
     public boolean checkCollisionsLeftLimit() {
         double nextXLeftEdge = xCenter - BALL_RADIUS + Math.cos(velocityAngle) * velocityModule;
-        return nextXLeftEdge <= leftLimit;
+        return nextXLeftEdge <= GamePanel.GAME_COURT_LEFT_LIMIT;
     }
 
     public boolean checkCollisionsRightLimit() {
         double nextXRightEdge = xCenter + BALL_RADIUS + Math.cos(velocityAngle) * velocityModule;
-        return nextXRightEdge >= rightLimit;
+        return nextXRightEdge >= GamePanel.GAME_COURT_RIGHT_LIMIT;
     }
 
     public boolean checkCollisionsPaddleLeft() {

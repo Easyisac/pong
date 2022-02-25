@@ -17,12 +17,11 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int GAME_COURT_WIDTH = 800;
     public static final int TOP_FRAME = 100;
     public static final int BOTTOM_FRAME = 50;
-    public static final int LEFT_FRAME = 50;
-    public static final int RIGHT_FRAME = 50;
+    public static final int SIDE_FRAME = 50;
     public static final int GAME_COURT_TOP_LIMIT = TOP_FRAME;
     public static final int GAME_COURT_BOTTOM_LIMIT = GAME_COURT_HEIGHT + TOP_FRAME;
-    public static final int GAME_COURT_LEFT_LIMIT = LEFT_FRAME;
-    public static final int GAME_COURT_RIGHT_LIMIT = GAME_COURT_WIDTH + LEFT_FRAME;
+    public static final int GAME_COURT_LEFT_LIMIT = SIDE_FRAME;
+    public static final int GAME_COURT_RIGHT_LIMIT = GAME_COURT_WIDTH + SIDE_FRAME;
 
     private static PaddleMover paddleMover;
     private static boolean pauseFlag = false;
@@ -39,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Bot bot;
 
     public GamePanel() {
-        Dimension panelSize = new Dimension(GAME_COURT_WIDTH + LEFT_FRAME + RIGHT_FRAME,
+        Dimension panelSize = new Dimension(GAME_COURT_WIDTH + SIDE_FRAME + SIDE_FRAME,
                 GAME_COURT_HEIGHT + TOP_FRAME + BOTTOM_FRAME);
         setPreferredSize(panelSize);
         setBackground(Color.black);
@@ -92,18 +91,18 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.white);
         g2.setStroke(new BasicStroke(2));
-        g2.drawRect(LEFT_FRAME, TOP_FRAME, GAME_COURT_WIDTH, GAME_COURT_HEIGHT);
+        g2.drawRect(SIDE_FRAME, TOP_FRAME, GAME_COURT_WIDTH, GAME_COURT_HEIGHT);
         if (pauseFlag) {
             String pauseString = "PAUSE";
             g2.setFont(new Font("Arial", Font.PLAIN, 40));
             int stringWidth = g2.getFontMetrics().stringWidth(pauseString);
             int stringHeight = g2.getFontMetrics().getHeight();
-            g2.drawString(pauseString, LEFT_FRAME + GAME_COURT_WIDTH / 2 - stringWidth / 2,
+            g2.drawString(pauseString, SIDE_FRAME + GAME_COURT_WIDTH / 2 - stringWidth / 2,
                     TOP_FRAME + GAME_COURT_HEIGHT / 2 + stringHeight / 4);
         }
         int pixelLine = 5;
         int offset = 20;
-        int halfCourt = GAME_COURT_WIDTH / 2 + LEFT_FRAME;
+        int halfCourt = GAME_COURT_WIDTH / 2 + SIDE_FRAME;
         for (int i = 0; i < GAME_COURT_HEIGHT / (pixelLine + offset); i++) {
             g2.drawLine(halfCourt, TOP_FRAME + i * (pixelLine + offset), halfCourt, TOP_FRAME + i * (pixelLine + offset) + pixelLine);
         }

@@ -12,17 +12,10 @@ import java.util.stream.IntStream;
 
 public class MenuPanel extends JPanel implements ActionListener {
 
-    public int gameHeight = GamePanel.GAME_COURT_HEIGHT;
-    public int gameWidth = GamePanel.GAME_COURT_WIDTH;
-    public int topBorder = GamePanel.TOP_FRAME;
-    public int botBorder = GamePanel.BOTTOM_FRAME;
-    public int leftBorder = GamePanel.LEFT_FRAME;
-    public int rightBorder = GamePanel.RIGHT_FRAME;
-
     private final int buttonHeight = 50;
     private final int buttonWidth = 100;
-    private final int buttonXPosition = (gameWidth + leftBorder + rightBorder) / 2 - buttonWidth / 2;
-    private final int buttonYPosition = 2 * topBorder;
+    private final int buttonXPosition = (GamePanel.GAME_COURT_WIDTH + GamePanel.SIDE_FRAME + GamePanel.SIDE_FRAME) / 2 - buttonWidth / 2;
+    private final int buttonYPosition = 2 * GamePanel.TOP_FRAME;
     private final int gapBetweenButtons = buttonHeight + 10;
 
     private TextField playerLeftNameField;
@@ -37,8 +30,8 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     public MenuPanel(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        Dimension panelSize = new Dimension(gameWidth + leftBorder + rightBorder,
-                gameHeight + topBorder + botBorder);
+        Dimension panelSize = new Dimension(GamePanel.GAME_COURT_WIDTH + GamePanel.SIDE_FRAME + GamePanel.SIDE_FRAME,
+                GamePanel.GAME_COURT_HEIGHT + GamePanel.TOP_FRAME + GamePanel.BOTTOM_FRAME);
         setPreferredSize(panelSize);
         setBackground(Color.black);
         setLayout(null);
@@ -55,7 +48,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     private JLabel createLabel(String text, int yPosition, int fontSize) {
         JLabel label = new JLabel(text);
-        label.setBounds(leftBorder, yPosition, GamePanel.GAME_COURT_WIDTH, 100);
+        label.setBounds(GamePanel.SIDE_FRAME, yPosition, GamePanel.GAME_COURT_WIDTH, 100);
         label.setBackground(Color.white);
         label.setForeground(Color.WHITE);
         label.setVerticalAlignment(JLabel.TOP);
@@ -68,7 +61,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         this.removeAll();
         repaint();
 
-        JLabel title = createLabel("Pong", topBorder, 40);
+        JLabel title = createLabel("Pong", GamePanel.TOP_FRAME, 40);
         Button buttonOnePlayer = createButton("One Player", buttonYPosition);
         Button buttonTwoPlayers = createButton("Two Players", buttonYPosition + gapBetweenButtons);
         Button buttonSettings = createButton("Settings", buttonYPosition + gapBetweenButtons * 2);
@@ -88,7 +81,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         this.playerRightName = playerRightName;
         this.singlePlayerModeFlag = singlePlayerModeFlag;
 
-        JLabel title = createLabel("The winner is " + winnerName, topBorder, 20);
+        JLabel title = createLabel("The winner is " + winnerName, GamePanel.TOP_FRAME, 20);
         Button buttonPlayAgain = createButton("Play Again", buttonYPosition);
         Button buttonMainMenu = createButton("Main Menu", buttonYPosition + gapBetweenButtons);
         Button buttonQuit = createButton("Quit", buttonYPosition + gapBetweenButtons * 2);
@@ -103,7 +96,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         this.removeAll();
         repaint();
 
-        JLabel title = createLabel("Insert names", topBorder, 28);
+        JLabel title = createLabel("Insert names", GamePanel.TOP_FRAME, 28);
 
         playerLeftNameField = new TextField("Player1");
         playerLeftNameField.setBounds(buttonXPosition - (buttonWidth + gapBetweenButtons) / 2, buttonYPosition / 2 + gapBetweenButtons, buttonWidth, buttonHeight / 2);
@@ -140,7 +133,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         int gap = buttonHeight + 50;
         int maxVelocity = 5;
 
-        JLabel title = createLabel("Settings", topBorder, 28);
+        JLabel title = createLabel("Settings", GamePanel.TOP_FRAME, 28);
         Button buttonSave = createButton("Save", buttonYPosition + gap * 2);
 
         Hashtable<Integer, JLabel> velLabels = new Hashtable<>();

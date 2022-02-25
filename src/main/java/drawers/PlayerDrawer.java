@@ -19,7 +19,7 @@ public class PlayerDrawer implements Drawer {
         int stringWidth = g2.getFontMetrics().stringWidth(player.getName());
         int stringHeight = g2.getFontMetrics().getHeight();
         int topFrame = GamePanel.TOP_FRAME;
-        int leftFrame = GamePanel.LEFT_FRAME;
+        int leftFrame = GamePanel.SIDE_FRAME;
         int gameWidth = GamePanel.GAME_COURT_WIDTH;
         int position;
         position = player.getId() == 0 ? gameWidth / 4 + leftFrame - stringWidth / 2

@@ -13,24 +13,19 @@ public class Paddle {
     private int yPosition;
     private double velocity;
 
-    private final int topLim = GamePanel.GAME_COURT_TOP_LIMIT;
-    private final int botLim = GamePanel.GAME_COURT_BOTTOM_LIMIT;
-    private final int leftLim = GamePanel.GAME_COURT_LEFT_LIMIT;
-    private final int rightLim = GamePanel.GAME_COURT_RIGHT_LIMIT;
-
     private final Player player;
 
     public Paddle(Player player) {
         velocity = 0;
         this.player = player;
-        xPosition = (this.player.getId() == 0) ? leftLim + OFFSET : rightLim - OFFSET - PADDLE_WIDTH;
-        yPosition = (topLim + botLim) / 2 - PADDLE_HEIGHT / 2;
+        xPosition = (this.player.getId() == 0) ? GamePanel.GAME_COURT_LEFT_LIMIT + OFFSET : GamePanel.GAME_COURT_RIGHT_LIMIT - OFFSET - PADDLE_WIDTH;
+        yPosition = (GamePanel.GAME_COURT_TOP_LIMIT + GamePanel.GAME_COURT_BOTTOM_LIMIT) / 2 - PADDLE_HEIGHT / 2;
     }
 
     public void move() {
         yPosition += velocity;
-        yPosition = Math.max(yPosition, topLim);
-        yPosition = Math.min(yPosition, botLim - PADDLE_HEIGHT);
+        yPosition = Math.max(yPosition, GamePanel.GAME_COURT_TOP_LIMIT);
+        yPosition = Math.min(yPosition, GamePanel.GAME_COURT_BOTTOM_LIMIT - PADDLE_HEIGHT);
     }
 
     public void setyPosition(int yPosition) {
