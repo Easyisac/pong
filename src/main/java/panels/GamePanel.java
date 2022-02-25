@@ -86,7 +86,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.maxScore = maxScore;
     }
 
-    //Standard method, draws static images, calls draw function
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -5,6 +5,7 @@ import entities.Player;
 import pong.GameProperties;
 
 public class PlayerDrawer implements Drawer {
+    // Draws players' names and scores during the match.
 
     private final Player player;
 

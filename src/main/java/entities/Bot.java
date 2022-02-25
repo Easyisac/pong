@@ -18,6 +18,7 @@ public class Bot {
         this.paddleMover = paddleMover;
     }
 
+    // Aims to reduce the distance between ball and paddle.
     public void makeMove() {
 
         double ballPosition = ball.getyCenter();
@@ -28,6 +29,4 @@ public class Bot {
         KeyEvent keyEvent = new KeyEvent(gamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, key, 'Z');
         paddleMover.keyPressed(keyEvent);
     }
-
-
 }

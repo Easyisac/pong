@@ -78,11 +78,13 @@ public class Ball {
 
     public void setyCenter(double yCenter) { this.yCenter = yCenter; }
 
+    // Generates a random angle for the ball velocity, centered in 0 or PI, with aperture within STARTING_RANGE.
     public double generateStartingAngle(int direction){
         double angle = (STARTING_RANGE * random.nextDouble() + (1-STARTING_RANGE)/2.0 + 1/2.0 + direction) % 2;
         return angle * Math.PI;
     }
 
+    // Checks for goals and collisions and moves the ball to the next position.
     public void move() {
         if (checkCollisionsLeftLimit()){
             goalScored(playerRight, LEFT);
@@ -103,7 +105,6 @@ public class Ball {
             } else if (checkCollisionsPaddleRight()) {
                 bounceOffPaddle(paddleRight, RIGHT);
             }
-
             xCenter = nextXCenter();
             yCenter = nextYCenter();
         }
@@ -171,12 +172,13 @@ public class Ball {
                                               && nextXCenter() <= paddle.getRightEdgePosition() + BALL_RADIUS;
         }
 
-        boolean yCenterInsideTopCollisionZone    = paddle.getyPosition() - BALL_RADIUS <= nextYCenter() && nextYCenter() <= paddle.getyPosition();
+        boolean yCenterInsideTopCollisionZone = paddle.getyPosition() - BALL_RADIUS <= nextYCenter() && nextYCenter() <= paddle.getyPosition();
         boolean yCenterInsideBottomCollisionZone = paddle.getBottomEdgePosition() <= nextYCenter() && nextYCenter() <= paddle.getBottomEdgePosition()+ BALL_RADIUS;
 
         return (xCenterInsideCollisionZones && (yCenterInsideTopCollisionZone || yCenterInsideBottomCollisionZone));
     }
 
+    // Computes the next angle after the ball bounces on the paddle, depending on the relative positions.
     private void bounceOffPaddle(Paddle paddle, boolean side){
         double yPositionPaddleCenter = paddle.getyPosition() + paddle.getPADDLE_HEIGHT() / 2.0;
         double yRelative = (yPositionPaddleCenter - nextYCenter()) / (paddle.getPADDLE_HEIGHT() / 2.0) /2.0 + 0.5;
@@ -194,7 +196,7 @@ public class Ball {
         player.increaseScore();
         if (side) { // right
             reset(0); // angle 0
-        } else { //left
+        } else { // left
             reset(1); // angle PI
         }
     }
