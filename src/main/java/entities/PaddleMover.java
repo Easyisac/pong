@@ -1,3 +1,7 @@
+package entities;
+
+import entities.Paddle;
+
 import java.awt.event.KeyEvent;
 public class PaddleMover {
 

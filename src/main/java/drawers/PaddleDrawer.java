@@ -1,3 +1,7 @@
+package drawers;
+
+import entities.Paddle;
+
 import java.awt.*;
 
 public class PaddleDrawer implements Drawer {

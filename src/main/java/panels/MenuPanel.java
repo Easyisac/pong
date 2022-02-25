@@ -1,3 +1,8 @@
+package panels;
+
+import pong.GameProperties;
+import pong.Pong;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

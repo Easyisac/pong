@@ -1,3 +1,13 @@
+package panels;
+
+import drawers.BallDrawer;
+import drawers.Drawer;
+import drawers.PaddleDrawer;
+import drawers.PlayerDrawer;
+import entities.*;
+import pong.GameProperties;
+import pong.Pong;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -94,7 +104,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
         int pixelLine = 5;
         int offset = 20;
-        int halfCourt = GameProperties.GAME_COURT_WIDTH/2+GameProperties.LEFT_FRAME;
+        int halfCourt = GameProperties.GAME_COURT_WIDTH/2+ GameProperties.LEFT_FRAME;
         for (int i = 0; i < GameProperties.GAME_COURT_HEIGHT/(pixelLine+offset); i++){
             g2.drawLine(halfCourt, GameProperties.TOP_FRAME + i*(pixelLine+offset), halfCourt, GameProperties.TOP_FRAME + i*(pixelLine+offset) + pixelLine);
         }

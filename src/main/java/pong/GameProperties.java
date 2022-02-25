@@ -1,3 +1,5 @@
+package pong;
+
 public interface GameProperties {
 
     int GAME_COURT_HEIGHT = 500;

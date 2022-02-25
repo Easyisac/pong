@@ -1,3 +1,7 @@
+package drawers;
+
+import entities.Ball;
+
 import java.awt.*;
 
 public class BallDrawer implements Drawer {

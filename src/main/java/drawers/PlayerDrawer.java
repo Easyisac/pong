@@ -1,4 +1,8 @@
+package drawers;
+
 import java.awt.*;
+import entities.Player;
+import pong.GameProperties;
 
 public class PlayerDrawer implements Drawer {
 

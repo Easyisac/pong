@@ -1,3 +1,7 @@
+package entities;
+
+import pong.GameProperties;
+
 import java.util.Random;
 
 public class Ball {

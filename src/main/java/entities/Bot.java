@@ -1,3 +1,7 @@
+package entities;
+
+import panels.GamePanel;
+
 import java.awt.event.KeyEvent;
 
 public class Bot {

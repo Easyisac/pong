@@ -1,3 +1,8 @@
+package pong;
+
+import panels.GamePanel;
+import panels.MenuPanel;
+
 import javax.swing.*;
 
 public class Pong{

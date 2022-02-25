@@ -1,3 +1,7 @@
+package entities;
+
+import pong.GameProperties;
+
 public class Paddle {
 
     private final int PADDLE_HEIGHT = 75;
