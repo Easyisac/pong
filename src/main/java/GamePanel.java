@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Paddle paddleLeft;
     private Paddle paddleRight;
     private Ball ball;
-    private int velocityModule = 3;
+    private int velocityModule = 5;
     private int maxScore = 10;
     private Bot bot;
 
@@ -53,7 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
         GamePanel.singlePlayerModeFlag = singlePlayerModeFlag;
         if (singlePlayerModeFlag) {
             bot = new Bot(paddleRight, ball, this, paddleMover);
-            paddleMover.setPaddleRightSpeed(velocityModule / 2.0);
+            paddleMover.setPaddleRightSpeed(velocityModule*0.75);
         }
 
         Thread game = new Thread(this);
@@ -82,7 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.white);
-        g2.setStroke(new BasicStroke(1));
+        g2.setStroke(new BasicStroke(2));
         g2.drawRect(leftFrame, topFrame, gameWidth, gameHeight);
         if (pauseFlag) {
             String pauseString = "PAUSE";
@@ -91,6 +91,12 @@ public class GamePanel extends JPanel implements Runnable {
             int stringHeight = g2.getFontMetrics().getHeight();
             g2.drawString(pauseString, leftFrame + gameWidth / 2 - stringWidth / 2,
                     topFrame + gameHeight / 2 + stringHeight / 4);
+        }
+        int pixelLine = 5;
+        int offset = 20;
+        int halfCourt = GameProperties.GAME_COURT_WIDTH/2+GameProperties.LEFT_FRAME;
+        for (int i = 0; i < GameProperties.GAME_COURT_HEIGHT/(pixelLine+offset); i++){
+            g2.drawLine(halfCourt, GameProperties.TOP_FRAME + i*(pixelLine+offset), halfCourt, GameProperties.TOP_FRAME + i*(pixelLine+offset) + pixelLine);
         }
 
         for (Drawer drawer : drawers) {

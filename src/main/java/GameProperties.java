@@ -1,7 +1,7 @@
 public interface GameProperties {
 
     int GAME_COURT_HEIGHT = 500;
-    int GAME_COURT_WIDTH = 500;
+    int GAME_COURT_WIDTH = 800;
     int TOP_FRAME = 100;
     int BOTTOM_FRAME = 50;
     int LEFT_FRAME = 50;
