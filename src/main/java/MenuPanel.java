@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Hashtable;
 import java.util.stream.IntStream;
 
@@ -104,9 +106,22 @@ public class MenuPanel extends JPanel implements ActionListener {
 
         playerLeftNameField = new TextField("Player1");
         playerLeftNameField.setBounds(buttonXPosition -(buttonWidth + gapBetweenButtons)/2, buttonYPosition /2 + gapBetweenButtons, buttonWidth, buttonHeight/2);
+        playerLeftNameField.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                if (playerLeftNameField.getText().length() >= 15 )
+                    e.consume();
+            }
+        });
 
         playerRightNameField = new TextField("Player2");
         playerRightNameField.setBounds(buttonXPosition +(buttonWidth + gapBetweenButtons)/2, buttonYPosition /2 + gapBetweenButtons, buttonWidth, buttonHeight/2);
+        playerRightNameField.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                if (playerRightNameField.getText().length() >= 15 )
+                    e.consume();
+            }
+        });
+
 
         Button buttonPlay = createButton("Play", buttonYPosition + gapBetweenButtons);
         Button buttonBack = createButton("Main Menu", buttonYPosition + gapBetweenButtons *2);
