@@ -32,7 +32,9 @@ public class Paddle {
         yPosition = Math.min(yPosition, botLim - PADDLE_HEIGHT);
     }
 
-    public void setyPosition(int yPosition) { this.yPosition = yPosition; }
+    public void setyPosition(int yPosition) {
+        this.yPosition = yPosition;
+    }
 
     public void setVelocity(double velocity) {
         this.velocity = velocity;
@@ -62,7 +64,11 @@ public class Paddle {
         return player;
     }
 
-    public int getBottomEdgePosition() { return yPosition + PADDLE_HEIGHT; }
+    public int getBottomEdgePosition() {
+        return yPosition + PADDLE_HEIGHT;
+    }
 
-    public int getRightEdgePosition() { return xPosition + PADDLE_WIDTH; }
+    public int getRightEdgePosition() {
+        return xPosition + PADDLE_WIDTH;
+    }
 }

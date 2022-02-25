@@ -5,7 +5,7 @@ import panels.MenuPanel;
 
 import javax.swing.*;
 
-public class Pong{
+public class Pong {
 
     private static JFrame jf;
     private static final GamePanel gamePanel = new GamePanel();
@@ -37,7 +37,6 @@ public class Pong{
         jf.setLocationRelativeTo(null);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setVisible(true);
-
     }
 
     public static void startGame(String sName0, String sName1, boolean singlePlayerModeFlag) {

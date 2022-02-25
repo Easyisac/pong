@@ -1,8 +1,7 @@
 package entities;
 
-import entities.Paddle;
-
 import java.awt.event.KeyEvent;
+
 public class PaddleMover {
 
     private final Paddle paddleLeft;
@@ -41,7 +40,7 @@ public class PaddleMover {
         boolean p_up;
         boolean p_down;
         double paddleSpeed;
-        if (paddle.getPlayer().getId() == 0){
+        if (paddle.getPlayer().getId() == 0) {
             p_up = paddleLeftUpFlag;
             p_down = paddleLeftDownFlag;
             paddleSpeed = paddleLeftSpeed;

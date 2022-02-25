@@ -2,7 +2,6 @@ package panels;
 
 import pong.GameProperties;
 import pong.Pong;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,7 +22,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     private final int buttonHeight = 50;
     private final int buttonWidth = 100;
-    private final int buttonXPosition = (gameWidth + leftBorder + rightBorder)/2 - buttonWidth /2;
+    private final int buttonXPosition = (gameWidth + leftBorder + rightBorder) / 2 - buttonWidth / 2;
     private final int buttonYPosition = 2 * topBorder;
     private final int gapBetweenButtons = buttonHeight + 10;
 
@@ -37,8 +36,7 @@ public class MenuPanel extends JPanel implements ActionListener {
     private boolean singlePlayerModeFlag;
     private final GamePanel gamePanel;
 
-
-    public MenuPanel(GamePanel gamePanel){
+    public MenuPanel(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         Dimension panelSize = new Dimension(gameWidth + leftBorder + rightBorder,
                 gameHeight + topBorder + botBorder);
@@ -48,7 +46,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         startMenu();
     }
 
-    private Button createButton(String name, int yPosition){
+    private Button createButton(String name, int yPosition) {
         Button button = new Button(name);
         button.setBounds(buttonXPosition, yPosition, buttonWidth, buttonHeight);
         button.addActionListener(this);
@@ -56,9 +54,9 @@ public class MenuPanel extends JPanel implements ActionListener {
         return button;
     }
 
-    private JLabel createLabel(String text, int yPosition, int fontSize){
+    private JLabel createLabel(String text, int yPosition, int fontSize) {
         JLabel label = new JLabel(text);
-        label.setBounds(leftBorder, yPosition, GameProperties.GAME_COURT_WIDTH,100);
+        label.setBounds(leftBorder, yPosition, GameProperties.GAME_COURT_WIDTH, 100);
         label.setBackground(Color.white);
         label.setForeground(Color.WHITE);
         label.setVerticalAlignment(JLabel.TOP);
@@ -74,8 +72,8 @@ public class MenuPanel extends JPanel implements ActionListener {
         JLabel title = createLabel("Pong", topBorder, 40);
         Button buttonOnePlayer = createButton("One Player", buttonYPosition);
         Button buttonTwoPlayers = createButton("Two Players", buttonYPosition + gapBetweenButtons);
-        Button buttonSettings = createButton("Settings", buttonYPosition + gapBetweenButtons *2);
-        Button buttonQuit = createButton("Quit", buttonYPosition + gapBetweenButtons *3);
+        Button buttonSettings = createButton("Settings", buttonYPosition + gapBetweenButtons * 2);
+        Button buttonQuit = createButton("Quit", buttonYPosition + gapBetweenButtons * 3);
 
         add(buttonOnePlayer);
         add(buttonTwoPlayers);
@@ -84,7 +82,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         add(title);
     }
 
-    public void endMenu(String playerLeftName, String playerRightName, String winnerName, boolean singlePlayerModeFlag){
+    public void endMenu(String playerLeftName, String playerRightName, String winnerName, boolean singlePlayerModeFlag) {
         this.removeAll();
         repaint();
         this.playerLeftName = playerLeftName;
@@ -94,13 +92,12 @@ public class MenuPanel extends JPanel implements ActionListener {
         JLabel title = createLabel("The winner is " + winnerName, topBorder, 20);
         Button buttonPlayAgain = createButton("Play Again", buttonYPosition);
         Button buttonMainMenu = createButton("Main Menu", buttonYPosition + gapBetweenButtons);
-        Button buttonQuit = createButton("Quit", buttonYPosition + gapBetweenButtons *2);
+        Button buttonQuit = createButton("Quit", buttonYPosition + gapBetweenButtons * 2);
 
         add(buttonPlayAgain);
         add(buttonMainMenu);
         add(buttonQuit);
         add(title);
-
     }
 
     private void insertNameMenu() {
@@ -110,26 +107,25 @@ public class MenuPanel extends JPanel implements ActionListener {
         JLabel title = createLabel("Insert names", topBorder, 28);
 
         playerLeftNameField = new TextField("Player1");
-        playerLeftNameField.setBounds(buttonXPosition -(buttonWidth + gapBetweenButtons)/2, buttonYPosition /2 + gapBetweenButtons, buttonWidth, buttonHeight/2);
+        playerLeftNameField.setBounds(buttonXPosition - (buttonWidth + gapBetweenButtons) / 2, buttonYPosition / 2 + gapBetweenButtons, buttonWidth, buttonHeight / 2);
         playerLeftNameField.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
-                if (playerLeftNameField.getText().length() >= 15 )
+                if (playerLeftNameField.getText().length() >= 15)
                     e.consume();
             }
         });
 
         playerRightNameField = new TextField("Player2");
-        playerRightNameField.setBounds(buttonXPosition +(buttonWidth + gapBetweenButtons)/2, buttonYPosition /2 + gapBetweenButtons, buttonWidth, buttonHeight/2);
+        playerRightNameField.setBounds(buttonXPosition + (buttonWidth + gapBetweenButtons) / 2, buttonYPosition / 2 + gapBetweenButtons, buttonWidth, buttonHeight / 2);
         playerRightNameField.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
-                if (playerRightNameField.getText().length() >= 15 )
+                if (playerRightNameField.getText().length() >= 15)
                     e.consume();
             }
         });
 
-
         Button buttonPlay = createButton("Play", buttonYPosition + gapBetweenButtons);
-        Button buttonBack = createButton("Main Menu", buttonYPosition + gapBetweenButtons *2);
+        Button buttonBack = createButton("Main Menu", buttonYPosition + gapBetweenButtons * 2);
 
         add(buttonPlay);
         add(buttonBack);
@@ -138,24 +134,24 @@ public class MenuPanel extends JPanel implements ActionListener {
         add(title);
     }
 
-    private void settingsMenu(){
+    private void settingsMenu() {
         this.removeAll();
         repaint();
 
-        int gap = buttonHeight +50;
+        int gap = buttonHeight + 50;
         int maxVelocity = 5;
 
         JLabel title = createLabel("Settings", topBorder, 28);
-        Button buttonSave = createButton("Save", buttonYPosition + gap*2);
+        Button buttonSave = createButton("Save", buttonYPosition + gap * 2);
 
         Hashtable<Integer, JLabel> velLabels = new Hashtable<>();
-        IntStream.range(1,maxVelocity+1).forEach(
+        IntStream.range(1, maxVelocity + 1).forEach(
                 x -> velLabels.put(x, new JLabel(Integer.toString(x)))
         );
 
         JLabel selectBallVelocity = createLabel("Select ball velocity", buttonYPosition - 28, 15);
 
-        velocitySlider = new JSlider(1,maxVelocity, gamePanel.getVelocityModule()-2);
+        velocitySlider = new JSlider(1, maxVelocity, gamePanel.getVelocityModule() - 2);
         velocitySlider.setBounds(buttonXPosition, buttonYPosition, buttonWidth, buttonHeight);
         velocitySlider.setMinorTickSpacing(1);
         velocitySlider.setSnapToTicks(true);
@@ -165,16 +161,15 @@ public class MenuPanel extends JPanel implements ActionListener {
         velocitySlider.setPaintTicks(true);
         velocitySlider.setLabelTable(velLabels);
 
-
         Hashtable<Integer, JLabel> maxScoreLabels = new Hashtable<>();
-        IntStream.range(1,5).forEach(
-                x -> maxScoreLabels.put(x*5, new JLabel(Integer.toString(x*5)))
+        IntStream.range(1, 5).forEach(
+                x -> maxScoreLabels.put(x * 5, new JLabel(Integer.toString(x * 5)))
         );
 
         JLabel selectMaxScore = createLabel("Select maximum score", buttonYPosition + gap - 28, 15);
 
-        maxScoreSlider = new JSlider(5,20, gamePanel.getMaxScore());
-        maxScoreSlider.setBounds(buttonXPosition, buttonYPosition +gap, buttonWidth, buttonHeight);
+        maxScoreSlider = new JSlider(5, 20, gamePanel.getMaxScore());
+        maxScoreSlider.setBounds(buttonXPosition, buttonYPosition + gap, buttonWidth, buttonHeight);
         maxScoreSlider.setMinorTickSpacing(5);
         maxScoreSlider.setSnapToTicks(true);
         maxScoreSlider.setOpaque(true);
@@ -182,7 +177,6 @@ public class MenuPanel extends JPanel implements ActionListener {
         maxScoreSlider.setPaintTrack(true);
         maxScoreSlider.setPaintTicks(true);
         maxScoreSlider.setLabelTable(maxScoreLabels);
-
 
         add(buttonSave);
         add(velocitySlider);
@@ -192,12 +186,11 @@ public class MenuPanel extends JPanel implements ActionListener {
         add(title);
     }
 
-    private void startGame(){
+    private void startGame() {
         playerLeftName = playerLeftNameField.getText();
         playerRightName = playerRightNameField.getText();
         Pong.startGame(playerLeftName, playerRightName, false);
     }
-
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {

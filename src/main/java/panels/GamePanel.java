@@ -7,7 +7,6 @@ import drawers.PlayerDrawer;
 import entities.*;
 import pong.GameProperties;
 import pong.Pong;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -46,7 +45,6 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void startGame(String playerLeftName, String playerRightName, boolean singlePlayerModeFlag) {
-
         playerLeft = new Player(playerLeftName, 0);
         playerRight = new Player(playerRightName, 1);
         paddleLeft = new Paddle(playerLeft);
@@ -63,9 +61,8 @@ public class GamePanel extends JPanel implements Runnable {
         GamePanel.singlePlayerModeFlag = singlePlayerModeFlag;
         if (singlePlayerModeFlag) {
             bot = new Bot(paddleRight, ball, this, paddleMover);
-            paddleMover.setPaddleRightSpeed(velocityModule*0.75);
+            paddleMover.setPaddleRightSpeed(velocityModule * 0.75);
         }
-
         Thread game = new Thread(this);
         game.start();
     }
@@ -103,9 +100,9 @@ public class GamePanel extends JPanel implements Runnable {
         }
         int pixelLine = 5;
         int offset = 20;
-        int halfCourt = GameProperties.GAME_COURT_WIDTH/2+ GameProperties.LEFT_FRAME;
-        for (int i = 0; i < GameProperties.GAME_COURT_HEIGHT/(pixelLine+offset); i++){
-            g2.drawLine(halfCourt, GameProperties.TOP_FRAME + i*(pixelLine+offset), halfCourt, GameProperties.TOP_FRAME + i*(pixelLine+offset) + pixelLine);
+        int halfCourt = GameProperties.GAME_COURT_WIDTH / 2 + GameProperties.LEFT_FRAME;
+        for (int i = 0; i < GameProperties.GAME_COURT_HEIGHT / (pixelLine + offset); i++) {
+            g2.drawLine(halfCourt, GameProperties.TOP_FRAME + i * (pixelLine + offset), halfCourt, GameProperties.TOP_FRAME + i * (pixelLine + offset) + pixelLine);
         }
 
         for (Drawer drawer : drawers) {
@@ -134,13 +131,11 @@ public class GamePanel extends JPanel implements Runnable {
                 e.printStackTrace();
             }
         }
-
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         String winner = (playerLeft.getScore() > playerRight.getScore()) ? playerLeft.getName() : playerRight.getName();
         Pong.exitGame(playerLeft.getName(), playerRight.getName(), winner, singlePlayerModeFlag);
     }
