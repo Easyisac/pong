@@ -32,17 +32,11 @@ public class EndMenu extends Menu {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         switch (actionEvent.getActionCommand()) {
-            case "Quit":
-                System.exit(0);
-                break;
-            case "Main Menu":
-                MenuManager.startMenu();
-                break;
-            case "Play Again":
-                MenuManager.startGame();
-                break;
-            default:
-                break;
+            case "Quit" -> System.exit(0);
+            case "Main Menu" -> MenuManager.startMenu();
+            case "Play Again" -> MenuManager.startGame();
+            default -> {
+            }
         }
     }
 }
