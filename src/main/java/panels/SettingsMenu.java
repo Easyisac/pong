@@ -68,14 +68,10 @@ public class SettingsMenu extends Menu {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        switch (actionEvent.getActionCommand()) {
-            case "Save":
-                gamePanel.setVelocityModule(velocitySlider.getValue() + 2);
-                gamePanel.setMaxScore(maxScoreSlider.getValue());
-                MenuManager.startMenu();
-                break;
-            default:
-                break;
+        if ("Save".equals(actionEvent.getActionCommand())) {
+            gamePanel.setVelocityModule(velocitySlider.getValue() + 2);
+            gamePanel.setMaxScore(maxScoreSlider.getValue());
+            MenuManager.startMenu();
         }
     }
 }

@@ -47,17 +47,15 @@ public class InsertNameMenu extends Menu {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         switch (actionEvent.getActionCommand()) {
-            case "Play":
+            case "Play" -> {
                 MenuManager.setPlayerLeftName(playerLeftNameField.getText());
                 MenuManager.setPlayerRightName(playerRightNameField.getText());
                 MenuManager.setSinglePlayerModeFlag(false);
                 MenuManager.startGame();
-                break;
-            case "Main Menu":
-                MenuManager.startMenu();
-                break;
-            default:
-                break;
+            }
+            case "Main Menu" -> MenuManager.startMenu();
+            default -> {
+            }
         }
     }
 }

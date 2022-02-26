@@ -25,23 +25,17 @@ public class StartMenu extends Menu {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         switch (actionEvent.getActionCommand()) {
-            case "Quit":
-                System.exit(0);
-                break;
-            case "One Player":
+            case "Quit" -> System.exit(0);
+            case "One Player" -> {
                 MenuManager.setPlayerLeftName("Player");
                 MenuManager.setPlayerRightName("COM");
                 MenuManager.setSinglePlayerModeFlag(true);
                 MenuManager.startGame();
-                break;
-            case "Two Players":
-                MenuManager.insertNameMenu();
-                break;
-            case "Settings":
-                MenuManager.settingsMenu();
-                break;
-            default:
-                break;
+            }
+            case "Two Players" -> MenuManager.insertNameMenu();
+            case "Settings" -> MenuManager.settingsMenu();
+            default -> {
+            }
         }
     }
 }
