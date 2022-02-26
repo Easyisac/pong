@@ -13,10 +13,10 @@ public class Ball {
     private final Random random = new Random();
 
     private final int BALL_RADIUS = 10;
-    private final boolean LEFT = false;
-    private final boolean RIGHT = true;
-    private final double STARTING_RANGE = 5 / 6.0;
-    private final double BOUNCE_RANGE = 2 / 3.0;
+    public static final boolean LEFT = false;
+    public static final boolean RIGHT = true;
+    private static final double STARTING_RANGE = 5 / 6.0;
+    private static final double BOUNCE_RANGE = 2 / 3.0;
 
     private final int xPositionStart = (GamePanel.GAME_COURT_RIGHT_LIMIT + GamePanel.GAME_COURT_LEFT_LIMIT) / 2;
     private final int yPositionStart = (GamePanel.GAME_COURT_TOP_LIMIT + GamePanel.GAME_COURT_BOTTOM_LIMIT) / 2;
@@ -85,14 +85,23 @@ public class Ball {
         return ((STARTING_RANGE * random.nextDouble() + (1 - STARTING_RANGE) / 2.0 + 1 / 2.0 + direction) % 2) * Math.PI;
     }
 
+    public double xVelocityProjection(){ return Math.cos(velocityAngle) * velocityModule; }
+    public double yVelocityProjection(){ return Math.sin(velocityAngle) * velocityModule; }
+
+    private double nextXCenter() { return xCenter + xVelocityProjection(); }
+    private double nextYCenter() {
+        return yCenter + yVelocityProjection();
+    }
+
     // Checks for goals and collisions and moves the ball to the next position.
     public void move() {
-        if (checkCollisionsLeftLimit()) {
+        if (xCenter - BALL_RADIUS + xVelocityProjection() <= GamePanel.GAME_COURT_LEFT_LIMIT) {
             goalScored(playerRight, LEFT);
-        } else if (checkCollisionsRightLimit()) {
+        } else if (xCenter + BALL_RADIUS + xVelocityProjection() >= GamePanel.GAME_COURT_RIGHT_LIMIT) {
             goalScored(playerLeft, RIGHT);
         } else {
-            if (checkCollisionsTopLimit() || checkCollisionsBottomLimit()) {
+            if (yCenter - BALL_RADIUS + yVelocityProjection() <= GamePanel.GAME_COURT_TOP_LIMIT ||
+                    yCenter + BALL_RADIUS + yVelocityProjection() >= GamePanel.GAME_COURT_BOTTOM_LIMIT) {
                 if (velocityAngle == 0) {
                     velocityAngle = Math.PI;
                 } else if (velocityAngle == Math.PI) {
@@ -100,9 +109,9 @@ public class Ball {
                 } else {
                     velocityAngle = 2.0 * Math.PI - velocityAngle;
                 }
-            } else if (checkCollisionsPaddleLeft()) {
+            } else if (checkCollisionsHorizontalSide(paddleLeft, LEFT) || checkCollisionsPaddleLeftVerticalSide()) {
                 bounceOffPaddle(paddleLeft, LEFT);
-            } else if (checkCollisionsPaddleRight()) {
+            } else if (checkCollisionsHorizontalSide(paddleRight, RIGHT) || checkCollisionsPaddleRightVerticalSide()) {
                 bounceOffPaddle(paddleRight, RIGHT);
             }
             xCenter = nextXCenter();
@@ -110,40 +119,33 @@ public class Ball {
         }
     }
 
-    public boolean checkCollisionsTopLimit() {
-        double nextYTopEdge = yCenter - BALL_RADIUS + Math.sin(velocityAngle) * velocityModule;
-        return nextYTopEdge <= GamePanel.GAME_COURT_TOP_LIMIT;
+    private void goalScored(Player player, boolean side) {
+        player.increaseScore();
+        if (side) { // right
+            reset(0); // angle 0
+        } else { // left
+            reset(1); // angle PI
+        }
     }
 
-    public boolean checkCollisionsBottomLimit() {
-        double nextYBottomEdge = yCenter + BALL_RADIUS + Math.sin(velocityAngle) * velocityModule;
-        return nextYBottomEdge >= GamePanel.GAME_COURT_BOTTOM_LIMIT;
+    public void reset(int direction) {
+        xCenter = xPositionStart;
+        yCenter = yPositionStart;
+        velocityAngle = generateStartingAngle(direction);
     }
 
-    public boolean checkCollisionsLeftLimit() {
-        double nextXLeftEdge = xCenter - BALL_RADIUS + Math.cos(velocityAngle) * velocityModule;
-        return nextXLeftEdge <= GamePanel.GAME_COURT_LEFT_LIMIT;
-    }
+    // Computes the next angle after the ball bounces on the paddle, depending on the relative positions.
+    private void bounceOffPaddle(Paddle paddle, boolean side) {
+        double yPositionPaddleCenter = paddle.getyPosition() + paddle.getPADDLE_HEIGHT() / 2.0;
+        double yRelative = (yPositionPaddleCenter - nextYCenter()) / (paddle.getPADDLE_HEIGHT() / 2.0) / 2.0 + 0.5;
+        yRelative = Math.min(1, yRelative);
+        yRelative = Math.max(0, yRelative);
 
-    public boolean checkCollisionsRightLimit() {
-        double nextXRightEdge = xCenter + BALL_RADIUS + Math.cos(velocityAngle) * velocityModule;
-        return nextXRightEdge >= GamePanel.GAME_COURT_RIGHT_LIMIT;
-    }
-
-    public boolean checkCollisionsPaddleLeft() {
-        return (checkCollisionsHorizontalSide(paddleLeft, LEFT) || checkCollisionsPaddleLeftVerticalSide());
-    }
-
-    public boolean checkCollisionsPaddleRight() {
-        return (checkCollisionsHorizontalSide(paddleRight, RIGHT) || checkCollisionsPaddleRightVerticalSide());
-    }
-
-    private double nextXCenter() {
-        return xCenter + Math.cos(velocityAngle) * velocityModule;
-    }
-
-    private double nextYCenter() {
-        return yCenter + Math.sin(velocityAngle) * velocityModule;
+        if (side) { // right
+            velocityAngle = Math.PI * (BOUNCE_RANGE * yRelative + (1 - BOUNCE_RANGE) / 2.0 + 1 / 2.0);
+        } else { // left
+            velocityAngle = Math.PI * (2 - ((BOUNCE_RANGE * yRelative + (1 - BOUNCE_RANGE) / 2.0 + 1 / 2.0 + 1) % 2));
+        }
     }
 
     public boolean checkCollisionsPaddleLeftVerticalSide() {
@@ -174,34 +176,5 @@ public class Ball {
         boolean yCenterInsideBottomCollisionZone = paddle.getBottomEdgePosition() <= nextYCenter() && nextYCenter() <= paddle.getBottomEdgePosition() + BALL_RADIUS;
 
         return (xCenterInsideCollisionZones && (yCenterInsideTopCollisionZone || yCenterInsideBottomCollisionZone));
-    }
-
-    // Computes the next angle after the ball bounces on the paddle, depending on the relative positions.
-    private void bounceOffPaddle(Paddle paddle, boolean side) {
-        double yPositionPaddleCenter = paddle.getyPosition() + paddle.getPADDLE_HEIGHT() / 2.0;
-        double yRelative = (yPositionPaddleCenter - nextYCenter()) / (paddle.getPADDLE_HEIGHT() / 2.0) / 2.0 + 0.5;
-        yRelative = Math.min(1, yRelative);
-        yRelative = Math.max(0, yRelative);
-
-        if (side) { // right
-            velocityAngle = Math.PI * (BOUNCE_RANGE * yRelative + (1 - BOUNCE_RANGE) / 2.0 + 1 / 2.0);
-        } else { // left
-            velocityAngle = Math.PI * (2 - ((BOUNCE_RANGE * yRelative + (1 - BOUNCE_RANGE) / 2.0 + 1 / 2.0 + 1) % 2));
-        }
-    }
-
-    private void goalScored(Player player, boolean side) {
-        player.increaseScore();
-        if (side) { // right
-            reset(0); // angle 0
-        } else { // left
-            reset(1); // angle PI
-        }
-    }
-
-    public void reset(int direction) {
-        xCenter = xPositionStart;
-        yCenter = yPositionStart;
-        velocityAngle = generateStartingAngle(direction);
     }
 }

@@ -60,51 +60,51 @@ public class PaddleMover {
 
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_W:
+            case KeyEvent.VK_W -> {
                 paddleLeftUpFlag = true;
                 paddleLeftDownFlag = false;
                 setPaddleVelocity(paddleLeft);
-                break;
-            case KeyEvent.VK_S:
+            }
+            case KeyEvent.VK_S -> {
                 paddleLeftDownFlag = true;
                 paddleLeftUpFlag = false;
                 setPaddleVelocity(paddleLeft);
-                break;
-            case KeyEvent.VK_UP:
+            }
+            case KeyEvent.VK_UP -> {
                 paddleRightUpFlag = true;
                 paddleRightDownFlag = false;
                 setPaddleVelocity(paddleRight);
-                break;
-            case KeyEvent.VK_DOWN:
+            }
+            case KeyEvent.VK_DOWN -> {
                 paddleRightDownFlag = true;
                 paddleRightUpFlag = false;
                 setPaddleVelocity(paddleRight);
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
     }
 
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_W:
+            case KeyEvent.VK_W -> {
                 paddleLeftUpFlag = false;
                 setPaddleVelocity(paddleLeft);
-                break;
-            case KeyEvent.VK_S:
+            }
+            case KeyEvent.VK_S -> {
                 paddleLeftDownFlag = false;
                 setPaddleVelocity(paddleLeft);
-                break;
-            case KeyEvent.VK_UP:
+            }
+            case KeyEvent.VK_UP -> {
                 paddleRightUpFlag = false;
                 setPaddleVelocity(paddleRight);
-                break;
-            case KeyEvent.VK_DOWN:
+            }
+            case KeyEvent.VK_DOWN -> {
                 paddleRightDownFlag = false;
                 setPaddleVelocity(paddleRight);
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
     }
 }

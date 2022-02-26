@@ -8,8 +8,8 @@ import java.awt.event.KeyEvent;
 
 public class InsertNameMenu extends Menu {
 
-    private TextField playerLeftNameField;
-    private TextField playerRightNameField;
+    private final TextField playerLeftNameField;
+    private final TextField playerRightNameField;
 
     public InsertNameMenu() {
         super();

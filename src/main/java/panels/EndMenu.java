@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 public class EndMenu extends Menu {
 
     private String winnerName = "";
-    private JLabel title;
+    private final JLabel title;
 
     public EndMenu() {
         super();

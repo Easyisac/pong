@@ -9,8 +9,8 @@ import java.util.stream.IntStream;
 public class SettingsMenu extends Menu {
 
     private final GamePanel gamePanel;
-    private JSlider velocitySlider;
-    private JSlider maxScoreSlider;
+    private final JSlider velocitySlider;
+    private final JSlider maxScoreSlider;
 
 
     public SettingsMenu(GamePanel gamePanel) {

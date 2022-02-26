@@ -11,11 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestBall {
 
-    private final int topLimit = GamePanel.GAME_COURT_TOP_LIMIT;
-    private final int bottomLimit = GamePanel.GAME_COURT_BOTTOM_LIMIT;
-    private final int leftLimit = GamePanel.GAME_COURT_LEFT_LIMIT;
-    private final int rightLimit = GamePanel.GAME_COURT_RIGHT_LIMIT;
-
     private final Player playerLeft = new Player("Player0", 0);
     private final Player playerRight = new Player("Player1", 1);
 
@@ -54,9 +49,9 @@ public class TestBall {
     public void ball_collides_on_top_boundary_when_moving_outside_top_limit(double velModule) {
         ball.setVelModule(velModule);
         ball.setVelocityAngle( 3/2.0 * Math.PI);
-        ball.setyCenter(topLimit + 15);
-
-        assertTrue(ball.checkCollisionsTopLimit());
+        ball.setyCenter(GamePanel.GAME_COURT_TOP_LIMIT + 15);
+        boolean checkCollisionsTopLimit = ball.getyCenter() - ball.getBALL_RADIUS() + ball.yVelocityProjection() <= GamePanel.GAME_COURT_TOP_LIMIT;
+        assertTrue(checkCollisionsTopLimit);
     }
 
     @ParameterizedTest
@@ -64,9 +59,9 @@ public class TestBall {
     public void ball_collides_on_bottom_boundary_when_moving_outside_bottom_limit(double velModule) {
         ball.setVelModule(velModule);
         ball.setVelocityAngle(Math.PI/2);
-        ball.setyCenter(bottomLimit - 15);
-
-        assertTrue(ball.checkCollisionsBottomLimit());
+        ball.setyCenter(GamePanel.GAME_COURT_BOTTOM_LIMIT - 15);
+        boolean checkCollisionsBottomLimit = ball.getyCenter() + ball.getBALL_RADIUS() + ball.yVelocityProjection() >= GamePanel.GAME_COURT_BOTTOM_LIMIT;
+        assertTrue(checkCollisionsBottomLimit);
     }
 
     @ParameterizedTest
@@ -74,9 +69,9 @@ public class TestBall {
     public void ball_collides_on_left_boundary_when_moving_outside_left_limit(double velModule) {
         ball.setVelModule(velModule);
         ball.setVelocityAngle(Math.PI);
-        ball.setxCenter(leftLimit + 15);
-
-        assertTrue(ball.checkCollisionsLeftLimit());
+        ball.setxCenter(GamePanel.GAME_COURT_LEFT_LIMIT + 15);
+        boolean checkCollisionsLeftLimit = ball.getxCenter() - ball.getBALL_RADIUS() + ball.xVelocityProjection() <= GamePanel.GAME_COURT_LEFT_LIMIT;
+        assertTrue(checkCollisionsLeftLimit);
     }
 
     @ParameterizedTest
@@ -84,9 +79,9 @@ public class TestBall {
     public void ball_collides_on_right_boundary_when_moving_outside_right_limit(double velModule) {
         ball.setVelModule(velModule);
         ball.setVelocityAngle(0);
-        ball.setxCenter(rightLimit - 15);
-
-        assertTrue(ball.checkCollisionsRightLimit());
+        ball.setxCenter(GamePanel.GAME_COURT_RIGHT_LIMIT - 15);
+        boolean checkCollisionsRightLimit = ball.getxCenter() + ball.getBALL_RADIUS() + ball.xVelocityProjection() >= GamePanel.GAME_COURT_RIGHT_LIMIT;
+        assertTrue(checkCollisionsRightLimit);
     }
 
     @ParameterizedTest
@@ -97,7 +92,7 @@ public class TestBall {
         ball.setyCenter(paddleLeft.getyPosition() + paddleLeft.getPADDLE_HEIGHT()/2.0);
         ball.setxCenter(paddleLeft.getxPosition() + paddleLeft.getPADDLE_WIDTH() + 10);
 
-        assertTrue(ball.checkCollisionsPaddleLeft());
+        assertTrue(ball.checkCollisionsHorizontalSide(paddleLeft, Ball.LEFT) || ball.checkCollisionsPaddleLeftVerticalSide());
     }
 
     @ParameterizedTest
@@ -108,7 +103,7 @@ public class TestBall {
         ball.setyCenter(paddleRight.getyPosition() + paddleRight.getPADDLE_HEIGHT()/2.0);
         ball.setxCenter(paddleRight.getxPosition() - 10);
 
-        assertTrue(ball.checkCollisionsPaddleRight());
+        assertTrue(ball.checkCollisionsHorizontalSide(paddleRight, Ball.RIGHT) || ball.checkCollisionsPaddleRightVerticalSide());
     }
 
     @ParameterizedTest
@@ -116,8 +111,8 @@ public class TestBall {
     public void ball_bounces_when_hitting_top_boundary(double velAngle, double velModule){
         ball.setVelModule(velModule);
         ball.setVelocityAngle(Math.PI*velAngle);
-        ball.setyCenter(topLimit +10);
-        ball.setxCenter((rightLimit + leftLimit)/2.0);
+        ball.setyCenter(GamePanel.GAME_COURT_TOP_LIMIT +10);
+        ball.setxCenter((GamePanel.GAME_COURT_RIGHT_LIMIT + GamePanel.GAME_COURT_LEFT_LIMIT)/2.0);
 
         double newAngle = 2 * Math.PI - ball.getVelocityAngle();
         double final_positionX = ball.getxCenter() + Math.cos(newAngle) * velModule;
@@ -135,8 +130,8 @@ public class TestBall {
     public void ball_bounces_when_hitting_bottom_boundary(double velAngle, double velModule){
         ball.setVelModule(velModule);
         ball.setVelocityAngle(Math.PI*velAngle);
-        ball.setyCenter(topLimit -10);
-        ball.setxCenter((rightLimit + leftLimit)/2.0);
+        ball.setyCenter(GamePanel.GAME_COURT_TOP_LIMIT -10);
+        ball.setxCenter((GamePanel.GAME_COURT_RIGHT_LIMIT + GamePanel.GAME_COURT_LEFT_LIMIT)/2.0);
 
         double newAngle = 2 * Math.PI - ball.getVelocityAngle();
         double final_positionX = ball.getxCenter() + Math.cos(newAngle) * velModule;
@@ -153,8 +148,8 @@ public class TestBall {
     public void ball_resets_position_after_goal_scored_left(double velModule){
         ball.setVelModule(velModule);
         ball.setVelocityAngle(Math.PI);
-        ball.setyCenter(topLimit +10);
-        ball.setxCenter(leftLimit +10);
+        ball.setyCenter(GamePanel.GAME_COURT_TOP_LIMIT +10);
+        ball.setxCenter(GamePanel.GAME_COURT_LEFT_LIMIT +10);
 
         ball.move();
 
@@ -167,8 +162,8 @@ public class TestBall {
     public void ball_resets_position_after_goal_scored_right(double velModule){
         ball.setVelModule(velModule);
         ball.setVelocityAngle(0);
-        ball.setyCenter(topLimit +10);
-        ball.setxCenter(rightLimit -10);
+        ball.setyCenter(GamePanel.GAME_COURT_TOP_LIMIT +10);
+        ball.setxCenter(GamePanel.GAME_COURT_RIGHT_LIMIT -10);
 
         ball.move();
 

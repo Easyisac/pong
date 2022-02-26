@@ -8,11 +8,6 @@ import panels.GamePanel;
 
 public class TestPaddle {
 
-    private final int topLimit = GamePanel.GAME_COURT_TOP_LIMIT;
-    private final int bottomLimit = GamePanel.GAME_COURT_BOTTOM_LIMIT;
-    private final int leftLimit = GamePanel.GAME_COURT_LEFT_LIMIT;
-    private final int rightLimit = GamePanel.GAME_COURT_RIGHT_LIMIT;
-
     private final Player playerRight = new Player("Player1", 1);
 
     private final Paddle paddle = new Paddle(playerRight);
@@ -35,7 +30,7 @@ public class TestPaddle {
         paddle.setVelocity(velocity);
         paddle.move();
 
-        assertEquals(topLimit, paddle.getyPosition());
+        assertEquals(GamePanel.GAME_COURT_TOP_LIMIT, paddle.getyPosition());
     }
 
     @ParameterizedTest
@@ -44,6 +39,6 @@ public class TestPaddle {
         paddle.setVelocity(velocity);
         paddle.move();
 
-        assertEquals(bottomLimit - paddle_height, paddle.getyPosition());
+        assertEquals(GamePanel.GAME_COURT_BOTTOM_LIMIT - paddle_height, paddle.getyPosition());
     }
 }

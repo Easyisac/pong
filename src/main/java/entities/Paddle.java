@@ -5,9 +5,9 @@ import panels.GamePanel;
 
 public class Paddle {
 
-    private final int PADDLE_HEIGHT = 75;
-    private final int PADDLE_WIDTH = 10;
-    private final int OFFSET = 50;
+    private static final int PADDLE_HEIGHT = 75;
+    private static final int PADDLE_WIDTH = 10;
+    private static final int OFFSET = 50;
 
     private final int xPosition;
     private int yPosition;
