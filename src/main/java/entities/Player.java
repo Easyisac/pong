@@ -1,8 +1,10 @@
+package entities;
+
 public class Player {
 
-    private String name;
+    private final String name;
+    private final int id;
     private int score;
-    private int id;
 
     public Player(String name, int id) {
         this.name = name;
@@ -22,9 +24,7 @@ public class Player {
         return score;
     }
 
-    public void incScore(){
+    public void increaseScore() {
         score++;
     }
-
-
 }

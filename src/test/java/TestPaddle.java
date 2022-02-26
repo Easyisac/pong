@@ -1,45 +1,44 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import entities.Paddle;
+import entities.Player;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import panels.GamePanel;
 
 public class TestPaddle {
 
-    private final int topLim = GameProperties.TOP_LIM;
-    private final int botLim = GameProperties.BOT_LIM;
-    private final int leftLim = GameProperties.LEFT_LIM;
-    private final int rightLim = GameProperties.RIGHT_LIM;
+    private final Player playerRight = new Player("Player1", 1);
 
-    private final Player pl1 = new Player("Player1", 1);
+    private final Paddle paddle = new Paddle(playerRight);
+    private final int paddle_height = paddle.getPADDLE_HEIGHT();
 
-    private final Paddle p = new Paddle(pl1);
-    private final int paddle_height = p.getPADDLE_HEIGHT();
-
-    private final int yStart = p.getY();
+    private final int yStart = paddle.getyPosition();
 
     @ParameterizedTest
     @ValueSource(ints={1,2,3,4,-4,20,-30})
-    public void paddle_inside_panel_move_test(int velocity){
-        p.setVelocity(velocity);
-        p.move();
+    public void paddle_shift_position_after_move_command(int velocity){
+        paddle.setVelocity(velocity);
+        paddle.move();
 
-        assertEquals(yStart + velocity, p.getY());
+        assertEquals(yStart + velocity, paddle.getyPosition());
     }
 
     @ParameterizedTest
     @ValueSource(ints={-451, -500, -550, -600})
-    public void paddle_outside_top_panel_move_test(int velocity){
-        p.setVelocity(velocity);
-        p.move();
+    public void paddle_stops_when_hitting_top_boundary(int velocity){
+        paddle.setVelocity(velocity);
+        paddle.move();
 
-        assertEquals(topLim, p.getY());
+        assertEquals(GamePanel.GAME_COURT_TOP_LIMIT, paddle.getyPosition());
     }
 
     @ParameterizedTest
     @ValueSource(ints={451, 500, 550, 600})
-    public void paddle_outside_bot_panel_move_test(int velocity){
-        p.setVelocity(velocity);
-        p.move();
+    public void paddle_stops_when_hitting_bot_boundary(int velocity){
+        paddle.setVelocity(velocity);
+        paddle.move();
 
-        assertEquals(botLim - paddle_height, p.getY());
+        assertEquals(GamePanel.GAME_COURT_BOTTOM_LIMIT - paddle_height, paddle.getyPosition());
     }
 }

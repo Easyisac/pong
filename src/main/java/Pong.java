@@ -1,49 +1,8 @@
-import javax.swing.*;
+import panels.MenuManager;
 
-public class Pong{
-
-    private static JFrame jf;
-    private static final GamePanel gamePanel = new GamePanel();
-    private static final MenuPanel menuPanel = new MenuPanel(gamePanel);
+public class Pong {
 
     public static void main(String[] args) {
-        jf = new JFrame();
-        startMenu();
-    }
-
-    public static void startMenu() {
-        jf.getContentPane().removeAll();
-        jf.add(menuPanel);
-        menuPanel.startMenu();
-        jf.setResizable(false);
-        jf.pack();
-        jf.setTitle("PONG");
-        jf.setLocationRelativeTo(null);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.setVisible(true);
-    }
-
-    public static void exitGame(String sName0, String sName1, String winner, boolean singlePlayer) {
-        jf.getContentPane().removeAll();
-        jf.add(menuPanel);
-        menuPanel.endMenu(sName0, sName1, winner, singlePlayer);
-        jf.setResizable(false);
-        jf.pack();
-        jf.setLocationRelativeTo(null);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.setVisible(true);
-
-    }
-
-    public static void startGame(String sName0, String sName1, boolean singlePlayer) {
-        jf.getContentPane().removeAll();
-        jf.add(gamePanel);
-        gamePanel.startGame(sName0, sName1, singlePlayer);
-        jf.setResizable(false);
-        jf.pack();
-        jf.setLocationRelativeTo(null);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.setVisible(true);
-        gamePanel.requestFocus();
+        MenuManager.startMenu();
     }
 }

@@ -1,3 +1,4 @@
+import entities.Player;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -5,15 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestPlayer {
 
-    private final Player p0 = new Player("p0", 0);
+    private final Player playerLeft = new Player("player0", 0);
 
     @ParameterizedTest
     @ValueSource(ints={2, 3, 4})
-    public void test_player_score(int points) {
-        int startScore = p0.getScore();
+    public void player_score_increases_by_one_on_every_call(int points) {
+        int startScore = playerLeft.getScore();
         for(int i = 0; i < points; i++) {
-            p0.incScore();
+            playerLeft.increaseScore();
         }
-        assertEquals(p0.getScore(), startScore+points);
+        assertEquals(playerLeft.getScore(), startScore+points);
     }
 }
