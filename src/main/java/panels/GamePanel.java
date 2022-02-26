@@ -5,7 +5,7 @@ import drawers.Drawer;
 import drawers.PaddleDrawer;
 import drawers.PlayerDrawer;
 import entities.*;
-import pong.Pong;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -139,7 +139,7 @@ public class GamePanel extends JPanel implements Runnable {
             e.printStackTrace();
         }
         String winner = (playerLeft.getScore() > playerRight.getScore()) ? playerLeft.getName() : playerRight.getName();
-        Pong.exitGame(playerLeft.getName(), playerRight.getName(), winner, singlePlayerModeFlag);
+        MenuManager.endMenu(winner);
     }
 
     public static class GameKeyListener extends KeyAdapter {
