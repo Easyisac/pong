@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Paddle paddleLeft;
     private Paddle paddleRight;
     private Ball ball;
-    private int velocityModule = 5;
+    private int ballVelocityModule = 5;
     private int maxScore = 10;
     private Bot bot;
 
@@ -46,12 +46,28 @@ public class GamePanel extends JPanel implements Runnable {
         setFocusable(true);
     }
 
+    public int getBallVelocityModule() {
+        return ballVelocityModule;
+    }
+
+    public void setBallVelocityModule(int ballVelocityModule) {
+        this.ballVelocityModule = ballVelocityModule;
+    }
+
+    public int getMaxScore() {
+        return maxScore;
+    }
+
+    public void setMaxScore(int maxScore) {
+        this.maxScore = maxScore;
+    }
+
     public void startGame(String playerLeftName, String playerRightName, boolean singlePlayerModeFlag) {
         playerLeft = new Player(playerLeftName, 0);
         playerRight = new Player(playerRightName, 1);
         paddleLeft = new Paddle(playerLeft);
         paddleRight = new Paddle(playerRight);
-        ball = new Ball(paddleLeft, paddleRight, playerLeft, playerRight, velocityModule);
+        ball = new Ball(paddleLeft, paddleRight, playerLeft, playerRight, ballVelocityModule);
         paddleMover = new PaddleMover(paddleLeft, paddleRight);
 
         drawers[0] = new PaddleDrawer(paddleLeft);
@@ -63,26 +79,10 @@ public class GamePanel extends JPanel implements Runnable {
         GamePanel.singlePlayerModeFlag = singlePlayerModeFlag;
         if (singlePlayerModeFlag) {
             bot = new Bot(paddleRight, ball, this, paddleMover);
-            paddleMover.setPaddleRightSpeed(velocityModule * 0.6);
+            paddleMover.setPaddleRightSpeed(ballVelocityModule * 0.6);
         }
         Thread game = new Thread(this);
         game.start();
-    }
-
-    public int getVelocityModule() {
-        return velocityModule;
-    }
-
-    public void setVelocityModule(int velocityModule) {
-        this.velocityModule = velocityModule;
-    }
-
-    public int getMaxScore() {
-        return maxScore;
-    }
-
-    public void setMaxScore(int maxScore) {
-        this.maxScore = maxScore;
     }
 
     @Override

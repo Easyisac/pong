@@ -37,24 +37,25 @@ public class PaddleMover {
     }
 
     private void setPaddleVelocity(Paddle paddle) {
-        boolean p_up;
-        boolean p_down;
+        boolean pressedUp;
+        boolean pressedDown;
         double paddleSpeed;
+
         if (paddle.getPlayer().getId() == 0) {
-            p_up = paddleLeftUpFlag;
-            p_down = paddleLeftDownFlag;
+            pressedUp = paddleLeftUpFlag;
+            pressedDown = paddleLeftDownFlag;
             paddleSpeed = paddleLeftSpeed;
         } else {
-            p_up = paddleRightUpFlag;
-            p_down = paddleRightDownFlag;
+            pressedUp = paddleRightUpFlag;
+            pressedDown = paddleRightDownFlag;
             paddleSpeed = paddleRightSpeed;
         }
-        if (!p_up && !p_down) {
-            paddle.setVelocity(0);
-        } else if (p_up) {
-            paddle.setVelocity(-paddleSpeed);
+        if (!pressedUp && !pressedDown) {
+            paddle.setSpeed(0);
+        } else if (pressedUp) {
+            paddle.setSpeed(-paddleSpeed);
         } else {
-            paddle.setVelocity(paddleSpeed);
+            paddle.setSpeed(paddleSpeed);
         }
     }
 

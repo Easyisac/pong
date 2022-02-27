@@ -24,14 +24,14 @@ public class SettingsMenu extends Menu {
         JLabel title = createLabel("Settings", GamePanel.TOP_FRAME, 28);
         Button buttonSave = createButton("Save", buttonYPosition + gap * 2);
 
-        Hashtable<Integer, JLabel> velLabels = new Hashtable<>();
+        Hashtable<Integer, JLabel> velocityLabels = new Hashtable<>();
         IntStream.range(1, maxVelocity + 1).forEach(
-                x -> velLabels.put(x, new JLabel(Integer.toString(x)))
+                x -> velocityLabels.put(x, new JLabel(Integer.toString(x)))
         );
 
         JLabel selectBallVelocity = createLabel("Select ball velocity", buttonYPosition - 28, 15);
 
-        velocitySlider = new JSlider(1, maxVelocity, gamePanel.getVelocityModule() - 2);
+        velocitySlider = new JSlider(1, maxVelocity, gamePanel.getBallVelocityModule() - 2);
         velocitySlider.setBounds(buttonXPosition, buttonYPosition, buttonWidth, buttonHeight);
         velocitySlider.setMinorTickSpacing(1);
         velocitySlider.setSnapToTicks(true);
@@ -39,7 +39,7 @@ public class SettingsMenu extends Menu {
         velocitySlider.setPaintLabels(true);
         velocitySlider.setPaintTrack(true);
         velocitySlider.setPaintTicks(true);
-        velocitySlider.setLabelTable(velLabels);
+        velocitySlider.setLabelTable(velocityLabels);
 
         Hashtable<Integer, JLabel> maxScoreLabels = new Hashtable<>();
         IntStream.range(1, 5).forEach(
@@ -69,7 +69,7 @@ public class SettingsMenu extends Menu {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if ("Save".equals(actionEvent.getActionCommand())) {
-            gamePanel.setVelocityModule(velocitySlider.getValue() + 2);
+            gamePanel.setBallVelocityModule(velocitySlider.getValue() + 2);
             gamePanel.setMaxScore(maxScoreSlider.getValue());
             MenuManager.startMenu();
         }

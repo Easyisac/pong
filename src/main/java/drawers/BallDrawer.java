@@ -14,6 +14,7 @@ public class BallDrawer implements Drawer {
     }
 
     public void draw(Graphics2D g2) {
-        g2.fillOval((int) ball.getxCenter() - ballRadius, (int) ball.getyCenter() - ballRadius, ballRadius * 2, ballRadius * 2);
+        g2.fillOval((int) ball.getxCenter() - ballRadius, (int) ball.getyCenter() - ballRadius,
+                ballRadius * 2, ballRadius * 2);
     }
 }

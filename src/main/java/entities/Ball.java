@@ -85,23 +85,31 @@ public class Ball {
         return ((STARTING_RANGE * random.nextDouble() + (1 - STARTING_RANGE) / 2.0 + 1 / 2.0 + direction) % 2) * Math.PI;
     }
 
-    public double xVelocityProjection(){ return Math.cos(velocityAngle) * velocityModule; }
-    public double yVelocityProjection(){ return Math.sin(velocityAngle) * velocityModule; }
+    public double xVelocityProjection() {
+        return Math.cos(velocityAngle) * velocityModule;
+    }
 
-    private double nextXCenter() { return xCenter + xVelocityProjection(); }
+    public double yVelocityProjection() {
+        return Math.sin(velocityAngle) * velocityModule;
+    }
+
+    private double nextXCenter() {
+        return xCenter + xVelocityProjection();
+    }
+
     private double nextYCenter() {
         return yCenter + yVelocityProjection();
     }
 
     // Checks for goals and collisions and moves the ball to the next position.
     public void move() {
-        if (xCenter - BALL_RADIUS + xVelocityProjection() <= GamePanel.GAME_COURT_LEFT_LIMIT) {
+        if (nextXCenter() - BALL_RADIUS <= GamePanel.GAME_COURT_LEFT_LIMIT) {
             goalScored(playerRight, LEFT);
-        } else if (xCenter + BALL_RADIUS + xVelocityProjection() >= GamePanel.GAME_COURT_RIGHT_LIMIT) {
+        } else if (nextXCenter() + BALL_RADIUS >= GamePanel.GAME_COURT_RIGHT_LIMIT) {
             goalScored(playerLeft, RIGHT);
         } else {
-            if (yCenter - BALL_RADIUS + yVelocityProjection() <= GamePanel.GAME_COURT_TOP_LIMIT ||
-                    yCenter + BALL_RADIUS + yVelocityProjection() >= GamePanel.GAME_COURT_BOTTOM_LIMIT) {
+            if (nextYCenter() - BALL_RADIUS <= GamePanel.GAME_COURT_TOP_LIMIT ||
+                    nextYCenter() + BALL_RADIUS >= GamePanel.GAME_COURT_BOTTOM_LIMIT) {
                 if (velocityAngle == 0) {
                     velocityAngle = Math.PI;
                 } else if (velocityAngle == Math.PI) {
@@ -119,12 +127,12 @@ public class Ball {
         }
     }
 
-    private void goalScored(Player player, boolean side) {
+    private void goalScored(Player player, boolean sideThatConcededGoal) {
         player.increaseScore();
-        if (side) { // right
-            reset(0); // angle 0
+        if (sideThatConcededGoal) { // right
+            reset(0); // towards left
         } else { // left
-            reset(1); // angle PI
+            reset(1); // towards right
         }
     }
 

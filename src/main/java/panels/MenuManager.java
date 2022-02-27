@@ -51,6 +51,7 @@ public class MenuManager {
     public static void insertNameMenu() {
         setPanel(insertNameMenu);
     }
+
     public static void settingsMenu() {
         setPanel(settingsMenu);
     }

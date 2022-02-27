@@ -18,7 +18,7 @@ public class TestPaddle {
     @ParameterizedTest
     @ValueSource(ints={1,2,3,4,-4,20,-30})
     public void paddle_shift_position_after_move_command(int velocity){
-        paddle.setVelocity(velocity);
+        paddle.setSpeed(velocity);
         paddle.move();
 
         assertEquals(yStart + velocity, paddle.getyPosition());
@@ -27,7 +27,7 @@ public class TestPaddle {
     @ParameterizedTest
     @ValueSource(ints={-451, -500, -550, -600})
     public void paddle_stops_when_hitting_top_boundary(int velocity){
-        paddle.setVelocity(velocity);
+        paddle.setSpeed(velocity);
         paddle.move();
 
         assertEquals(GamePanel.GAME_COURT_TOP_LIMIT, paddle.getyPosition());
@@ -36,7 +36,7 @@ public class TestPaddle {
     @ParameterizedTest
     @ValueSource(ints={451, 500, 550, 600})
     public void paddle_stops_when_hitting_bot_boundary(int velocity){
-        paddle.setVelocity(velocity);
+        paddle.setSpeed(velocity);
         paddle.move();
 
         assertEquals(GamePanel.GAME_COURT_BOTTOM_LIMIT - paddle_height, paddle.getyPosition());

@@ -29,7 +29,7 @@ public class TestPaddleMover {
         PaddleMover pm = new PaddleMover(paddleLeft, paddleRight);
         KeyEvent ke = new KeyEvent(gamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, key, 'Z');
         pm.keyPressed(ke);
-        assertEquals(result, paddleRight.getVelocity());
+        assertEquals(result, paddleRight.getSpeed());
     }
 
     private Stream<Arguments> provideParametersPressed() {
@@ -44,9 +44,9 @@ public class TestPaddleMover {
     public void paddle_velocity_to_zero_when_releasing_key(int key, double result) {
         PaddleMover pm = new PaddleMover(paddleLeft, paddleRight);
         KeyEvent ke = new KeyEvent(gamePanel, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, key, 'Z');
-        paddleRight.setVelocity(pm.getPaddleRightSpeed());
+        paddleRight.setSpeed(pm.getPaddleRightSpeed());
         pm.keyReleased(ke);
-        assertEquals(result, paddleRight.getVelocity());
+        assertEquals(result, paddleRight.getSpeed());
     }
 
     private Stream<Arguments> provideParametersReleased() {
@@ -61,12 +61,12 @@ public class TestPaddleMover {
     @MethodSource("provideParametersPressedContemporary")
     public void on_key_pressed_velocity_changes_only_on_corresponding_paddle(int key, double[] result) {
         PaddleMover pm = new PaddleMover(paddleLeft, paddleRight);
-        paddleLeft.setVelocity(0);
-        paddleRight.setVelocity(0);
+        paddleLeft.setSpeed(0);
+        paddleRight.setSpeed(0);
         KeyEvent ke = new KeyEvent(gamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, key, 'Z');
         pm.keyPressed(ke);
-        assertEquals(result[0], paddleLeft.getVelocity());
-        assertEquals(result[1], paddleRight.getVelocity());
+        assertEquals(result[0], paddleLeft.getSpeed());
+        assertEquals(result[1], paddleRight.getSpeed());
     }
 
     private Stream<Arguments> provideParametersPressedContemporary() {
@@ -82,14 +82,14 @@ public class TestPaddleMover {
     @MethodSource("provideParametersReleasedContemporary")
     public void on_key_released_velocity_goes_to_zero_only_on_corresponding_paddle(int key, double[] result) {
         PaddleMover pm = new PaddleMover(paddleLeft, paddleRight);
-        paddleLeft.setVelocity(0);
-        paddleRight.setVelocity(0);
+        paddleLeft.setSpeed(0);
+        paddleRight.setSpeed(0);
         KeyEvent ke = new KeyEvent(gamePanel, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, key, 'Z');
-        paddleLeft.setVelocity(pm.getPaddleLeftSpeed());
-        paddleRight.setVelocity(pm.getPaddleRightSpeed());
+        paddleLeft.setSpeed(pm.getPaddleLeftSpeed());
+        paddleRight.setSpeed(pm.getPaddleRightSpeed());
         pm.keyReleased(ke);
-        assertEquals(result[0], paddleLeft.getVelocity());
-        assertEquals(result[1], paddleRight.getVelocity());
+        assertEquals(result[0], paddleLeft.getSpeed());
+        assertEquals(result[1], paddleRight.getSpeed());
     }
 
     private Stream<Arguments> provideParametersReleasedContemporary() {

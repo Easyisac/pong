@@ -19,9 +19,9 @@ public class Bot {
 
     // Aims to reduce the distance between ball and paddle.
     public void makeMove() {
-        double ballPosition = ball.getyCenter();
-        int paddlePosition = paddle.getyPosition() + paddle.getPADDLE_HEIGHT() / 2;
-        double distancePaddleBall = ballPosition - paddlePosition;
+        double ballCenterPosition = ball.getyCenter();
+        int paddleCenterPosition = paddle.getyPosition() + paddle.getPADDLE_HEIGHT() / 2;
+        double distancePaddleBall = ballCenterPosition - paddleCenterPosition;
         int key = (distancePaddleBall < 0) ? KeyEvent.VK_UP : KeyEvent.VK_DOWN;
 
         KeyEvent keyEvent = new KeyEvent(gamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, key, 'Z');
