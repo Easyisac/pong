@@ -4,5 +4,6 @@ public class Pong {
 
     public static void main(String[] args) {
         GameManager.startMenu();
+        GameManager.setup();
     }
 }

@@ -27,16 +27,19 @@ public class GameManager {
         GameManager.singlePlayerModeFlag = singlePlayerModeFlag;
     }
 
+    public static void setup(){
+        jf.setResizable(false);
+        jf.setTitle("PONG");
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jf.setVisible(true);
+        jf.setLocationRelativeTo(null);
+    }
+
     private static void setPanel(JPanel jPanel) {
         jf.getContentPane().removeAll();
         jf.add(jPanel);
-        jf.setResizable(false);
         jf.pack();
-        jf.setTitle("PONG");
-        jf.setLocationRelativeTo(null);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jPanel.repaint();
-        jf.setVisible(true);
     }
 
     public static void startGame() {
