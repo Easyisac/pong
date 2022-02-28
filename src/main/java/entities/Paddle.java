@@ -4,9 +4,9 @@ import panels.GamePanel;
 
 public class Paddle {
 
-    private static final int PADDLE_HEIGHT = 75;
-    private static final int PADDLE_WIDTH = 10;
-    private static final int OFFSET = 50;  // distance between paddle and border
+    public static final int PADDLE_HEIGHT = 75;
+    public static final int PADDLE_WIDTH = 10;
+    public static final int OFFSET = 50;  // distance between paddle and border
 
     private final int xPosition;
     private int yPosition;
@@ -33,14 +33,6 @@ public class Paddle {
 
     public void setSpeed(double speed) {
         this.speed = speed;
-    }
-
-    public int getPADDLE_HEIGHT() {
-        return PADDLE_HEIGHT;
-    }
-
-    public int getPADDLE_WIDTH() {
-        return PADDLE_WIDTH;
     }
 
     public int getxPosition() {

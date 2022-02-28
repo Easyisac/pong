@@ -27,13 +27,13 @@ public class StartMenu extends Menu {
         switch (actionEvent.getActionCommand()) {
             case "Quit" -> System.exit(0);
             case "One Player" -> {
-                MenuManager.setPlayerLeftName("Player");
-                MenuManager.setPlayerRightName("COM");
-                MenuManager.setSinglePlayerModeFlag(true);
-                MenuManager.startGame();
+                GameManager.setPlayerLeftName("Player");
+                GameManager.setPlayerRightName("COM");
+                GameManager.setSinglePlayerModeFlag(true);
+                GameManager.startGame();
             }
-            case "Two Players" -> MenuManager.insertNameMenu();
-            case "Settings" -> MenuManager.settingsMenu();
+            case "Two Players" -> GameManager.insertNameMenu();
+            case "Settings" -> GameManager.settingsMenu();
             default -> {
             }
         }

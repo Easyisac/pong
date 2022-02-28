@@ -81,8 +81,8 @@ public class GamePanel extends JPanel implements Runnable {
             bot = new Bot(paddleRight, ball, this, paddleMover);
             paddleMover.setPaddleRightSpeed(ballVelocityModule * 0.6);
         }
-        Thread game = new Thread(this);
-        game.start();
+        Thread gameThread = new Thread(this);
+        gameThread.start();
     }
 
     @Override
@@ -139,7 +139,7 @@ public class GamePanel extends JPanel implements Runnable {
             e.printStackTrace();
         }
         String winner = (playerLeft.getScore() > playerRight.getScore()) ? playerLeft.getName() : playerRight.getName();
-        MenuManager.endMenu(winner);
+        GameManager.endMenu(winner);
     }
 
     public static class GameKeyListener extends KeyAdapter {

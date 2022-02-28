@@ -71,7 +71,7 @@ public class SettingsMenu extends Menu {
         if ("Save".equals(actionEvent.getActionCommand())) {
             gamePanel.setBallVelocityModule(velocitySlider.getValue() + 2);
             gamePanel.setMaxScore(maxScoreSlider.getValue());
-            MenuManager.startMenu();
+            GameManager.startMenu();
         }
     }
 }

@@ -33,8 +33,8 @@ public class EndMenu extends Menu {
     public void actionPerformed(ActionEvent actionEvent) {
         switch (actionEvent.getActionCommand()) {
             case "Quit" -> System.exit(0);
-            case "Main Menu" -> MenuManager.startMenu();
-            case "Play Again" -> MenuManager.startGame();
+            case "Main Menu" -> GameManager.startMenu();
+            case "Play Again" -> GameManager.startGame();
             default -> {
             }
         }

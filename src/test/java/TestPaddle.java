@@ -11,7 +11,7 @@ public class TestPaddle {
     private final Player playerRight = new Player("Player1", 1);
 
     private final Paddle paddle = new Paddle(playerRight);
-    private final int paddle_height = paddle.getPADDLE_HEIGHT();
+    private final int paddle_height = Paddle.PADDLE_HEIGHT;
 
     private final int yStart = paddle.getyPosition();
 

@@ -2,7 +2,7 @@ package panels;
 
 import javax.swing.*;
 
-public class MenuManager {
+public class GameManager {
 
     private static final GamePanel gamePanel = new GamePanel();
     private static final JFrame jf = new JFrame();
@@ -16,15 +16,15 @@ public class MenuManager {
     private static boolean singlePlayerModeFlag;
 
     public static void setPlayerLeftName(String playerLeftName) {
-        MenuManager.playerLeftName = playerLeftName;
+        GameManager.playerLeftName = playerLeftName;
     }
 
     public static void setPlayerRightName(String playerRightName) {
-        MenuManager.playerRightName = playerRightName;
+        GameManager.playerRightName = playerRightName;
     }
 
     public static void setSinglePlayerModeFlag(boolean singlePlayerModeFlag) {
-        MenuManager.singlePlayerModeFlag = singlePlayerModeFlag;
+        GameManager.singlePlayerModeFlag = singlePlayerModeFlag;
     }
 
     private static void setPanel(JPanel jPanel) {

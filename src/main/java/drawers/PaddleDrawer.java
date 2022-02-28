@@ -12,6 +12,6 @@ public class PaddleDrawer implements Drawer {
     }
 
     public void draw(Graphics2D g2) {
-        g2.fillRect(paddle.getxPosition(), paddle.getyPosition(), paddle.getPADDLE_WIDTH(), paddle.getPADDLE_HEIGHT());
+        g2.fillRect(paddle.getxPosition(), paddle.getyPosition(), Paddle.PADDLE_WIDTH, Paddle.PADDLE_HEIGHT);
     }
 }
