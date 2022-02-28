@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TestPaddleMover {
 
-    private final Player playerLeft = new Player("Player0", 0);
-    private final Player playerRight = new Player("Player1", 1);
+    private final Player playerLeft = new Player("Player1", 0);
+    private final Player playerRight = new Player("Player2", 1);
 
     private final Paddle paddleLeft = new Paddle(playerLeft);
     private final Paddle paddleRight = new Paddle(playerRight);

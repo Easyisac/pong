@@ -5,18 +5,18 @@ import java.util.Random;
 
 public class Ball {
 
+    public static final int BALL_RADIUS = 10;
+    public static final boolean LEFT = false;
+    public static final boolean RIGHT = true;
+    public static final double STARTING_RANGE = 5 / 6.0;
+    public static final double BOUNCE_RANGE = 2 / 3.0;
+
     private final Paddle paddleLeft;
     private final Paddle paddleRight;
     private final Player playerLeft;
     private final Player playerRight;
 
     private final Random random = new Random();
-
-    public static final int BALL_RADIUS = 10;
-    public static final boolean LEFT = false;
-    public static final boolean RIGHT = true;
-    public static final double STARTING_RANGE = 5 / 6.0;
-    public static final double BOUNCE_RANGE = 2 / 3.0;
 
     private final int xPositionStart = (GamePanel.GAME_COURT_RIGHT_LIMIT + GamePanel.GAME_COURT_LEFT_LIMIT) / 2;
     private final int yPositionStart = (GamePanel.GAME_COURT_TOP_LIMIT + GamePanel.GAME_COURT_BOTTOM_LIMIT) / 2;

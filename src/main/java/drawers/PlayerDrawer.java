@@ -21,9 +21,8 @@ public class PlayerDrawer implements Drawer {
         int topFrame = GamePanel.TOP_FRAME;
         int leftFrame = GamePanel.SIDE_FRAME;
         int gameWidth = GamePanel.GAME_COURT_WIDTH;
-        int position;
-        position = player.getId() == 0 ? gameWidth / 4 + leftFrame - stringWidth / 2
-                : leftFrame + (gameWidth / 4) * 3 - stringWidth / 2;
+        int position = player.getId() == 0 ? gameWidth / 4 + leftFrame - stringWidth / 2
+                       : leftFrame + (gameWidth / 4) * 3 - stringWidth / 2;
         g2.drawString(player.getName(), position, topFrame / 2);
         g2.drawString(String.valueOf(player.getScore()), position + stringWidth / 2, topFrame / 2 + stringHeight);
     }

@@ -11,13 +11,12 @@ public class TestPaddle {
     private final Player playerRight = new Player("Player1", 1);
 
     private final Paddle paddle = new Paddle(playerRight);
-    private final int paddle_height = Paddle.PADDLE_HEIGHT;
 
     private final int yStart = paddle.getyPosition();
 
     @ParameterizedTest
     @ValueSource(ints={1,2,3,4,-4,20,-30})
-    public void paddle_shift_position_after_move_command(int velocity){
+    public void paddle_moves_within_boundaries(int velocity){
         paddle.setSpeed(velocity);
         paddle.move();
 
@@ -39,6 +38,6 @@ public class TestPaddle {
         paddle.setSpeed(velocity);
         paddle.move();
 
-        assertEquals(GamePanel.GAME_COURT_BOTTOM_LIMIT - paddle_height, paddle.getyPosition());
+        assertEquals(GamePanel.GAME_COURT_BOTTOM_LIMIT - Paddle.PADDLE_HEIGHT, paddle.getyPosition());
     }
 }

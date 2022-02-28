@@ -10,7 +10,7 @@ public class TestPlayer {
 
     @ParameterizedTest
     @ValueSource(ints={2, 3, 4})
-    public void player_score_increases_by_one_on_every_call(int points) {
+    public void player_score_increases_by_one(int points) {
         int startScore = playerLeft.getScore();
         for(int i = 0; i < points; i++) {
             playerLeft.increaseScore();
