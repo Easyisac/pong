@@ -23,7 +23,7 @@ public class TestBall {
 
     @ParameterizedTest
     @CsvSource({"1, 1", "5, 5", "10,20", "25, 30"})
-    public void ball_shifts_position_after_move_command(double velAngle, double velModule) {
+    public void ball_moves_without_collisions(double velAngle, double velModule) {
         ball.setVelocityAngle(velAngle);
         ball.setVelModule(velModule);
         ball.move();
