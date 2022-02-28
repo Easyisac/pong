@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/Easyisac/pong/tree/main.svg?style=svg)](https://circleci.com/gh/Easyisac/pong/tree/main)
+
 # Pong
 *Valentina Blasone, Daniele Irto, Giulia Marchiori Pietrosanti, Matteo Marturini, Isacco Zinna*
 
