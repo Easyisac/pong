@@ -35,6 +35,7 @@ public class GameManager {
         jf.setTitle("PONG");
         jf.setLocationRelativeTo(null);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jPanel.repaint();
         jf.setVisible(true);
     }
 

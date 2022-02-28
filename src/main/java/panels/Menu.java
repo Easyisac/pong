@@ -22,6 +22,7 @@ public abstract class Menu extends JPanel implements ActionListener {
 
     protected Button createButton(String name, int yPosition) {
         Button button = new Button(name);
+        button.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         button.setBounds(buttonXPosition, yPosition, buttonWidth, buttonHeight);
         button.addActionListener(this);
         button.setActionCommand(name);
@@ -35,7 +36,7 @@ public abstract class Menu extends JPanel implements ActionListener {
         label.setForeground(Color.WHITE);
         label.setVerticalAlignment(JLabel.TOP);
         label.setHorizontalAlignment(JLabel.CENTER);
-        label.setFont(new Font("Arial", Font.PLAIN, fontSize));
+        label.setFont(new Font(Font.MONOSPACED, Font.PLAIN, fontSize));
         return label;
     }
 

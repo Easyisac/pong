@@ -94,7 +94,7 @@ public class GamePanel extends JPanel implements Runnable {
         g2.drawRect(SIDE_FRAME, TOP_FRAME, GAME_COURT_WIDTH, GAME_COURT_HEIGHT);
         if (pauseFlag) {
             String pauseString = "PAUSE";
-            g2.setFont(new Font("Arial", Font.PLAIN, 40));
+            g2.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 40));
             int stringWidth = g2.getFontMetrics().stringWidth(pauseString);
             int stringHeight = g2.getFontMetrics().getHeight();
             g2.drawString(pauseString, SIDE_FRAME + GAME_COURT_WIDTH / 2 - stringWidth / 2,

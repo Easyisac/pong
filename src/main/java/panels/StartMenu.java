@@ -10,16 +10,18 @@ public class StartMenu extends Menu {
         super();
 
         JLabel title = createLabel("Pong", GamePanel.TOP_FRAME, 40);
+        JLabel signature = createLabel("Blasone, Irto, Marchiori Pietrosanti, Marturini, Zinna", GamePanel.GAME_COURT_BOTTOM_LIMIT, 12);
         Button buttonOnePlayer = createButton("One Player", buttonYPosition);
         Button buttonTwoPlayers = createButton("Two Players", buttonYPosition + gapBetweenButtons);
         Button buttonSettings = createButton("Settings", buttonYPosition + gapBetweenButtons * 2);
         Button buttonQuit = createButton("Quit", buttonYPosition + gapBetweenButtons * 3);
-
+        
         add(buttonOnePlayer);
         add(buttonTwoPlayers);
         add(buttonSettings);
         add(buttonQuit);
         add(title);
+        add(signature);
     }
 
     @Override

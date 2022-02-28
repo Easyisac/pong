@@ -15,7 +15,7 @@ public class PlayerDrawer implements Drawer {
     }
 
     public void draw(Graphics2D g2) {
-        g2.setFont(new Font("Arial", Font.PLAIN, 20));
+        g2.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
         int stringWidth = g2.getFontMetrics().stringWidth(player.getName());
         int stringHeight = g2.getFontMetrics().getHeight();
         int topFrame = GamePanel.TOP_FRAME;
