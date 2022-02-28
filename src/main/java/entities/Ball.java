@@ -99,17 +99,17 @@ public class Ball {
 
     // Checks for goals and collisions and moves the ball to the next position.
     public void move() {
-        if (nextXCenter() - BALL_RADIUS <= GamePanel.GAME_COURT_LEFT_LIMIT) {
+        if (nextXCenter() - BALL_RADIUS <= GamePanel.GAME_COURT_LEFT_LIMIT) { // goal scored on left side
             goalScored(playerRight, LEFT);
-        } else if (nextXCenter() + BALL_RADIUS >= GamePanel.GAME_COURT_RIGHT_LIMIT) {
+        } else if (nextXCenter() + BALL_RADIUS >= GamePanel.GAME_COURT_RIGHT_LIMIT) { // goal scored on right side
             goalScored(playerLeft, RIGHT);
         } else {
             if (nextYCenter() - BALL_RADIUS <= GamePanel.GAME_COURT_TOP_LIMIT ||
-                    nextYCenter() + BALL_RADIUS >= GamePanel.GAME_COURT_BOTTOM_LIMIT) {
+                    nextYCenter() + BALL_RADIUS >= GamePanel.GAME_COURT_BOTTOM_LIMIT) { // bounce on the top or bottom of the court
                 velocityAngle = 2.0 * Math.PI - velocityAngle;
-            } else if (checkCollisionsHorizontalSide(paddleLeft, LEFT) || checkCollisionsPaddleLeftVerticalSide()) {
+            } else if (checkCollisionsHorizontalSide(paddleLeft, LEFT) || checkCollisionsPaddleLeftVerticalSide()) { // bounce on left paddle
                 bounceOffPaddle(paddleLeft, LEFT);
-            } else if (checkCollisionsHorizontalSide(paddleRight, RIGHT) || checkCollisionsPaddleRightVerticalSide()) {
+            } else if (checkCollisionsHorizontalSide(paddleRight, RIGHT) || checkCollisionsPaddleRightVerticalSide()) { // bounce on right paddle
                 bounceOffPaddle(paddleRight, RIGHT);
             }
             xCenter = nextXCenter();

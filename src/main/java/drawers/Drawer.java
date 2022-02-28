@@ -4,6 +4,5 @@ import java.awt.*;
 
 public interface Drawer {
 
-    default void draw(Graphics2D g2) {
-    }
+    default void draw(Graphics2D g2) {}
 }
