@@ -1,4 +1,6 @@
 [![CircleCI](https://circleci.com/gh/Easyisac/pong/tree/main.svg?style=svg)](https://circleci.com/gh/Easyisac/pong/tree/main)
+![Gradle](https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)
+![jUnit](https://img.shields.io/badge/Junit5-25A162?style=for-the-badge&logo=junit5&logoColor=white)
 
 # Pong
 *Valentina Blasone, Daniele Irto, Giulia Marchiori Pietrosanti, Matteo Marturini, Isacco Zinna*
