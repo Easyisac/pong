@@ -29,3 +29,14 @@ Game modes:
 - Single player: user moves one paddle while a bot moves the other
 - Two players: one user moves his paddle using the UP and DOWN keys while
 the other moves his paddle using W and S keys
+
+# Instructions for the execution
+
+- To run the tests: `gradle test`
+
+- To run the application: `gradle run`
+
+- To compile executable jar: `gradle jar`
+
+Based on your OS replace `gradle` with `./gradlew` or `gradlew.bat`.
+
