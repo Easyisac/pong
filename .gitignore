@@ -4,9 +4,6 @@
 # Log file
 *.log
 
-# Package Files #
-*.jar
-
 
 .idea/
 .gradle/
