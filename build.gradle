@@ -1,5 +1,14 @@
 plugins {
-    id 'java'
+    id 'application'
+}
+apply plugin: 'java'
+ext {
+    javaMainClass=
+            'Pong'
+}
+
+application {
+    mainClass.set(javaMainClass)
 }
 
 group 'org.example'
@@ -16,4 +25,10 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class':javaMainClass
+    }
 }
